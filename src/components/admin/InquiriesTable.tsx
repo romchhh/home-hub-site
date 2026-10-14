@@ -80,33 +80,41 @@ export default function InquiriesTable({
         </div>
       ) : null}
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search name, email, phone, model or source…"
-          className="w-full max-w-md rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400"
-        />
+      <div
+        data-tour="tour-inquiries-filters"
+        className="space-y-3"
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search name, email, phone, model or source…"
+            className="w-full max-w-md rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400"
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {["all", ...statuses].map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setFilter(s)}
+              className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize ${
+                filter === s
+                  ? "bg-[#3c2412] text-[#f5ebe0]"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {s.replace("_", " ")}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {["all", ...statuses].map((s) => (
-          <button
-            key={s}
-            type="button"
-            onClick={() => setFilter(s)}
-            className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize ${
-              filter === s
-                ? "bg-[#3c2412] text-[#f5ebe0]"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            {s.replace("_", " ")}
-          </button>
-        ))}
-      </div>
-
-      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+      <div
+        data-tour="tour-inquiries-table"
+        className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead className="border-b border-gray-100 bg-gray-50 text-xs tracking-wide text-gray-500 uppercase">

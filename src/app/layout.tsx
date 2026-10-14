@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { headers } from "next/headers";
 import { Geist } from "next/font/google";
-import { isLocale } from "@/lib/i18n";
 import { getSiteUrl, siteName } from "@/lib/site";
 import "./globals.css";
 
@@ -48,13 +46,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const headerList = await headers();
-  const localeHeader = headerList.get("x-locale");
-  const lang = localeHeader && isLocale(localeHeader) ? localeHeader : "sv";
-
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  // Default lang; locale routes update via LocaleHtmlLang (avoids headers() → keeps SSG).
   return (
-    <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="sv" className={`${geistSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

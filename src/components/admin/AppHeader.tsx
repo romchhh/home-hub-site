@@ -130,7 +130,11 @@ export default function AppHeader() {
             menuOpen ? "flex" : "hidden"
           } w-full items-center justify-between gap-4 px-5 py-4 shadow-sm lg:flex lg:justify-end lg:px-0 lg:shadow-none`}
         >
-          <div ref={containerRef} className="relative hidden lg:block">
+          <div
+            ref={containerRef}
+            data-tour="tour-header-search"
+            className="relative hidden lg:block"
+          >
             <form>
               <div className="relative">
                 <span className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2">

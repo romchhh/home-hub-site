@@ -119,6 +119,7 @@ export function AdminTour({ onComplete, onSkip }: Props) {
   const isFirst = stepIndex === 0;
   const isLast = stepIndex === steps.length - 1;
   const placement = step.placement ?? (step.target ? "bottom" : "center");
+  const progressPct = ((stepIndex + 1) / steps.length) * 100;
 
   const refreshGeometry = useCallback(() => {
     const targetId = step.target;
@@ -134,7 +135,7 @@ export function AdminTour({ onComplete, onSkip }: Props) {
       const tooltipEl = document.getElementById("admin-tour-tooltip");
       const size = tooltipEl
         ? { width: tooltipEl.offsetWidth, height: tooltipEl.offsetHeight }
-        : { width: 340, height: 260 };
+        : { width: 400, height: 320 };
       setTooltipPos(tooltipPosition(rect, placement, size));
     });
   }, [step.target, placement]);
@@ -195,17 +196,39 @@ export function AdminTour({ onComplete, onSkip }: Props) {
     };
   }, []);
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (isLast) onComplete();
     else setStepIndex((i) => i + 1);
-  };
+  }, [isLast, onComplete]);
 
-  const goBack = () => setStepIndex((i) => Math.max(0, i - 1));
+  const goBack = useCallback(() => setStepIndex((i) => Math.max(0, i - 1)), []);
 
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     if (onSkip) onSkip();
     else onComplete();
-  };
+  }, [onComplete, onSkip]);
+
+  useEffect(() => {
+    if (!stepReady) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleSkip();
+        return;
+      }
+      if (e.key === "ArrowRight" || e.key === "Enter") {
+        e.preventDefault();
+        goNext();
+        return;
+      }
+      if (e.key === "ArrowLeft" && !isFirst) {
+        e.preventDefault();
+        goBack();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [stepReady, goNext, goBack, handleSkip, isFirst]);
 
   if (!mounted) return null;
 
@@ -233,87 +256,136 @@ export function AdminTour({ onComplete, onSkip }: Props) {
 
       <div
         id="admin-tour-tooltip"
-        className={`absolute w-[min(100vw-24px,380px)] rounded-2xl border border-gray-200 bg-white p-5 shadow-2xl shadow-black/20 transition-opacity duration-200 ${
+        className={`absolute flex max-h-[min(85vh,560px)] w-[min(100vw-24px,420px)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-black/20 transition-opacity duration-200 ${
           !stepReady ? "pointer-events-none opacity-0" : ""
         }`}
         style={{ top: tooltipPos.top, left: tooltipPos.left }}
       >
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <span className="text-[11px] font-bold tracking-wide text-[#3c2412] uppercase">
-              Step {stepIndex + 1} of {steps.length}
-            </span>
-            {step.section ? (
-              <span className="mt-0.5 block truncate text-[11px] text-gray-500">
-                {step.section}
-              </span>
-            ) : null}
-          </div>
+        <div className="h-1 w-full bg-gray-100">
+          <div
+            className="h-full bg-[#3c2412] transition-all duration-300"
+            style={{ width: `${progressPct}%` }}
+          />
         </div>
 
-        <h2
-          id="admin-tour-title"
-          className="text-[18px] leading-snug font-bold tracking-tight text-gray-900"
-        >
-          {step.title}
-        </h2>
-        <p className="mt-2 text-[13px] leading-relaxed text-gray-600">{step.description}</p>
-
-        {step.tips && step.tips.length > 0 ? (
-          <ul className="mt-3 space-y-1.5 rounded-xl bg-gray-50 px-3.5 py-3">
-            {step.tips.map((tip) => (
-              <li
-                key={tip}
-                className="flex gap-2 text-[12px] leading-relaxed text-gray-800/85"
-              >
-                <span
-                  className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3c2412]"
-                  aria-hidden
-                />
-                <span>{tip}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        <div className="mt-4 flex gap-2">
-          {!isFirst ? (
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-5">
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <span className="text-[11px] font-bold tracking-wide text-[#3c2412] uppercase">
+                Step {stepIndex + 1} of {steps.length}
+              </span>
+              {step.section ? (
+                <span className="mt-0.5 block truncate text-[11px] text-gray-500">
+                  {step.section}
+                </span>
+              ) : null}
+            </div>
             <button
               type="button"
-              onClick={goBack}
-              disabled={!stepReady}
-              className="flex-1 rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              onClick={handleSkip}
+              className="shrink-0 rounded-lg px-2 py-1 text-[11px] font-medium text-gray-400 hover:bg-gray-50 hover:text-gray-700"
+              aria-label="Close tour"
             >
-              Back
+              Esc
             </button>
-          ) : null}
-          <button
-            type="button"
-            onClick={goNext}
-            disabled={!stepReady}
-            className="flex-1 rounded-xl bg-[#3c2412] px-3 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c] disabled:opacity-50"
+          </div>
+
+          <h2
+            id="admin-tour-title"
+            className="text-[18px] leading-snug font-bold tracking-tight text-gray-900"
           >
-            {isLast ? "Start working" : "Next"}
-          </button>
+            {step.title}
+          </h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
+            {step.description}
+          </p>
+
+          {step.action ? (
+            <p className="mt-3 rounded-xl border border-[#3c2412]/15 bg-[#3c2412]/6 px-3.5 py-2.5 text-[12.5px] leading-snug font-semibold text-[#3c2412]">
+              <span className="mr-1.5 inline-block rounded bg-[#3c2412] px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#f5ebe0] uppercase">
+                Do this
+              </span>
+              {step.action}
+            </p>
+          ) : null}
+
+          {step.tips && step.tips.length > 0 ? (
+            <div className="mt-3 rounded-xl bg-gray-50 px-3.5 py-3">
+              <p className="mb-2 text-[10px] font-bold tracking-wide text-gray-400 uppercase">
+                Tips
+              </p>
+              <ul className="space-y-2">
+                {step.tips.map((tip, tipIndex) => (
+                  <li
+                    key={tip}
+                    className="flex gap-2.5 text-[12px] leading-relaxed text-gray-800/85"
+                  >
+                    <span
+                      className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#3c2412]/10 text-[10px] font-bold text-[#3c2412]"
+                      aria-hidden
+                    >
+                      {tipIndex + 1}
+                    </span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
-        <button
-          type="button"
-          onClick={handleSkip}
-          className="mt-3 w-full rounded-xl py-2.5 text-[13px] font-semibold text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900"
-        >
-          I’ll explore myself
-        </button>
+        <div className="shrink-0 border-t border-gray-100 bg-white p-4">
+          <div className="flex gap-2">
+            {!isFirst ? (
+              <button
+                type="button"
+                onClick={goBack}
+                disabled={!stepReady}
+                className="flex-1 rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              >
+                Back
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={goNext}
+              disabled={!stepReady}
+              className="flex-[1.4] rounded-xl bg-[#3c2412] px-3 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c] disabled:opacity-50"
+            >
+              {isLast ? "Start working" : "Next"}
+            </button>
+          </div>
 
-        <div className="mt-4 flex justify-center gap-1.5">
-          {steps.map((_, i) => (
-            <span
-              key={steps[i].id}
-              className={`h-1.5 rounded-full transition-all ${
-                i === stepIndex ? "w-5 bg-[#3c2412]" : "w-1.5 bg-gray-200"
-              }`}
-            />
-          ))}
+          <button
+            type="button"
+            onClick={handleSkip}
+            className="mt-2.5 w-full rounded-xl py-2 text-[13px] font-semibold text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-900"
+          >
+            I’ll explore myself
+          </button>
+
+          <p className="mt-2 text-center text-[10px] text-gray-400">
+            ← → or Enter to navigate · Esc to exit
+          </p>
+
+          <div className="mt-3 flex justify-center gap-1">
+            {steps.map((s, i) => (
+              <button
+                key={s.id}
+                type="button"
+                aria-label={`Go to step ${i + 1}: ${s.title}`}
+                disabled={!stepReady}
+                onClick={() => setStepIndex(i)}
+                className={`h-1.5 rounded-full transition-all disabled:opacity-50 ${
+                  i === stepIndex
+                    ? "w-5 bg-[#3c2412]"
+                    : i < stepIndex
+                      ? "w-1.5 bg-[#3c2412]/35 hover:bg-[#3c2412]/55"
+                      : "w-1.5 bg-gray-200 hover:bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>,

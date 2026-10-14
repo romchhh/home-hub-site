@@ -1,11 +1,11 @@
 import { buildGoogleProductFeedXml } from "@/lib/seo/productFeed";
 
-export const dynamic = "force-dynamic";
+/** Static feed snapshot; rebuild or wait for revalidate after catalogue changes. */
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
-export function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const locale = searchParams.get("lang") === "en" ? "en" : "sv";
-  const xml = buildGoogleProductFeedXml(locale);
+export function GET() {
+  const xml = buildGoogleProductFeedXml("sv");
   return new Response(xml, {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",

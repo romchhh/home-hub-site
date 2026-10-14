@@ -2,6 +2,9 @@ import { getModels } from "@/lib/catalog";
 import { contactInfo } from "@/lib/contactInfo";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 
+export const dynamic = "force-static";
+export const revalidate = 3600;
+
 export function GET() {
   const base = getSiteUrl();
   const modelsSv = getModels("sv");
@@ -44,7 +47,9 @@ export function GET() {
     `- ${base}/sitemap.xml`,
     `- ${base}/llms.txt`,
     `- ${base}/feeds/products.xml`,
+    `- ${base}/feeds/products.en.xml`,
     `- ${base}/feeds/products.json`,
+    `- ${base}/feeds/products.en.json`,
     "",
     "## Catalogue",
     ...productBlocks,

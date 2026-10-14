@@ -2,15 +2,26 @@ import { ContactSection } from "@/components/ContactSection";
 import { DoorDetailView } from "@/components/DoorDetailView";
 import { JsonLd } from "@/components/JsonLd";
 import { getDictionary } from "@/dictionaries";
-import { getModelBySlug, getModels, getRelatedModels, modelSlugs } from "@/lib/catalog";
+import {
+  getAllModelSlugs,
+  getModelBySlug,
+  getModels,
+  getRelatedModels,
+} from "@/lib/catalog";
 import { formatDoorPrice } from "@/lib/formatPrice";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonLd";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 import { notFound } from "next/navigation";
 
+/** Prerender every locale × product slug at build time. */
+export const dynamic = "force-static";
+/** Unknown slugs (e.g. newly added in admin) generate on first request; known ones are prerendered. */
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return locales.flatMap((locale) => modelSlugs.map((slug) => ({ locale, slug })));
+  const slugs = getAllModelSlugs();
+  return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/catalog/[slug]">) {

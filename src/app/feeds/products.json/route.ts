@@ -1,11 +1,10 @@
 import { buildProductFeedJson } from "@/lib/seo/productFeed";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
-export function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const locale = searchParams.get("lang") === "en" ? "en" : "sv";
-  const body = buildProductFeedJson(locale);
+export function GET() {
+  const body = buildProductFeedJson("sv");
   return Response.json(body, {
     headers: {
       "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",

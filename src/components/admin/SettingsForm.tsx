@@ -54,7 +54,10 @@ export default function SettingsForm({
   return (
     <div className="grid gap-6 lg:grid-cols-5">
       <form onSubmit={onSubmit} className="space-y-6 lg:col-span-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+        <div
+          data-tour="tour-settings-emails"
+          className="rounded-2xl border border-gray-200 bg-white p-6"
+        >
           <h2 className="text-base font-semibold text-gray-900">Inquiry emails</h2>
           <p className="mt-1 text-sm text-gray-500">
             Addresses that receive contact-form submissions via Resend. Separate
@@ -103,7 +106,10 @@ export default function SettingsForm({
         </div>
       </form>
 
-      <aside className="space-y-4 lg:col-span-2">
+      <aside
+        data-tour="tour-settings-status"
+        className="space-y-4 lg:col-span-2"
+      >
         <div className="rounded-2xl border border-gray-200 bg-white p-5">
           <h2 className="text-base font-semibold text-gray-900">System status</h2>
           <ul className="mt-3 space-y-2.5 text-sm">
@@ -151,7 +157,18 @@ export default function SettingsForm({
               >
                 products.xml
               </a>
-              <span className="text-gray-400"> · Google Merchant</span>
+              <span className="text-gray-400"> · SV · Google Merchant</span>
+            </li>
+            <li>
+              <a
+                href={system.feedXml.replace(/\.xml$/, ".en.xml")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#3c2412] hover:underline"
+              >
+                products.en.xml
+              </a>
+              <span className="text-gray-400"> · EN</span>
             </li>
             <li>
               <a
@@ -162,7 +179,18 @@ export default function SettingsForm({
               >
                 products.json
               </a>
-              <span className="text-gray-400"> · JSON API</span>
+              <span className="text-gray-400"> · SV</span>
+            </li>
+            <li>
+              <a
+                href={system.feedJson.replace(/\.json$/, ".en.json")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#3c2412] hover:underline"
+              >
+                products.en.json
+              </a>
+              <span className="text-gray-400"> · EN</span>
             </li>
             <li className="pt-1 text-xs break-all text-gray-500">
               Site URL: {system.siteUrl}

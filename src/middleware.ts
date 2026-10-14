@@ -74,9 +74,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
   if (isLocale(segment)) {
-    const response = NextResponse.next();
-    response.headers.set("x-locale", segment);
-    return response;
+    return NextResponse.next();
   }
 
   const url = request.nextUrl.clone();

@@ -13,7 +13,9 @@ export default function robots(): MetadataRoute.Robots {
           "/llms.txt",
           "/llms-full.txt",
           "/feeds/products.xml",
+          "/feeds/products.en.xml",
           "/feeds/products.json",
+          "/feeds/products.en.json",
         ],
         disallow: [
           "/api/",

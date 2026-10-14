@@ -1,10 +1,14 @@
-import { modelSlugs } from "@/lib/catalog";
+import { getAllModelSlugs } from "@/lib/catalog";
 import { contactInfo } from "@/lib/contactInfo";
 import { locales } from "@/lib/i18n";
 import { absoluteUrl, getSiteUrl, siteName, staticSeoPaths } from "@/lib/site";
 
+export const dynamic = "force-static";
+export const revalidate = 3600;
+
 export function GET() {
   const base = getSiteUrl();
+  const modelSlugs = getAllModelSlugs();
   const lines = [
     `# ${siteName}`,
     "",
@@ -20,9 +24,9 @@ export function GET() {
     `- Products sitemap: ${base}/sitemaps/products.xml`,
     `- Images sitemap: ${base}/sitemaps/images.xml`,
     `- Product feed (Google Merchant XML, SV): ${base}/feeds/products.xml`,
-    `- Product feed (EN): ${base}/feeds/products.xml?lang=en`,
+    `- Product feed (EN): ${base}/feeds/products.en.xml`,
     `- Product feed (JSON, SV): ${base}/feeds/products.json`,
-    `- Product feed (JSON, EN): ${base}/feeds/products.json?lang=en`,
+    `- Product feed (JSON, EN): ${base}/feeds/products.en.json`,
     `- Full LLM brief: ${base}/llms-full.txt`,
     `- Robots: ${base}/robots.txt`,
     "",

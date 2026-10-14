@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/",
+        destination: "/sv",
+        permanent: false,
+      },
+      {
         source: "/uk",
         destination: "/sv",
         permanent: true,

@@ -283,7 +283,11 @@ export default function ProductForm({
   const siteSlug = values.slug.trim();
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form
+      data-tour="tour-product-form"
+      onSubmit={onSubmit}
+      className="space-y-6"
+    >
       {error ? (
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}

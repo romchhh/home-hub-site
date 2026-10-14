@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,6 +23,8 @@ type NavItem = {
   subItems?: { name: string; path: string }[];
 };
 
+type SubmenuKey = { type: "main"; index: number };
+
 const navItems: NavItem[] = [
   { icon: <GridIcon />, name: "Dashboard", path: "/admin" },
   {
@@ -42,22 +44,17 @@ const navItems: NavItem[] = [
 export default function AppSidebar() {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
-  const [manualSubmenu, setManualSubmenu] = useState<{
-    type: "main";
-    index: number;
-  } | null>(null);
+  const [manualSubmenu, setManualSubmenu] = useState<SubmenuKey | null>(null);
   const [manualClosed, setManualClosed] = useState(false);
-  const [pathForManual, setPathForManual] = useState(pathname);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
     {},
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  if (pathname !== pathForManual) {
-    setPathForManual(pathname);
+  useEffect(() => {
     setManualSubmenu(null);
     setManualClosed(false);
-  }
+  }, [pathname]);
 
   const isActive = useCallback(
     (path: string) => {
@@ -67,30 +64,35 @@ export default function AppSidebar() {
     [pathname],
   );
 
-  let routeSubmenu: { type: "main"; index: number } | null = null;
+  let routeSubmenuIndex: number | null = null;
   for (let index = 0; index < navItems.length; index += 1) {
     const nav = navItems[index];
     if (nav.subItems?.some((sub) => isActive(sub.path))) {
-      routeSubmenu = { type: "main", index };
+      routeSubmenuIndex = index;
       break;
     }
   }
 
-  const openSubmenu = manualClosed
+  const openIndex = manualClosed
     ? null
-    : manualSubmenu ?? routeSubmenu;
+    : (manualSubmenu?.index ?? routeSubmenuIndex);
+
+  const showLabel = isExpanded || isHovered || isMobileOpen;
 
   useLayoutEffect(() => {
-    if (openSubmenu === null) return;
-    const key = `${openSubmenu.type}-${openSubmenu.index}`;
+    if (openIndex === null || !showLabel) return;
+    const key = `main-${openIndex}`;
     const el = subMenuRefs.current[key];
-    if (el) {
-      setSubMenuHeight((prev) => ({ ...prev, [key]: el.scrollHeight || 0 }));
-    }
-  }, [openSubmenu]);
+    if (!el) return;
+    const next = el.scrollHeight || 0;
+    setSubMenuHeight((prev) => {
+      if (prev[key] === next) return prev;
+      return { ...prev, [key]: next };
+    });
+  }, [openIndex, showLabel]);
 
   const handleSubmenuToggle = (index: number) => {
-    const isOpen = openSubmenu?.type === "main" && openSubmenu.index === index;
+    const isOpen = openIndex === index;
     if (isOpen) {
       setManualClosed(true);
       setManualSubmenu(null);
@@ -99,8 +101,6 @@ export default function AppSidebar() {
     setManualClosed(false);
     setManualSubmenu({ type: "main", index });
   };
-
-  const showLabel = isExpanded || isHovered || isMobileOpen;
 
   return (
     <aside
@@ -159,7 +159,7 @@ export default function AppSidebar() {
                         type="button"
                         onClick={() => handleSubmenuToggle(index)}
                         className={`menu-item group ${
-                          openSubmenu?.index === index
+                          openIndex === index
                             ? "menu-item-active"
                             : "menu-item-inactive"
                         } cursor-pointer ${
@@ -170,7 +170,7 @@ export default function AppSidebar() {
                       >
                         <span
                           className={
-                            openSubmenu?.index === index
+                            openIndex === index
                               ? "menu-item-icon-active"
                               : "menu-item-icon-inactive"
                           }
@@ -183,7 +183,7 @@ export default function AppSidebar() {
                         {showLabel && (
                           <ChevronDownIcon
                             className={`ml-auto transition-transform duration-200 ${
-                              openSubmenu?.index === index
+                              openIndex === index
                                 ? "rotate-180 text-brand-500"
                                 : ""
                             }`}
@@ -198,7 +198,7 @@ export default function AppSidebar() {
                           className="overflow-hidden transition-all duration-300"
                           style={{
                             height:
-                              openSubmenu?.index === index
+                              openIndex === index
                                 ? `${subMenuHeight[`main-${index}`] ?? 0}px`
                                 : "0px",
                           }}

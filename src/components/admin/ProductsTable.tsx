@@ -105,7 +105,10 @@ export default function ProductsTable({
         </div>
       ) : null}
 
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div
+        data-tour="tour-products-toolbar"
+        className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
+      >
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -137,7 +140,10 @@ export default function ProductsTable({
         ))}
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+      <div
+        data-tour="tour-products-table"
+        className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead className="border-b border-gray-100 bg-gray-50 text-xs tracking-wide text-gray-500 uppercase">

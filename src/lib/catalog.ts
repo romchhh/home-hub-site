@@ -148,7 +148,8 @@ export function getModelBySlug(
   return getStaticModelBySlug(slug, locale);
 }
 
-function getModelSlugs(): string[] {
+/** Prefer DB slugs when available (call at build / request — do not evaluate at module load). */
+export function getAllModelSlugs(): string[] {
   if (isAdminDbEnabled()) {
     try {
       const rows = listProducts({ includeDrafts: false });
@@ -160,5 +161,5 @@ function getModelSlugs(): string[] {
   return staticModelSlugs;
 }
 
-/** Prefer DB slugs when available (evaluated on the server). */
-export const modelSlugs = getModelSlugs();
+/** @deprecated Prefer getAllModelSlugs() — kept for existing imports. */
+export const modelSlugs = staticModelSlugs;
