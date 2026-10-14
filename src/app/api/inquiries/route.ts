@@ -6,21 +6,6 @@ import { getResendConfig, sendInquiryEmail } from "@/lib/notifyInquiry";
 
 export async function POST(request: NextRequest) {
   try {
-    if (!getResendConfig()) {
-      return NextResponse.json(
-        { error: "Email delivery is not configured" },
-        { status: 503 },
-      );
-    }
-
-    const recipients = getInquiryRecipients();
-    if (recipients.length === 0) {
-      return NextResponse.json(
-        { error: "No inquiry recipients configured" },
-        { status: 503 },
-      );
-    }
-
     const body = await request.json();
     const name = String(body.name || "").trim();
     if (!name) {
@@ -36,20 +21,63 @@ export async function POST(request: NextRequest) {
       message: String(body.message || "").trim(),
     };
 
-    const sent = await sendInquiryEmail(recipients, payload);
+    const resendReady = Boolean(getResendConfig());
+    const recipients = resendReady ? getInquiryRecipients() : [];
+    const canEmail = resendReady && recipients.length > 0;
+    const canArchive = isAdminDbEnabled();
 
-    let inquiryId: number | undefined;
-    if (isAdminDbEnabled()) {
+    if (!canEmail && !canArchive) {
+      return NextResponse.json(
+        {
+          error:
+            "Inquiries are not configured (set Resend + recipients, or enable the admin database)",
+        },
+        { status: 503 },
+      );
+    }
+
+    let emailId: string | undefined;
+    let emailError: string | undefined;
+    if (canEmail) {
       try {
-        inquiryId = createInquiry(payload);
-      } catch {
-        // Email already sent — do not fail the request if local archive fails
+        const sent = await sendInquiryEmail(recipients, payload);
+        emailId = sent.id;
+      } catch (e) {
+        emailError = e instanceof Error ? e.message : "Failed to send email";
+        console.error("[inquiries] email failed:", emailError);
       }
     }
 
+    let inquiryId: number | undefined;
+    let archiveError: string | undefined;
+    if (canArchive) {
+      try {
+        inquiryId = createInquiry(payload);
+      } catch (e) {
+        archiveError = e instanceof Error ? e.message : "Failed to save inquiry";
+        console.error("[inquiries] archive failed:", archiveError);
+      }
+    }
+
+    // Success if at least one channel worked — leads are not lost when mail is down.
+    if (emailId || inquiryId != null) {
+      return NextResponse.json(
+        {
+          ok: true,
+          emailId,
+          id: inquiryId,
+          emailDelivered: Boolean(emailId),
+          ...(emailError && !emailId ? { emailWarning: emailError } : {}),
+        },
+        { status: 201 },
+      );
+    }
+
     return NextResponse.json(
-      { ok: true, emailId: sent.id, id: inquiryId },
-      { status: 201 },
+      {
+        error: emailError || archiveError || "Failed to submit inquiry",
+      },
+      { status: 500 },
     );
   } catch (e) {
     return NextResponse.json(

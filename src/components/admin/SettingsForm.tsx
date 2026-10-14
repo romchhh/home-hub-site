@@ -14,11 +14,9 @@ type SystemInfo = {
 
 export default function SettingsForm({
   initialInquiryToEmails,
-  envFallback,
   system,
 }: {
   initialInquiryToEmails: string;
-  envFallback: string;
   system: SystemInfo;
 }) {
   const [emails, setEmails] = useState(initialInquiryToEmails);
@@ -60,17 +58,9 @@ export default function SettingsForm({
         >
           <h2 className="text-base font-semibold text-gray-900">Inquiry emails</h2>
           <p className="mt-1 text-sm text-gray-500">
-            Addresses that receive contact-form submissions via Resend. Separate
-            with commas or new lines. If empty, the server falls back to{" "}
-            <code className="rounded bg-gray-100 px-1 text-xs">INQUIRY_TO_EMAIL</code>
-            {envFallback ? (
-              <>
-                {" "}
-                (<span className="text-gray-700">{envFallback}</span>).
-              </>
-            ) : (
-              " (not set in env)."
-            )}
+            Who should be notified when someone submits the contact form.
+            Separate addresses with commas or new lines. Leave empty to use the
+            server default recipients from environment config.
           </p>
           <label className="mt-4 block">
             <span className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500 uppercase">
@@ -120,7 +110,7 @@ export default function SettingsForm({
             />
             <StatusRow
               ok={system.emailFromConfigured}
-              label="From address"
+              label="Mail sender"
               detail={system.emailFromConfigured ? "Configured" : "Missing EMAIL_FROM"}
             />
             <StatusRow
@@ -128,10 +118,10 @@ export default function SettingsForm({
               label="Recipients"
               detail={
                 emails.trim()
-                  ? "Using admin settings"
+                  ? "Using list above"
                   : system.inquiryEnvFallback
-                    ? "Using env fallback"
-                    : "No recipients"
+                    ? "Using server default"
+                    : "None set"
               }
             />
             <StatusRow

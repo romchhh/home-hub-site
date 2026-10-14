@@ -16,7 +16,6 @@ export default function AdminSettingsPage() {
       <PageBreadcrumb pageTitle="Settings" />
       <SettingsForm
         initialInquiryToEmails={inquiryToEmails}
-        envFallback={envFallback}
         system={{
           siteUrl,
           emailFromConfigured: Boolean(process.env.EMAIL_FROM?.trim()),

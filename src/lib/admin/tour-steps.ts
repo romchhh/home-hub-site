@@ -236,8 +236,8 @@ export const ADMIN_TOUR_STEPS: AdminTourStep[] = [
       "List every address that should receive Resend notifications when someone submits the contact form. Separate with commas or new lines. Click Save settings to apply.",
     action: "Add your team emails → Save settings.",
     tips: [
-      "If this field is empty, the server uses INQUIRY_TO_EMAIL from the environment",
-      "Resend must be configured (API key + EMAIL_FROM) for mail to send",
+      "If this field is empty, the server uses its default recipient list from env",
+      "Resend must be configured (API key + mail sender) for notifications to send",
       "Check System status on the right for green/red configuration signals",
     ],
     placement: "bottom",

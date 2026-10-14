@@ -9,11 +9,19 @@ export type InquiryPayload = {
   message?: string;
 };
 
+/** Normalize EMAIL_FROM to `Name <email@domain>` when only an address is set. */
+export function formatFromAddress(raw: string): string {
+  const trimmed = raw.trim();
+  if (!trimmed) return trimmed;
+  if (trimmed.includes("<") && trimmed.includes(">")) return trimmed;
+  return `HOME HUB <${trimmed}>`;
+}
+
 export function getResendConfig(): { apiKey: string; from: string } | null {
   const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.EMAIL_FROM?.trim();
-  if (!apiKey || !from) return null;
-  return { apiKey, from };
+  const fromRaw = process.env.EMAIL_FROM?.trim();
+  if (!apiKey || !fromRaw) return null;
+  return { apiKey, from: formatFromAddress(fromRaw) };
 }
 
 export function parseEmailList(raw: string): string[] {
