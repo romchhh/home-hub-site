@@ -10,6 +10,7 @@ type Inquiry = {
   phone: string;
   email: string;
   model: string;
+  source?: string;
   status: string;
   created_at: string;
 };
@@ -38,7 +39,8 @@ export default function InquiriesTable({
         r.name.toLowerCase().includes(term) ||
         r.email.toLowerCase().includes(term) ||
         r.phone.toLowerCase().includes(term) ||
-        r.model.toLowerCase().includes(term)
+        r.model.toLowerCase().includes(term) ||
+        (r.source || "").toLowerCase().includes(term)
       );
     });
   }, [rows, filter, q]);
@@ -82,7 +84,7 @@ export default function InquiriesTable({
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search name, email, phone or model…"
+          placeholder="Search name, email, phone, model or source…"
           className="w-full max-w-md rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400"
         />
       </div>
@@ -110,7 +112,8 @@ export default function InquiriesTable({
             <thead className="border-b border-gray-100 bg-gray-50 text-xs tracking-wide text-gray-500 uppercase">
               <tr>
                 <th className="px-4 py-3 text-left font-medium">Contact</th>
-                <th className="px-4 py-3 text-left font-medium">Interest</th>
+                <th className="px-4 py-3 text-left font-medium">Door / interest</th>
+                <th className="px-4 py-3 text-left font-medium">Opened from</th>
                 <th className="px-4 py-3 text-left font-medium">Status</th>
                 <th className="px-4 py-3 text-left font-medium">Received</th>
                 <th className="px-4 py-3 text-right font-medium">Actions</th>
@@ -130,6 +133,9 @@ export default function InquiriesTable({
                   </td>
                   <td className="px-4 py-3 text-gray-600">
                     {row.model || "—"}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    <span className="line-clamp-2 max-w-[14rem]">{row.source || "—"}</span>
                   </td>
                   <td className="px-4 py-3">
                     <select
@@ -169,7 +175,7 @@ export default function InquiriesTable({
               {filtered.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="px-4 py-10 text-center text-gray-500"
                   >
                     No inquiries match your search.

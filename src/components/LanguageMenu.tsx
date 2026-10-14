@@ -6,26 +6,6 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { locales } from "@/lib/i18n";
 
-function GlobeIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M3 12h18M12 3c2.5 2.8 2.5 14.2 0 18M12 3c-2.5 2.8-2.5 14.2 0 18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
-
 export function LanguageMenu({
   locale,
   label,
@@ -37,6 +17,7 @@ export function LanguageMenu({
   const rootRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const listId = useId();
+  const code = locale.toUpperCase();
 
   function switchLocale(target: Locale) {
     const rest = pathname.replace(/^\/(sv|en)/, "") || "/";
@@ -63,14 +44,16 @@ export function LanguageMenu({
     <div className="language-menu relative" ref={rootRef}>
       <button
         type="button"
-        className="language-trigger icon-btn icon-btn--sm transition-opacity hover:opacity-80"
+        className={`language-trigger icon-btn icon-btn--sm ${open ? "language-trigger--open" : ""}`}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-controls={listId}
-        aria-label={`${label}: ${locale.toUpperCase()}`}
+        aria-label={`${label}: ${code}`}
         onClick={() => setOpen((v) => !v)}
       >
-        <GlobeIcon />
+        <span className="language-trigger-code" aria-hidden>
+          {code}
+        </span>
       </button>
       {open ? (
         <ul

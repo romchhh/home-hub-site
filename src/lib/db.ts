@@ -79,9 +79,16 @@ function migrate(database: SqliteDb) {
       phone TEXT NOT NULL DEFAULT '',
       email TEXT NOT NULL DEFAULT '',
       model TEXT NOT NULL DEFAULT '',
+      source TEXT NOT NULL DEFAULT '',
       message TEXT NOT NULL DEFAULT '',
       status TEXT NOT NULL DEFAULT 'new',
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS site_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL DEFAULT '',
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
@@ -89,6 +96,19 @@ function migrate(database: SqliteDb) {
     CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
     CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries(status);
   `);
+
+  ensureColumn(database, "inquiries", "source", "TEXT NOT NULL DEFAULT ''");
+}
+
+function ensureColumn(
+  database: SqliteDb,
+  table: string,
+  column: string,
+  definition: string,
+) {
+  const cols = database.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+  if (cols.some((c) => c.name === column)) return;
+  database.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
 }
 
 function seedIfEmpty(database: SqliteDb) {
@@ -184,6 +204,7 @@ export type DbInquiry = {
   phone: string;
   email: string;
   model: string;
+  source: string;
   message: string;
   status: string;
   created_at: string;

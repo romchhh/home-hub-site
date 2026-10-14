@@ -227,7 +227,15 @@ export default function ProductsTable({
                     </label>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
+                    <div className="flex flex-wrap justify-end gap-2">
+                      <Link
+                        href={`/sv/catalog/${p.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                      >
+                        View
+                      </Link>
                       <Link
                         href={`/admin/products/${p.id}/edit`}
                         className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"

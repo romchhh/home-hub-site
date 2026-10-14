@@ -8,5 +8,17 @@ export function PartnershipCta({ dict }: { dict: Dictionary }) {
   const p = dict.partnerships;
   const { openRequest } = useRequest();
 
-  return <Pill onClick={() => openRequest(p.breadcrumb)}>{p.cta}</Pill>;
+  return (
+    <Pill
+      onClick={() =>
+        openRequest({
+          intent: "project",
+          model: p.breadcrumb,
+          source: "Partnerships page",
+        })
+      }
+    >
+      {p.cta}
+    </Pill>
+  );
 }

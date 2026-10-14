@@ -10,9 +10,13 @@ import {
 } from "react";
 import type { Dictionary } from "@/dictionaries";
 import { RequestDialog } from "@/components/RequestDialog";
+import {
+  normalizeRequestOpen,
+  type RequestOpenOptions,
+} from "@/lib/requestOpen";
 
 type RequestContextValue = {
-  openRequest: (prefill?: string) => void;
+  openRequest: (input?: string | RequestOpenOptions) => void;
 };
 
 const RequestContext = createContext<RequestContextValue | null>(null);
@@ -25,10 +29,10 @@ export function RequestProvider({
   dict: Dictionary;
 }) {
   const [open, setOpen] = useState(false);
-  const [prefill, setPrefill] = useState("");
+  const [options, setOptions] = useState(() => normalizeRequestOpen());
 
-  const openRequest = useCallback((value = "") => {
-    setPrefill(value);
+  const openRequest = useCallback((input?: string | RequestOpenOptions) => {
+    setOptions(normalizeRequestOpen(input));
     setOpen(true);
   }, []);
 
@@ -40,7 +44,7 @@ export function RequestProvider({
       <RequestDialog
         dict={dict}
         open={open}
-        prefill={prefill}
+        options={options}
         onClose={() => setOpen(false)}
       />
     </RequestContext.Provider>

@@ -36,7 +36,7 @@ export function HomeIntroBlock({
               width={960}
               height={1280}
               className="intro-gallery-photo"
-              sizes="(max-width: 768px) 33vw, 28vw"
+              sizes="(max-width: 768px) 42vw, 28vw"
             />
           </figure>
         ))}

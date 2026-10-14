@@ -19,7 +19,7 @@ export default async function AdminInquiriesPage({
       : "all";
 
   return (
-    <div>
+    <div data-tour="tour-inquiries-page">
       <PageBreadcrumb pageTitle="Inquiries" />
       <InquiriesTable initial={inquiries} initialFilter={initialFilter} />
     </div>

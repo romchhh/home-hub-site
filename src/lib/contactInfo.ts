@@ -3,9 +3,33 @@ import type { Locale } from "@/lib/i18n";
 /** Showroom facts — update here or override via env where noted. */
 const phoneRaw = process.env.NEXT_PUBLIC_SHOWROOM_PHONE?.trim() || "+46812345678";
 
+function formatPhoneDisplay(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  // Swedish numbers: +46 (0)X XXX XXX XX for national format
+  if (digits.startsWith("46") && digits.length >= 10) {
+    const national = digits.slice(2);
+    const withLeading = national.startsWith("0") ? national : `0${national}`;
+    const rest = withLeading.slice(1);
+    const groups: string[] = [];
+    let i = 0;
+    // First group 1–2 digits (area), then 3s
+    if (rest.length >= 8) {
+      groups.push(rest.slice(0, 1));
+      i = 1;
+      while (i < rest.length) {
+        groups.push(rest.slice(i, i + 3));
+        i += 3;
+      }
+      return `+46 (0)${groups.join(" ")}`;
+    }
+  }
+  if (phone.startsWith("+")) return phone.replace(/\s+/g, " ").trim();
+  return phoneRaw;
+}
+
 export const contactInfo = {
   phone: phoneRaw.replace(/\s/g, ""),
-  phoneDisplay: "+46 (0)8 123 456 78",
+  phoneDisplay: formatPhoneDisplay(phoneRaw),
   email: process.env.NEXT_PUBLIC_SHOWROOM_EMAIL?.trim() || "hello@homehub.se",
   addressLine1: "Kungstensgatan 34",
   addressLine2: "113 59 Stockholm",
@@ -20,14 +44,8 @@ export const contactInfo = {
   social: [
     { id: "instagram", href: "https://www.instagram.com/homehub", label: "Instagram" },
     { id: "facebook", href: "https://www.facebook.com/homehub", label: "Facebook" },
-    { id: "pinterest", href: "https://www.pinterest.com/homehub", label: "Pinterest" },
   ] as const,
   messengers: [
-    {
-      id: "telegram",
-      href: process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim() || "https://t.me/homehub",
-      label: "Telegram",
-    },
     {
       id: "whatsapp",
       href:
@@ -47,10 +65,8 @@ export function getMapsDirectionsUrl(): string {
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
-/** OpenStreetMap embed — no API key required. */
+/** Google Maps embed for the showroom address (no API key required). */
 export function getMapEmbedUrl(): string {
-  const { lat, lng } = contactInfo.coordinates;
-  const pad = 0.004;
-  const bbox = [lng - pad, lat - pad, lng + pad, lat + pad].join("%2C");
-  return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
+  const q = encodeURIComponent(contactInfo.mapSearchQuery);
+  return `https://www.google.com/maps?q=${q}&z=16&output=embed`;
 }

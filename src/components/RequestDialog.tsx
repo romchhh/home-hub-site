@@ -2,16 +2,17 @@
 
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import type { Dictionary } from "@/dictionaries";
+import type { RequestOpenOptions } from "@/lib/requestOpen";
 import { ContactRequestForm } from "./ContactRequestForm";
 
 type RequestDialogProps = {
   dict: Dictionary;
   open: boolean;
-  prefill: string;
+  options: RequestOpenOptions;
   onClose: () => void;
 };
 
-export function RequestDialog({ dict, open, prefill, onClose }: RequestDialogProps) {
+export function RequestDialog({ dict, open, options, onClose }: RequestDialogProps) {
   const r = dict.request;
 
   useLockBodyScroll(open);
@@ -36,7 +37,11 @@ export function RequestDialog({ dict, open, prefill, onClose }: RequestDialogPro
         <h2 id="contact-sheet-title" className="contact-sheet-title">
           {r.dialogTitle}
         </h2>
-        <ContactRequestForm key={`${prefill}-${open}`} dict={dict} prefill={prefill} />
+        <ContactRequestForm
+          key={`${options.intent}-${options.model}-${options.source}-${open}`}
+          dict={dict}
+          options={options}
+        />
       </div>
     </div>
   );

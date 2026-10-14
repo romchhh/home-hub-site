@@ -1,6 +1,7 @@
 "use client";
 
 import { useSidebar } from "@/lib/admin/SidebarContext";
+import { requestAdminTour } from "@/lib/admin/tour";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -187,6 +188,17 @@ export default function AppHeader() {
           </div>
 
           <div className="flex items-center gap-2 2xsm:gap-3">
+            <button
+              type="button"
+              data-tour="tour-instructions"
+              onClick={() => {
+                requestAdminTour();
+                router.push("/admin");
+              }}
+              className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
+            >
+              Instructions
+            </button>
             <Link
               href="/sv"
               target="_blank"

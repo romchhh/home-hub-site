@@ -5,16 +5,13 @@ import { localePath } from "@/lib/i18n";
 
 type LogoProps = {
   locale: Locale;
-  variant?: "dark" | "light";
   className?: string;
 };
 
 const WORDMARK_WIDTH = 640;
 const WORDMARK_HEIGHT = 223;
 
-export function Logo({ locale, variant = "dark", className = "" }: LogoProps) {
-  const src = "/logos/wordmark-dark.webp";
-
+export function Logo({ locale, className = "" }: LogoProps) {
   return (
     <Link
       href={localePath(locale, "/")}
@@ -22,13 +19,13 @@ export function Logo({ locale, variant = "dark", className = "" }: LogoProps) {
       aria-label="HOME HUB"
     >
       <Image
-        src={src}
+        src="/logos/wordmark-dark.webp"
         alt=""
         width={WORDMARK_WIDTH}
         height={WORDMARK_HEIGHT}
         priority
-        className="block h-9 w-auto max-w-none md:h-10"
-        sizes="(min-width: 768px) 171px, 154px"
+        className="block h-9 w-auto max-w-none md:h-11"
+        sizes="(min-width: 768px) 200px, 160px"
       />
     </Link>
   );

@@ -7,7 +7,11 @@ export function OffersActions({ cta, className = "" }: { cta: string; className?
   const { openRequest } = useRequest();
   return (
     <div className={`${className}`}>
-      <Pill onClick={() => openRequest("")}>{cta}</Pill>
+      <Pill
+        onClick={() => openRequest({ intent: "project", source: "Offers page" })}
+      >
+        {cta}
+      </Pill>
     </div>
   );
 }

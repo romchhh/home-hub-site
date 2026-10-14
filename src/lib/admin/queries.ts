@@ -203,17 +203,19 @@ export function createInquiry(data: {
   phone?: string;
   email?: string;
   model?: string;
+  source?: string;
   message?: string;
 }) {
   const result = getDb()
     .prepare(
-      `INSERT INTO inquiries (name, phone, email, model, message) VALUES (?, ?, ?, ?, ?)`,
+      `INSERT INTO inquiries (name, phone, email, model, source, message) VALUES (?, ?, ?, ?, ?, ?)`,
     )
     .run(
       data.name,
       data.phone ?? "",
       data.email ?? "",
       data.model ?? "",
+      data.source ?? "",
       data.message ?? "",
     );
   return Number(result.lastInsertRowid);
@@ -229,6 +231,35 @@ export function updateInquiryStatus(id: number, status: string) {
 
 export function deleteInquiry(id: number) {
   getDb().prepare("DELETE FROM inquiries WHERE id = ?").run(id);
+}
+
+export const SETTING_INQUIRY_TO_EMAILS = "inquiry_to_emails";
+
+function getSetting(key: string): string {
+  const row = getDb()
+    .prepare("SELECT value FROM site_settings WHERE key = ?")
+    .get(key) as { value: string } | undefined;
+  return row?.value ?? "";
+}
+
+function setSetting(key: string, value: string) {
+  getDb()
+    .prepare(
+      `INSERT INTO site_settings (key, value, updated_at)
+       VALUES (?, ?, datetime('now'))
+       ON CONFLICT(key) DO UPDATE SET
+         value = excluded.value,
+         updated_at = datetime('now')`,
+    )
+    .run(key, value);
+}
+
+export function getInquiryToEmailsSetting(): string {
+  return getSetting(SETTING_INQUIRY_TO_EMAILS);
+}
+
+export function setInquiryToEmailsSetting(value: string) {
+  setSetting(SETTING_INQUIRY_TO_EMAILS, value);
 }
 
 export function getDashboardStats() {

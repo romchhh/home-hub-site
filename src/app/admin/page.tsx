@@ -35,7 +35,10 @@ export default function AdminDashboardPage() {
     <div>
       <PageBreadcrumb pageTitle="Dashboard" />
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div
+        data-tour="tour-dashboard-actions"
+        className="mb-6 flex flex-wrap gap-2"
+      >
         <Link
           href="/admin/products/add"
           className="rounded-xl bg-[#3c2412] px-4 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
@@ -59,9 +62,26 @@ export default function AdminDashboardPage() {
         >
           Media
         </Link>
+        <Link
+          href="/admin/settings"
+          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
+        >
+          Settings
+        </Link>
+        <a
+          href="/feeds/products.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
+        >
+          Product feed
+        </a>
       </div>
 
-      <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div
+        data-tour="tour-dashboard-stats"
+        className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <StatCard
           label="Products"
           value={stats.products}
@@ -128,7 +148,10 @@ export default function AdminDashboardPage() {
                       </span>
                     </div>
                     <p className="mt-0.5 truncate text-xs text-gray-500">
-                      {inq.model || inq.email || inq.phone || "—"}
+                      {[inq.model, inq.source].filter(Boolean).join(" · ") ||
+                        inq.email ||
+                        inq.phone ||
+                        "—"}
                     </p>
                   </Link>
                 </li>

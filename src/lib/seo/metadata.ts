@@ -77,6 +77,12 @@ export function createPageMetadata({
           { url: "/llms.txt", title: "llms.txt" },
           { url: "/llms-full.txt", title: "llms-full.txt" },
         ],
+        "application/xml": [
+          { url: "/feeds/products.xml", title: "Product feed (Google Merchant XML)" },
+        ],
+        "application/json": [
+          { url: "/feeds/products.json", title: "Product feed (JSON)" },
+        ],
       },
     },
     openGraph: {

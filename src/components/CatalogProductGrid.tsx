@@ -36,7 +36,6 @@ export function CatalogProductGrid({
   categories,
   showCount = true,
   showNote = false,
-  filterLayout = "toolbar",
 }: {
   locale: Locale;
   dict: Dictionary;
@@ -44,7 +43,6 @@ export function CatalogProductGrid({
   categories: CatalogCategoryOption[];
   showCount?: boolean;
   showNote?: boolean;
-  filterLayout?: "toolbar" | "scroll";
 }) {
   const c = dict.catalog;
   const priceBounds = useMemo(() => getCatalogPriceBounds(models), [models]);
@@ -91,98 +89,71 @@ export function CatalogProductGrid({
     setDraftFilters(defaults);
   }
 
-  const categoryChips = (
-    [
-      { slug: "all" as const, name: c.filters.all },
-      ...categories.map((cat) => ({ slug: cat.slug as DoorCategory, name: cat.name })),
-    ] as { slug: DoorCategory; name: string }[]
-  ).map((cat) => (
-    <CatalogFilterChip
-      key={cat.slug}
-      active={appliedFilters.category === cat.slug}
-      onClick={() => setAppliedFilters((prev) => ({ ...prev, category: cat.slug }))}
-    >
-      {cat.name}
-    </CatalogFilterChip>
-  ));
-
-  const isCatalogToolbar = filterLayout === "toolbar";
-
   return (
     <>
-      {isCatalogToolbar ? (
-        <div className="catalog-controls-card">
-          <div className="catalog-controls-top">
-            <label className="catalog-search-field">
-              <span className="sr-only">{c.searchLabel}</span>
-              <SearchIcon />
-              <input
-                type="search"
-                className="catalog-search-input"
-                placeholder={c.searchPlaceholder}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoComplete="off"
-                enterKeyHint="search"
-              />
-              {searchQuery ? (
-                <button
-                  type="button"
-                  className="catalog-search-clear"
-                  aria-label={c.clearSearch}
-                  onClick={() => setSearchQuery("")}
-                >
-                  ×
-                </button>
-              ) : null}
-            </label>
-            <button type="button" className="catalog-filters-open" onClick={openSheet}>
-              {c.openFilters}
-              {activeFilterCount > 0 ? (
-                <span className="catalog-filters-badge">{activeFilterCount}</span>
-              ) : null}
-            </button>
-          </div>
-
-          <div className="catalog-category-track" role="group" aria-label={c.filterCategoryLabel}>
-            {categoryChips}
-          </div>
-
-          <div className="catalog-controls-meta">
-            {showCount ? (
-              <span className="catalog-result-count" aria-live="polite">
-                {c.shown} <strong>{visible.length}</strong> {c.of} {models.length}
-              </span>
-            ) : null}
-            {hasActiveQuery ? (
-              <button type="button" className="catalog-clear-all" onClick={clearAll}>
-                {c.clearFilters}
+      <div className="catalog-controls-card">
+        <div className="catalog-controls-top">
+          <label className="catalog-search-field">
+            <span className="sr-only">{c.searchLabel}</span>
+            <SearchIcon />
+            <input
+              type="search"
+              className="catalog-search-input"
+              placeholder={c.searchPlaceholder}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoComplete="off"
+              enterKeyHint="search"
+            />
+            {searchQuery ? (
+              <button
+                type="button"
+                className="catalog-search-clear"
+                aria-label={c.clearSearch}
+                onClick={() => setSearchQuery("")}
+              >
+                ×
               </button>
             ) : null}
-          </div>
+          </label>
+          <button type="button" className="catalog-filters-open" onClick={openSheet}>
+            {c.openFilters}
+            {activeFilterCount > 0 ? (
+              <span className="catalog-filters-badge">{activeFilterCount}</span>
+            ) : null}
+          </button>
         </div>
-      ) : (
-        <>
-          {filterLayout === "scroll" ? (
-            <div className="catalog-category-scroll">
-              <div className="filters filters--scroll" role="group" aria-label={c.breadcrumb}>
-                {categoryChips}
-              </div>
-            </div>
-          ) : (
-            <div className="catalog-toolbar">
-              <div className="filters" role="group" aria-label={c.breadcrumb}>
-                {categoryChips}
-              </div>
-              {showCount ? (
-                <span id="count" aria-live="polite">
-                  {c.shown} {visible.length} {c.of} {models.length}
-                </span>
-              ) : null}
-            </div>
-          )}
-        </>
-      )}
+
+        <div className="catalog-category-track" role="group" aria-label={c.filterCategoryLabel}>
+          {(
+            [
+              { slug: "all" as const, name: c.filters.all },
+              ...categories.map((cat) => ({ slug: cat.slug as DoorCategory, name: cat.name })),
+            ] as { slug: DoorCategory; name: string }[]
+          ).map((cat) => (
+            <CatalogFilterChip
+              key={cat.slug}
+              active={appliedFilters.category === cat.slug}
+              onClick={() => setAppliedFilters((prev) => ({ ...prev, category: cat.slug }))}
+            >
+              {cat.name}
+            </CatalogFilterChip>
+          ))}
+        </div>
+
+        <div className="catalog-controls-meta">
+          {showCount ? (
+            <span className="catalog-result-count" aria-live="polite">
+              {c.shown} <strong>{visible.length}</strong> {c.of} {models.length}
+            </span>
+          ) : null}
+          {hasActiveQuery ? (
+            <button type="button" className="catalog-clear-all" onClick={clearAll}>
+              {c.clearFilters}
+            </button>
+          ) : null}
+        </div>
+      </div>
 
       <div className="catalog-products">
         {visible.map((m) => (
@@ -203,7 +174,7 @@ export function CatalogProductGrid({
 
       {showNote ? <p className="catalog-note">{c.note}</p> : null}
 
-      {isCatalogToolbar && sheetOpen ? (
+      {sheetOpen ? (
         <CatalogFilterSheet
           open={sheetOpen}
           locale={locale}

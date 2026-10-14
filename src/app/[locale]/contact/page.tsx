@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHead } from "@/components/PageHead";
@@ -49,9 +50,21 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         showMap
       />
       <section className="contact-layout site-section site-section--tight-top">
-        <article className="contact-card">
-          <h3>{c.card2Title}</h3>
-          <p>{c.card2Text}</p>
+        <article className="contact-card contact-card--media">
+          <div className="contact-card-media" aria-hidden>
+            <Image
+              src="/images/hero.png"
+              alt=""
+              fill
+              className="object-cover"
+              sizes="(max-width: 767px) 100vw, 50vw"
+              priority={false}
+            />
+          </div>
+          <div className="contact-card-body">
+            <h3>{c.card2Title}</h3>
+            <p>{c.card2Text}</p>
+          </div>
         </article>
         <div className="inline-request">
           <h2>{dict.request.dialogTitle}</h2>

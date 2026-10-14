@@ -9,6 +9,9 @@ import { useSavedItems } from "@/context/SavedItemsContext";
 import { formatDoorPrice } from "@/lib/formatPrice";
 import { localePath, type Locale } from "@/lib/i18n";
 import { mediaUrl } from "@/lib/mediaUrl";
+import { ProductCard } from "./ProductCard";
+
+const SUGGESTION_COUNT = 8;
 
 export function SavedItemsPanel({
   locale,
@@ -52,29 +55,88 @@ export function SavedItemsPanel({
     [items, modelsBySlug],
   );
 
+  const suggestions = useMemo(() => {
+    if (!isPage || resolved.length > 0) return [];
+    return catalogModels.slice(0, SUGGESTION_COUNT);
+  }, [catalogModels, isPage, resolved.length]);
+
+  const saveLabels = {
+    add: s.addShort,
+    remove: s.removeItem,
+    inList: s.inList,
+  };
+
   const panelClass = isPage ? "saved-page-panel" : "door-saved-section";
   const listClass = isPage ? "door-saved-list door-saved-list--page" : "door-saved-list";
 
-  return (
-    <div id={isPage ? undefined : "door-saved"} className={panelClass} aria-labelledby={isPage ? undefined : "door-saved-title"}>
-      {!isPage ? (
-        <div className="door-saved-head">
-          <div>
-            <h2 id="door-saved-title" className="type-section-title door-saved-title">
-              {s.title}
-            </h2>
-            <p className="door-saved-lead text-body-sm text-muted">{s.subtitle}</p>
-          </div>
-          <div className="door-saved-head-actions">
-            {resolved.length > 0 ? (
-              <span className="door-saved-count text-label text-muted">{resolved.length}</span>
-            ) : null}
-            <Link href={localePath(locale, "/catalog/saved")} className="door-saved-view-all">
-              {sp.viewAll}
+  if (isPage) {
+    return (
+      <div className={panelClass}>
+        {resolved.length === 0 ? (
+          <div className="saved-page-empty">
+            <p className="saved-page-empty-text">{sp.empty}</p>
+            <Link href={localePath(locale, "/catalog")} className="door-saved-browse">
+              {s.browseCatalog}
             </Link>
           </div>
+        ) : (
+          <div className="catalog-products">
+            {resolved.map(({ model }) => (
+              <ProductCard
+                key={model.slug}
+                locale={locale}
+                model={model}
+                priceFromLabel={c.priceFrom}
+                detailsLabel={c.details}
+                closeLabel={dict.nav.close}
+                allowSave
+                saveLabels={saveLabels}
+              />
+            ))}
+          </div>
+        )}
+
+        {suggestions.length > 0 ? (
+          <div className="saved-suggestions">
+            <h2 className="saved-suggestions-title">{sp.youMayLike}</h2>
+            <div className="catalog-products">
+              {suggestions.map((model) => (
+                <ProductCard
+                  key={model.slug}
+                  locale={locale}
+                  model={model}
+                  priceFromLabel={c.priceFrom}
+                  detailsLabel={c.details}
+                  closeLabel={dict.nav.close}
+                  allowSave
+                  saveLabels={saveLabels}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <div id="door-saved" className={panelClass} aria-labelledby="door-saved-title">
+      <div className="door-saved-head">
+        <div>
+          <h2 id="door-saved-title" className="type-section-title door-saved-title">
+            {s.title}
+          </h2>
+          <p className="door-saved-lead text-body-sm text-muted">{s.subtitle}</p>
         </div>
-      ) : null}
+        <div className="door-saved-head-actions">
+          {resolved.length > 0 ? (
+            <span className="door-saved-count text-label text-muted">{resolved.length}</span>
+          ) : null}
+          <Link href={localePath(locale, "/catalog/saved")} className="door-saved-view-all">
+            {sp.viewAll}
+          </Link>
+        </div>
+      </div>
 
       {resolved.length === 0 ? (
         <div className="door-saved-empty">
@@ -87,7 +149,7 @@ export function SavedItemsPanel({
         <ul className={listClass} role="list">
           {resolved.map(({ item, model, colorName }) => {
             const href = localePath(locale, `/catalog/${model.slug}`);
-            const isCurrent = !isPage && currentSlug === model.slug;
+            const isCurrent = currentSlug === model.slug;
             return (
               <li key={item.slug} className={`door-saved-item ${isCurrent ? "door-saved-item--current" : ""}`}>
                 <Link href={href} className="door-saved-item-link">
@@ -95,8 +157,8 @@ export function SavedItemsPanel({
                     <Image
                       src={mediaUrl(model.image)}
                       alt=""
-                      width={isPage ? 120 : 88}
-                      height={isPage ? 150 : 112}
+                      width={88}
+                      height={112}
                       className="door-saved-item-image"
                     />
                   </span>
@@ -109,11 +171,6 @@ export function SavedItemsPanel({
                       })}
                       {colorName ? ` · ${colorName}` : null}
                     </span>
-                    {isPage ? (
-                      <span className="door-saved-item-material text-caption text-muted">
-                        {model.material} · {model.finish}
-                      </span>
-                    ) : null}
                   </span>
                 </Link>
                 <button

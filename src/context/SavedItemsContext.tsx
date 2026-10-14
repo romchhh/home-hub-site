@@ -4,9 +4,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
@@ -25,42 +24,72 @@ type SavedItemsContextValue = {
 
 const SavedItemsContext = createContext<SavedItemsContextValue | null>(null);
 
+const EMPTY: SavedModelItem[] = [];
+let cachedItems: SavedModelItem[] = EMPTY;
+let cachedRaw: string | null = null;
+const listeners = new Set<() => void>();
+
+function emit() {
+  listeners.forEach((l) => l());
+}
+
+function getClientSnapshot(): SavedModelItem[] {
+  if (typeof window === "undefined") return EMPTY;
+  const raw = window.localStorage.getItem("homehub-saved-models");
+  if (raw === cachedRaw) return cachedItems;
+  cachedRaw = raw;
+  cachedItems = readSavedModels();
+  return cachedItems;
+}
+
+function getServerSnapshot(): SavedModelItem[] {
+  return EMPTY;
+}
+
+function subscribe(onStoreChange: () => void) {
+  listeners.add(onStoreChange);
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === "homehub-saved-models" || e.key === null) {
+      cachedRaw = null;
+      onStoreChange();
+    }
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(onStoreChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function commitItems(next: SavedModelItem[]) {
+  writeSavedModels(next);
+  cachedRaw = JSON.stringify(next);
+  cachedItems = next;
+  emit();
+}
+
 export function SavedItemsProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<SavedModelItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const items = useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    setItems(readSavedModels());
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    writeSavedModels(items);
-  }, [items, hydrated]);
-
-  const isSaved = useCallback((slug: string) => items.some((item) => item.slug === slug), [items]);
+  const isSaved = useCallback(
+    (slug: string) => items.some((item) => item.slug === slug),
+    [items],
+  );
 
   const toggleSaved = useCallback((slug: string, colorHex?: string) => {
-    setItems((prev) => {
-      const existing = prev.find((item) => item.slug === slug);
-      if (existing) {
-        return prev.filter((item) => item.slug !== slug);
-      }
-      const next: SavedModelItem = {
-        slug,
-        colorHex,
-        addedAt: Date.now(),
-      };
-      return [next, ...prev];
-    });
+    const prev = getClientSnapshot();
+    const existing = prev.find((item) => item.slug === slug);
+    const next = existing
+      ? prev.filter((item) => item.slug !== slug)
+      : [{ slug, colorHex, addedAt: Date.now() }, ...prev];
+    commitItems(next);
   }, []);
 
   const removeSaved = useCallback((slug: string) => {
-    setItems((prev) => prev.filter((item) => item.slug !== slug));
+    commitItems(getClientSnapshot().filter((item) => item.slug !== slug));
   }, []);
 
-  const clearSaved = useCallback(() => setItems([]), []);
+  const clearSaved = useCallback(() => commitItems([]), []);
 
   const value = useMemo(
     () => ({ items, isSaved, toggleSaved, removeSaved, clearSaved }),

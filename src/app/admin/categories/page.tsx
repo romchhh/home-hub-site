@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default function AdminCategoriesPage() {
   const categories = listCategories();
   return (
-    <div>
+    <div data-tour="tour-categories-page">
       <PageBreadcrumb pageTitle="Categories" />
       <CategoriesManager initial={categories} />
     </div>

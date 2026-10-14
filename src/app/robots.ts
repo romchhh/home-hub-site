@@ -8,7 +8,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: [
+          "/",
+          "/llms.txt",
+          "/llms-full.txt",
+          "/feeds/products.xml",
+          "/feeds/products.json",
+        ],
         disallow: [
           "/api/",
           "/admin/",
@@ -19,32 +25,32 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: "GPTBot",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "ChatGPT-User",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "Google-Extended",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "anthropic-ai",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "PerplexityBot",
-        allow: ["/", "/llms.txt", "/llms-full.txt"],
+        allow: ["/", "/llms.txt", "/llms-full.txt", "/feeds/"],
         disallow: ["/api/", "/admin/"],
       },
     ],

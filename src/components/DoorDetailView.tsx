@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { DoorModel } from "@/data/models";
 import { formatDoorPrice } from "@/lib/formatPrice";
@@ -36,20 +36,22 @@ export function DoorDetailView({
   const savedLabels = d.savedItems;
   const [activeImage, setActiveImage] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
+  const [gallerySlug, setGallerySlug] = useState(model.slug);
   const [tab, setTab] = useState<TabId>("description");
   const [galleryOpen, setGalleryOpen] = useState(false);
   const heroGalleryRef = useRef<HTMLDivElement>(null);
   const thumbTrackRef = useRef<HTMLDivElement>(null);
 
+  if (model.slug !== gallerySlug) {
+    setGallerySlug(model.slug);
+    setActiveImage(0);
+    setColorIndex(0);
+  }
+
   const priceLabel = `${c.priceFrom} ${formatDoorPrice(locale, model.priceSek, {
     perSqm: model.category === "flooring",
   })}`;
   const gallery = model.gallery;
-
-  useEffect(() => {
-    setActiveImage(0);
-    setColorIndex(0);
-  }, [model.slug]);
 
   useDoorGalleryScroll(heroGalleryRef, thumbTrackRef, activeImage, gallery.length, model.slug);
 
@@ -142,7 +144,6 @@ export function DoorDetailView({
               <button
                 key={`${key}-${index}`}
                 type="button"
-                role="listitem"
                 className={`door-gallery-thumb ${index === activeImage ? "door-gallery-thumb--active" : ""}`}
                 aria-label={`Image ${index + 1}`}
                 aria-pressed={index === activeImage}

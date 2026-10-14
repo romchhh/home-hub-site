@@ -707,6 +707,525 @@ const raw: {
     ],
   },
   {
+    slug: "own-doors-primed-chrome",
+    name: "Own Doors Primed Chrome",
+    image: "/images/doors/own-doors-primed-chrome/01.jpg",
+    gallery: ["/images/doors/own-doors-primed-chrome/01.jpg", "/images/doors/own-doors-primed-chrome/02.jpg", "/images/doors/own-doors-primed-chrome/03.jpg", "/images/doors/own-doors-primed-chrome/04.jpg", "/images/doors/own-doors-primed-chrome/05.jpg"],
+    category: "hidden",
+    priceSek: 24900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"],
+    hardware: ["Kantlist matt krom · Universal 45 · Hafele dolda gångjärn", "Matt chrome edge trim · Universal 45 · Hafele concealed hinges"],
+    colors: [
+      { hex: "#f7f7f2", name: ["Vit grund", "White primer"] },
+      { hex: "#c8c8c8", name: ["Matt krom", "Matt chrome"] }
+    ],
+    description: ["Dörr med dold montering — grundad MDF med aluminiumkantlist i matt krom.", "Concealed-installation door — primed MDF with a matt chrome aluminium edge trim."],
+    detailIntro: ["Vlasni Dveri (Own Doors), grundad. Aluminiumkarm Universal 45, Hafele magnetlås och dolda gångjärn ingår.", "Vlasni Dveri (Own Doors), primed. Universal 45 aluminium frame, Hafele magnetic lock and concealed hinges included."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["600/700/800 × 2000 mm", "600/700/800 × 2000 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom", "Matt chrome"] },
+      { label: ["Karm", "Frame"], value: ["Universal 45 · aluminium · matt krom", "Universal 45 · aluminium · matt chrome"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "own-doors-primed-black",
+    name: "Own Doors Primed Black",
+    image: "/images/doors/own-doors-primed-black/01.jpg",
+    gallery: ["/images/doors/own-doors-primed-black/01.jpg", "/images/doors/own-doors-primed-black/02.jpg", "/images/doors/own-doors-primed-black/03.jpg", "/images/doors/own-doors-primed-black/04.jpg", "/images/doors/own-doors-primed-black/05.jpg"],
+    category: "hidden",
+    priceSek: 24900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"],
+    hardware: ["Kantlist svart · Universal 45 · Hafele svart", "Black edge trim · Universal 45 · Hafele black"],
+    colors: [
+      { hex: "#f7f7f2", name: ["Vit grund", "White primer"] },
+      { hex: "#1a1a1a", name: ["Svart RAL 9005", "Black RAL 9005"] }
+    ],
+    description: ["Dörr med dold montering — grundad MDF med svart aluminiumkantlist och karm.", "Concealed-installation door — primed MDF with black aluminium edge trim and frame."],
+    detailIntro: ["Vlasni Dveri (Own Doors), grundad med svart profil. Ljudisolering 42 dB. Svart Hafele-beslag som standard.", "Vlasni Dveri (Own Doors), primed with a black profile. Sound insulation 42 dB. Black Hafele hardware as standard."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Svart aluminiumkantlist ger en skarp, hållbar kontur.", "Black aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["600/700/800 × 2000 mm", "600/700/800 × 2000 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Svart", "Black"] },
+      { label: ["Karm", "Frame"], value: ["Universal 45 · aluminium · svart", "Universal 45 · aluminium · black"] },
+      { label: ["Ljudisolering", "Sound insulation"], value: ["42 dB", "42 dB"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "own-doors-painted",
+    name: "Own Doors Painted",
+    image: "/images/doors/own-doors-painted/01.jpg",
+    gallery: ["/images/doors/own-doors-painted/01.jpg", "/images/doors/own-doors-painted/02.jpg", "/images/doors/own-doors-painted/03.jpg", "/images/doors/own-doors-painted/04.jpg", "/images/doors/own-doors-painted/05.jpg"],
+    category: "hidden",
+    priceSek: 26900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["målad", "paint"],
+    hardware: ["Kantlist aluminium · Alum Wood 40/45 · Hafele / AGB Polaris", "Aluminium edge trim · Alum Wood 40/45 · Hafele / AGB Polaris"],
+    colors: [
+      { hex: "#e8e0c8", name: ["RAL 1013", "RAL 1013"] },
+      { hex: "#f0e6c8", name: ["RAL 1015", "RAL 1015"] },
+      { hex: "#8a9096", name: ["RAL 7045", "RAL 7045"] },
+      { hex: "#c4c8cc", name: ["RAL 7047", "RAL 7047"] },
+      { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
+      { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
+      { hex: "#1a1a1a", name: ["RAL 9005", "RAL 9005"] }
+    ],
+    description: ["Dörr med dold montering — målad MDF med aluminiumkantlist, valfri RAL/NCS.", "Concealed-installation door — painted MDF with aluminium edge trim, any RAL/NCS."],
+    detailIntro: ["Vlasni Dveri (Own Doors), målad. Måttanpassad upp till 2100×900 mm. Karm Alum Wood 40 eller 45.", "Vlasni Dveri (Own Doors), painted. Made to measure up to 2100×900 mm. Alum Wood 40 or 45 frame."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Aluminium / RAL 9005 aluminiumkantlist ger en skarp, hållbar kontur.", "Aluminium / RAL 9005 aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 2100×900 mm", "custom, up to 2100×900 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["målad", "paint"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Aluminium / RAL 9005", "Aluminium / RAL 9005"] },
+      { label: ["Karm", "Frame"], value: ["Alum Wood 40 / 45 · aluminium", "Alum Wood 40 / 45 · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "alum-wood-primed",
+    name: "Alum Wood Primed",
+    image: "/images/doors/alum-wood-primed/01.jpg",
+    gallery: ["/images/doors/alum-wood-primed/01.jpg", "/images/doors/alum-wood-primed/02.jpg", "/images/doors/alum-wood-primed/03.jpg", "/images/doors/alum-wood-primed/04.jpg", "/images/doors/alum-wood-primed/05.jpg"],
+    category: "hidden",
+    priceSek: 23900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"],
+    hardware: ["Kantlist aluminium · Alum Wood 40 / Universal 45", "Aluminium edge trim · Alum Wood 40 / Universal 45"],
+    colors: [
+      { hex: "#f7f7f2", name: ["Vit grund", "White primer"] },
+      { hex: "#c8c8c8", name: ["Matt krom", "Matt chrome"] }
+    ],
+    description: ["Alum Wood med dold montering — grundad yta, klar för målning på plats eller i fabrik.", "Alum Wood concealed door — primed surface, ready for painting on site or at the factory."],
+    detailIntro: ["Alum Wood, grundad med kantlist. Leveranstid karm ca 14 dagar, blad ca 30 dagar. Ljudisolering 42 dB.", "Alum Wood, primed with edge trim. Lead time frame ~14 days, leaf ~30 days. Sound insulation 42 dB."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom / RAL aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome / RAL aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 2750×800 eller 2500×1100 mm", "custom, up to 2750×800 or 2500×1100 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom / RAL", "Matt chrome / RAL"] },
+      { label: ["Karm", "Frame"], value: ["Alum Wood 40 / Universal 45 · aluminium", "Alum Wood 40 / Universal 45 · aluminium"] },
+      { label: ["Ljudisolering", "Sound insulation"], value: ["42 dB", "42 dB"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "alum-wood-painted",
+    name: "Alum Wood Painted",
+    image: "/images/doors/alum-wood-painted/01.jpg",
+    gallery: ["/images/doors/alum-wood-painted/01.jpg", "/images/doors/alum-wood-painted/02.jpg", "/images/doors/alum-wood-painted/03.jpg", "/images/doors/alum-wood-painted/04.jpg", "/images/doors/alum-wood-painted/05.jpg"],
+    category: "hidden",
+    priceSek: 25900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["målad", "paint"],
+    hardware: ["Kantlist aluminium · Alum Wood 40 / Universal 45 · AGB Polaris", "Aluminium edge trim · Alum Wood 40 / Universal 45 · AGB Polaris"],
+    colors: [
+      { hex: "#e8e0c8", name: ["RAL 1013", "RAL 1013"] },
+      { hex: "#f0e6c8", name: ["RAL 1015", "RAL 1015"] },
+      { hex: "#8a9096", name: ["RAL 7045", "RAL 7045"] },
+      { hex: "#c4c8cc", name: ["RAL 7047", "RAL 7047"] },
+      { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
+      { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
+      { hex: "#1a1a1a", name: ["RAL 9005", "RAL 9005"] }
+    ],
+    description: ["Alum Wood med dold montering — målad MDF och aluminiumprofil för en flush känsla mot väggen.", "Alum Wood concealed door — painted MDF and an aluminium profile for a flush feel against the wall."],
+    detailIntro: ["Alum Wood, målad. Stora format upp till 2750×800 eller 2500×1100 mm. Valfri RAL Standard / RAL / NCS.", "Alum Wood, painted. Large formats up to 2750×800 or 2500×1100 mm. Any RAL Standard / RAL / NCS."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Aluminium / RAL 9005 aluminiumkantlist ger en skarp, hållbar kontur.", "Aluminium / RAL 9005 aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 2750×800 eller 2500×1100 mm", "custom, up to 2750×800 or 2500×1100 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["målad", "paint"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Aluminium / RAL 9005", "Aluminium / RAL 9005"] },
+      { label: ["Karm", "Frame"], value: ["Alum Wood 40 / Universal 45 · aluminium", "Alum Wood 40 / Universal 45 · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "alum-wood-veneered",
+    name: "Alum Wood Veneered",
+    image: "/images/doors/alum-wood-veneered/01.jpg",
+    gallery: ["/images/doors/alum-wood-veneered/01.jpg", "/images/doors/alum-wood-veneered/02.jpg", "/images/doors/alum-wood-veneered/03.jpg", "/images/doors/alum-wood-veneered/04.jpg", "/images/doors/alum-wood-veneered/05.jpg"],
+    category: "hidden",
+    priceSek: 28900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["faner", "veneer"],
+    hardware: ["Aluminiumkantlist · Alum Wood 40/45", "Aluminium edge trim · Alum Wood 40/45"],
+    colors: [
+      { hex: "#c4a882", name: ["Ek natur", "Oak natural"] },
+      { hex: "#8b6914", name: ["Ek mörk", "Oak dark"] },
+      { hex: "#a09080", name: ["Valnöt", "Walnut"] },
+      { hex: "#d4c4a8", name: ["Ask", "Ash"] }
+    ],
+    description: ["Alum Wood med dold montering — äkta faner i 65 alternativ, med aluminiumkantlist.", "Alum Wood concealed door — real veneer in 65 options, with an aluminium edge trim."],
+    detailIntro: ["Alum Wood, fanerad. Välj bland 65 faneralternativ. Måttanpassad upp till 2750×800 eller 2500×1100 mm.", "Alum Wood, veneered. Choose among 65 veneer options. Made to measure up to 2750×800 or 2500×1100 mm."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Aluminium aluminiumkantlist ger en skarp, hållbar kontur.", "Aluminium aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 2750×800 eller 2500×1100 mm", "custom, up to 2750×800 or 2500×1100 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["faner", "veneer"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Aluminium", "Aluminium"] },
+      { label: ["Karm", "Frame"], value: ["Alum Wood · aluminium", "Alum Wood · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "vlasni-dveri-primed",
+    name: "Vlasni Dveri Primed",
+    image: "/images/doors/vlasni-dveri-primed/01.jpg",
+    gallery: ["/images/doors/vlasni-dveri-primed/01.jpg", "/images/doors/vlasni-dveri-primed/02.jpg", "/images/doors/vlasni-dveri-primed/03.jpg", "/images/doors/vlasni-dveri-primed/04.jpg", "/images/doors/vlasni-dveri-primed/05.jpg"],
+    category: "hidden",
+    priceSek: 23900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"],
+    hardware: ["Kantlist · aluminiumkarm · Hafele", "Edge trim · aluminium frame · Hafele"],
+    colors: [
+      { hex: "#f7f7f2", name: ["Vit grund", "White primer"] },
+      { hex: "#c8c8c8", name: ["Matt krom", "Matt chrome"] }
+    ],
+    description: ["Vlasni Dveri med dold montering — grundad yta för slutmålning efter installation.", "Vlasni Dveri concealed door — primed surface for final painting after installation."],
+    detailIntro: ["VLASNI DVERI, grundad med kantlist. Aluminiumkarm för flush montering utan synliga foder.", "VLASNI DVERI, primed with edge trim. Aluminium frame for flush installation without visible casing."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Aluminium aluminiumkantlist ger en skarp, hållbar kontur.", "Aluminium aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat", "custom"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["grundfärg, klar för slutbehandling", "primer, ready for finishing"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Aluminium", "Aluminium"] },
+      { label: ["Karm", "Frame"], value: ["Aluminium · dold montering", "Aluminium · concealed installation"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "vlasni-dveri-painted-alum",
+    name: "Vlasni Dveri Painted Alum",
+    image: "/images/doors/vlasni-dveri-painted-alum/01.jpg",
+    gallery: ["/images/doors/vlasni-dveri-painted-alum/01.jpg", "/images/doors/vlasni-dveri-painted-alum/02.jpg"],
+    category: "hidden",
+    priceSek: 27900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["målad", "paint"],
+    hardware: ["Alum Unique 43/51 · aluminiumstomme", "Alum Unique 43/51 · aluminium frame"],
+    colors: [
+      { hex: "#e8e0c8", name: ["RAL 1013", "RAL 1013"] },
+      { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
+      { hex: "#8a9096", name: ["RAL 7045", "RAL 7045"] },
+      { hex: "#1a1a1a", name: ["RAL 9005", "RAL 9005"] }
+    ],
+    description: ["Vlasni Dveri med dold montering — målad, aluminiumstomme Alum Unique 43 eller 51.", "Vlasni Dveri concealed door — painted, Alum Unique 43 or 51 aluminium frame."],
+    detailIntro: ["VLASNI DVERI, målad med aluminiumkarm. Upp till 2200×1100×43 mm eller 2500×1100×51 mm. Garanti 120 månader.", "VLASNI DVERI, painted with aluminium frame. Up to 2200×1100×43 mm or 2500×1100×51 mm. 120-month warranty."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom / RAL aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome / RAL aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 2200×1100×43 eller 2500×1100×51 mm", "custom, up to 2200×1100×43 or 2500×1100×51 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["målad", "paint"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom / RAL", "Matt chrome / RAL"] },
+      { label: ["Karm", "Frame"], value: ["Alum Unique 43 / 51 · aluminium", "Alum Unique 43 / 51 · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["120 månader", "120 months"] }
+    ],
+  },
+  {
+    slug: "alum-premium-glass",
+    name: "Alum Premium Glass",
+    image: "/images/doors/alum-premium-glass/01.jpg",
+    gallery: ["/images/doors/alum-premium-glass/01.jpg", "/images/doors/alum-premium-glass/02.jpg", "/images/doors/alum-premium-glass/03.jpg", "/images/doors/alum-premium-glass/04.jpg", "/images/doors/alum-premium-glass/05.jpg"],
+    category: "hidden",
+    priceSek: 32900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["lackerat glas", "painted glass"],
+    hardware: ["Alum Premium 55 · kantlist matt krom", "Alum Premium 55 · matt chrome edge trim"],
+    colors: [
+      { hex: "#1a1a1a", name: ["Svart RAL 9005", "Black RAL 9005"] },
+      { hex: "#f7f7f2", name: ["Vit", "White"] },
+      { hex: "#c8c8c8", name: ["Matt krom", "Matt chrome"] }
+    ],
+    description: ["Alum Premium med dold montering — lackerat glas, stora format och 15 års garanti.", "Alum Premium concealed door — painted glass, large formats and a 15-year warranty."],
+    detailIntro: ["Alum Premium, lackerat glas. Upp till 3150×900×55 eller 2800×1100×55 mm. Ljudisolering 42 dB.", "Alum Premium, painted glass. Up to 3150×900×55 or 2800×1100×55 mm. Sound insulation 42 dB."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat, upp till 3150×900×55 eller 2800×1100×55 mm", "custom, up to 3150×900×55 or 2800×1100×55 mm"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["lackerat glas", "painted glass"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom", "Matt chrome"] },
+      { label: ["Karm", "Frame"], value: ["Alum Premium 55 · aluminium · matt krom", "Alum Premium 55 · aluminium · matt chrome"] },
+      { label: ["Ljudisolering", "Sound insulation"], value: ["42 dB", "42 dB"] },
+      { label: ["Garanti", "Warranty"], value: ["15 år", "15 years"] }
+    ],
+  },
+  {
+    slug: "alum-unique-glass",
+    name: "Alum Unique Glass",
+    image: "/images/doors/alum-unique-glass/01.jpg",
+    gallery: ["/images/doors/alum-unique-glass/01.jpg"],
+    category: "hidden",
+    priceSek: 31900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["lackerat glas", "painted glass"],
+    hardware: ["Alum Unique 43/51 · aluminiumkantlist", "Alum Unique 43/51 · aluminium edge trim"],
+    colors: [
+      { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
+      { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
+      { hex: "#e8e0c8", name: ["RAL 1013", "RAL 1013"] },
+      { hex: "#8a9096", name: ["RAL 7045", "RAL 7045"] },
+      { hex: "#1a1a1a", name: ["RAL 9005", "RAL 9005"] }
+    ],
+    description: ["Alum Unique med dold montering — lackerat glas i valfri RAL, med aluminiumprofil.", "Alum Unique concealed door — painted glass in any RAL, with an aluminium profile."],
+    detailIntro: ["Alum Unique, lackerat glas. Karm Alum Unique 43 eller 51. Glasfärger från vit till svart RAL.", "Alum Unique, painted glass. Alum Unique 43 or 51 frame. Glass colours from white to black RAL."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom / RAL aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome / RAL aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat", "custom"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["lackerat glas", "painted glass"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom / RAL", "Matt chrome / RAL"] },
+      { label: ["Karm", "Frame"], value: ["Alum Unique 43 / 51 · aluminium", "Alum Unique 43 / 51 · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
+    slug: "alum-wood-glass",
+    name: "Alum Wood Glass",
+    image: "/images/doors/alum-wood-glass/01.jpg",
+    gallery: ["/images/doors/alum-wood-glass/01.jpg"],
+    category: "hidden",
+    priceSek: 30900,
+    label: ["Dold dörr", "Concealed door"],
+    material: ["MDF", "MDF"],
+    finish: ["lackerat glas", "painted glass"],
+    hardware: ["Alum Unique 43/51 · aluminiumkantlist", "Alum Unique 43/51 · aluminium edge trim"],
+    colors: [
+      { hex: "#f7f7f2", name: ["Vit RAL 9010", "White RAL 9010"] },
+      { hex: "#f5f0e6", name: ["Gräddvit RAL 9001", "Cream RAL 9001"] },
+      { hex: "#e8e0c8", name: ["Pärlvit RAL 1013", "Pearl RAL 1013"] },
+      { hex: "#8a9096", name: ["Telegrå RAL 7045", "Telegrey RAL 7045"] },
+      { hex: "#1a1a1a", name: ["Svart RAL 9005", "Black RAL 9005"] }
+    ],
+    description: ["Alum Wood med dold montering — lackerat glas och aluminiumkarm för en ren, minimalistisk yta.", "Alum Wood concealed door — painted glass and an aluminium frame for a clean, minimalist plane."],
+    detailIntro: ["Alum Wood, lackerat glas. Valfri glaskulör (RAL 9010, 9001, 1013, 7045, 9005 m.fl.). Karm Alum Unique 43/51.", "Alum Wood, painted glass. Choice of glass colours (RAL 9010, 9001, 1013, 7045, 9005 and more). Alum Unique 43/51 frame."],
+    detailBullets: [
+      {
+        title: ["Dold montering", "Concealed installation"],
+        text: ["Aluminiumkarm utan synliga foder — dörrbladet ligger i väggens plan.", "Aluminium frame without visible casing — the leaf sits flush with the wall plane."],
+      },
+      {
+        title: ["Kantlist", "Edge trim"],
+        text: ["Matt krom / RAL aluminiumkantlist ger en skarp, hållbar kontur.", "Matt chrome / RAL aluminium edge trim gives a sharp, durable outline."],
+      },
+      {
+        title: ["Dolda gångjärn", "Concealed hinges"],
+        text: ["Hafele dolda gångjärn som standard — diskret montage utan synliga beslag.", "Hafele concealed hinges as standard — a discreet fit without visible hardware."],
+      },
+      {
+        title: ["Magnetlås", "Magnetic lock"],
+        text: ["Hafele eller AGB Polaris magnetlås ingår i standardsetet.", "Hafele or AGB Polaris magnetic lock is included in the standard set."],
+      },
+    ],
+    specs: [
+      { label: ["Dörrbladets storlek", "Leaf size"], value: ["måttanpassat", "custom"] },
+      { label: ["Öppning", "Opening"], value: ["utåtgående/inåtgående (höger/vänster)", "outward/inward (right/left hand)"] },
+      { label: ["Dörrbladets material", "Leaf material"], value: ["MDF", "MDF"] },
+      { label: ["Dörrbladets ytfinish", "Leaf finish"], value: ["lackerat glas", "painted glass"] },
+      { label: ["Kantlist", "Edge trim"], value: ["Matt krom / RAL", "Matt chrome / RAL"] },
+      { label: ["Karm", "Frame"], value: ["Alum Unique 43 / 51 · aluminium", "Alum Unique 43 / 51 · aluminium"] },
+      { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] }
+    ],
+  },
+  {
     slug: "enstav",
     name: "Enstav",
     image: "/images/floors/enstav/01.jpg",

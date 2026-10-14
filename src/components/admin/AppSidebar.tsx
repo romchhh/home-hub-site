@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,6 +12,7 @@ import {
   ImageIcon,
   InboxIcon,
   ListIcon,
+  SettingsIcon,
   TableIcon,
 } from "@/components/admin/icons";
 
@@ -35,19 +36,28 @@ const navItems: NavItem[] = [
   { name: "Categories", icon: <ListIcon />, path: "/admin/categories" },
   { name: "Inquiries", icon: <InboxIcon />, path: "/admin/inquiries" },
   { name: "Media", icon: <ImageIcon />, path: "/admin/media" },
+  { name: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
 ];
 
 export default function AppSidebar() {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
-  const [openSubmenu, setOpenSubmenu] = useState<{
+  const [manualSubmenu, setManualSubmenu] = useState<{
     type: "main";
     index: number;
   } | null>(null);
+  const [manualClosed, setManualClosed] = useState(false);
+  const [pathForManual, setPathForManual] = useState(pathname);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
     {},
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  if (pathname !== pathForManual) {
+    setPathForManual(pathname);
+    setManualSubmenu(null);
+    setManualClosed(false);
+  }
 
   const isActive = useCallback(
     (path: string) => {
@@ -57,41 +67,44 @@ export default function AppSidebar() {
     [pathname],
   );
 
-  useEffect(() => {
-    let matched = false;
-    navItems.forEach((nav, index) => {
-      nav.subItems?.forEach((sub) => {
-        if (isActive(sub.path)) {
-          setOpenSubmenu({ type: "main", index });
-          matched = true;
-        }
-      });
-    });
-    if (!matched) setOpenSubmenu(null);
-  }, [pathname, isActive]);
+  let routeSubmenu: { type: "main"; index: number } | null = null;
+  for (let index = 0; index < navItems.length; index += 1) {
+    const nav = navItems[index];
+    if (nav.subItems?.some((sub) => isActive(sub.path))) {
+      routeSubmenu = { type: "main", index };
+      break;
+    }
+  }
 
-  useEffect(() => {
-    if (openSubmenu !== null) {
-      const key = `${openSubmenu.type}-${openSubmenu.index}`;
-      const el = subMenuRefs.current[key];
-      if (el) {
-        setSubMenuHeight((prev) => ({ ...prev, [key]: el.scrollHeight || 0 }));
-      }
+  const openSubmenu = manualClosed
+    ? null
+    : manualSubmenu ?? routeSubmenu;
+
+  useLayoutEffect(() => {
+    if (openSubmenu === null) return;
+    const key = `${openSubmenu.type}-${openSubmenu.index}`;
+    const el = subMenuRefs.current[key];
+    if (el) {
+      setSubMenuHeight((prev) => ({ ...prev, [key]: el.scrollHeight || 0 }));
     }
   }, [openSubmenu]);
 
   const handleSubmenuToggle = (index: number) => {
-    setOpenSubmenu((prev) =>
-      prev?.type === "main" && prev.index === index
-        ? null
-        : { type: "main", index },
-    );
+    const isOpen = openSubmenu?.type === "main" && openSubmenu.index === index;
+    if (isOpen) {
+      setManualClosed(true);
+      setManualSubmenu(null);
+      return;
+    }
+    setManualClosed(false);
+    setManualSubmenu({ type: "main", index });
   };
 
   const showLabel = isExpanded || isHovered || isMobileOpen;
 
   return (
     <aside
+      data-tour="tour-sidebar"
       className={`fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out dark:border-gray-800 dark:bg-gray-900
         ${isExpanded || isMobileOpen ? "w-[290px]" : isHovered ? "w-[290px]" : "w-[90px]"}
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}

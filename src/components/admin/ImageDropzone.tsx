@@ -78,18 +78,17 @@ export default function ImageDropzone({
   useEffect(() => {
     if (!libraryOpen) return;
     let cancelled = false;
-    setLibraryLoading(true);
-    fetch("/api/admin/uploads")
-      .then((r) => (r.ok ? r.json() : []))
-      .then((data) => {
+    void (async () => {
+      try {
+        const r = await fetch("/api/admin/uploads");
+        const data = r.ok ? await r.json() : [];
         if (!cancelled) setLibrary(Array.isArray(data) ? data : []);
-      })
-      .catch(() => {
+      } catch {
         if (!cancelled) setLibrary([]);
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLibraryLoading(false);
-      });
+      }
+    })();
     return () => {
       cancelled = true;
     };
@@ -162,7 +161,10 @@ export default function ImageDropzone({
         </div>
         <button
           type="button"
-          onClick={() => setLibraryOpen(true)}
+          onClick={() => {
+            setLibraryLoading(true);
+            setLibraryOpen(true);
+          }}
           className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"
         >
           Choose from library

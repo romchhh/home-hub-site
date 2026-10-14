@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useRequest } from "@/context/RequestContext";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import type { Dictionary } from "@/dictionaries";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
 import { LanguageMenu } from "./LanguageMenu";
 import { Logo } from "./Logo";
+import { Pill } from "./Pill";
 import { SavedItemsNavButton } from "./SavedItemsNavButton";
 
 const navItems = [
@@ -27,9 +29,20 @@ type HeaderProps = {
   dict: Dictionary;
 };
 
+function MenuToggleIcon({ open }: { open: boolean }) {
+  return (
+    <span className={`menu-toggle-icon ${open ? "menu-toggle-icon--open" : ""}`} aria-hidden>
+      <span className="menu-toggle-line" />
+      <span className="menu-toggle-line" />
+      <span className="menu-toggle-line" />
+    </span>
+  );
+}
+
 export function Header({ locale, dict }: HeaderProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { openRequest } = useRequest();
   const n = dict.nav;
 
   useLockBodyScroll(menuOpen);
@@ -44,40 +57,68 @@ export function Header({ locale, dict }: HeaderProps) {
     return pathname.startsWith(href);
   }
 
+  function handleContact() {
+    setMenuOpen(false);
+    openRequest({ intent: "general", source: "Header · Contact us" });
+  }
+
   return (
-    <header className="site-header page-gutter-x relative flex items-center justify-between gap-4">
-      <Logo locale={locale} />
-      <nav
-        id="nav"
-        className={`${menuOpen ? "flex" : "hidden"} nav-mobile md:static md:flex md:flex-1 md:flex-row md:items-center md:justify-center md:gap-[22px] md:bg-transparent md:p-0 md:shadow-none`}
-      >
-        {navItems.map(({ key, path }) => (
-          <Link
-            key={key}
-            href={hrefFor(path)}
-            className={`whitespace-nowrap text-[1.05rem] md:text-[0.82rem] ${isActive(path) ? "border-b border-current pb-2 md:pb-[7px]" : ""}`}
-            aria-current={isActive(path) ? "page" : undefined}
-            onClick={() => setMenuOpen(false)}
-          >
-            {n[key]}
-          </Link>
-        ))}
-      </nav>
-      <div className="header-tools flex items-center gap-1.5">
-        <SavedItemsNavButton locale={locale} dict={dict} />
-        <LanguageMenu locale={locale} label={n.language} />
-        <button
-          id="menu"
-          type="button"
-          className="header-menu-toggle icon-btn text-2xl"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? n.close : n.menu}
-          aria-controls="nav"
-          onClick={() => setMenuOpen((v) => !v)}
+    <header className={`site-header page-gutter-x ${menuOpen ? "site-header--menu-open" : ""}`}>
+      <div className="site-header-inner">
+        <Logo locale={locale} className="site-header-logo" />
+
+        <nav
+          id="nav"
+          className={`nav-panel ${menuOpen ? "nav-panel--open" : ""}`}
         >
-          {menuOpen ? "×" : "☰"}
-        </button>
+          <div className="nav-panel-links">
+            {navItems.map(({ key, path }) => (
+              <Link
+                key={key}
+                href={hrefFor(path)}
+                className={`nav-link ${isActive(path) ? "nav-link--active" : ""}`}
+                aria-current={isActive(path) ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {n[key]}
+              </Link>
+            ))}
+          </div>
+          <div className="nav-panel-cta">
+            <Pill className="nav-contact-cta" onClick={handleContact}>
+              {n.contactCta}
+            </Pill>
+          </div>
+        </nav>
+
+        <div className="header-tools">
+          <Pill className="header-contact-btn" onClick={handleContact}>
+            {n.contactCta}
+          </Pill>
+          <SavedItemsNavButton locale={locale} dict={dict} />
+          <LanguageMenu locale={locale} label={n.language} />
+          <button
+            id="menu"
+            type="button"
+            className={`header-menu-toggle ${menuOpen ? "header-menu-toggle--open" : ""}`}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? n.close : n.menu}
+            aria-controls="nav"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <MenuToggleIcon open={menuOpen} />
+          </button>
+        </div>
       </div>
+
+      {menuOpen ? (
+        <button
+          type="button"
+          className="nav-backdrop"
+          aria-label={n.close}
+          onClick={() => setMenuOpen(false)}
+        />
+      ) : null}
     </header>
   );
 }

@@ -29,7 +29,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const models = getModels(locale);
   const categories = getCatalogCategories(locale);
   const seo = getSeoForPage(locale, "home");
-  const featured = models.filter((m) => m.category === "interior").slice(0, 8);
+  const featured = [...categories]
+    .sort((a, b) => a.priority - b.priority)
+    .flatMap((cat) => models.filter((m) => m.category === cat.slug).slice(0, 2));
 
   return (
     <>

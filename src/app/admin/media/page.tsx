@@ -30,7 +30,7 @@ export default function AdminMediaPage() {
   }
 
   return (
-    <div>
+    <div data-tour="tour-media-page">
       <PageBreadcrumb pageTitle="Media" />
       <MediaManager initial={initial} />
     </div>

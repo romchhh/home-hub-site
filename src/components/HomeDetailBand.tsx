@@ -15,7 +15,13 @@ export function HomeDetailBand({ dict }: { dict: Dictionary }) {
         title={h.detailTitle}
         titleEm={h.detailTitleEm}
         ctaLabel={h.detailCta}
-        onCta={() => openRequest(dict.catalog.hardware)}
+        onCta={() =>
+          openRequest({
+            intent: "project",
+            model: dict.catalog.hardware,
+            source: "Home · Hardware band",
+          })
+        }
       >
         <p>{h.detailText}</p>
       </DetailBand>

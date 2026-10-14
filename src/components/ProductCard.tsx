@@ -15,7 +15,6 @@ export function ProductCard({
   model,
   priceFromLabel,
   detailsLabel,
-  closeLabel,
   allowSave = false,
   saveLabels,
 }: {
@@ -23,7 +22,7 @@ export function ProductCard({
   model: DoorModel;
   priceFromLabel: string;
   detailsLabel: string;
-  closeLabel: string;
+  closeLabel?: string;
   allowSave?: boolean;
   saveLabels?: { add: string; remove: string; inList: string };
 }) {

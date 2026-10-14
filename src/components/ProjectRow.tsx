@@ -38,7 +38,15 @@ export function ProjectRow({
         <h2>{title}</h2>
         <p>{text}</p>
         <p className="project-note">{note}</p>
-        <Pill onClick={() => openRequest(prefill)}>
+        <Pill
+          onClick={() =>
+            openRequest({
+              intent: "project",
+              model: prefill,
+              source: `Projects · ${title}`,
+            })
+          }
+        >
           {cta}
         </Pill>
       </div>

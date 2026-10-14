@@ -14,7 +14,16 @@ export function DoorRequestPill({
 }) {
   const { openRequest } = useRequest();
   return (
-    <Pill className={className} onClick={() => openRequest(modelName)}>
+    <Pill
+      className={className}
+      onClick={() =>
+        openRequest({
+          intent: "model",
+          model: modelName,
+          source: `Product page · ${modelName}`,
+        })
+      }
+    >
       {label}
     </Pill>
   );
