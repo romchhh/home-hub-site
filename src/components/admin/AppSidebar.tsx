@@ -105,7 +105,7 @@ export default function AppSidebar() {
   return (
     <aside
       data-tour="tour-sidebar"
-      className={`fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out dark:border-gray-800 dark:bg-gray-900
+      className={`fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out 
         ${isExpanded || isMobileOpen ? "w-[290px]" : isHovered ? "w-[290px]" : "w-[90px]"}
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0`}
@@ -122,7 +122,7 @@ export default function AppSidebar() {
               alt="HOME HUB"
               width={160}
               height={56}
-              className="h-9 w-auto dark:brightness-0 dark:invert"
+              className="h-9 w-auto"
               priority
             />
           ) : (

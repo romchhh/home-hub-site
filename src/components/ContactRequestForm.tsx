@@ -14,12 +14,19 @@ export function ContactRequestForm({
   prefill = "",
   options,
   showMessengers = true,
+  /** Expand the success state to fill the parent (modal sheet). */
+  fillSuccess = false,
+  onSuccess,
+  onDismiss,
 }: {
   dict: Dictionary;
   /** @deprecated prefer `options.model` */
   prefill?: string;
   options?: string | RequestOpenOptions;
   showMessengers?: boolean;
+  fillSuccess?: boolean;
+  onSuccess?: () => void;
+  onDismiss?: () => void;
 }) {
   const r = dict.request;
   const resolved = useMemo(
@@ -65,6 +72,7 @@ export function ContactRequestForm({
       if (!res.ok) throw new Error("failed");
       form.reset();
       setStatus("success");
+      onSuccess?.();
     } catch {
       setStatus("error");
     } finally {
@@ -72,15 +80,27 @@ export function ContactRequestForm({
     }
   }
 
+  if (status === "success") {
+    return (
+      <div
+        className={`contact-form-success${fillSuccess ? " contact-form-success--fill" : ""}`}
+        role="status"
+      >
+        <p className="contact-form-success-message">{r.saved}</p>
+        {r.note ? <p className="contact-form-success-note">{r.note}</p> : null}
+        {onDismiss ? (
+          <button type="button" className="contact-form-success-close" onClick={onDismiss}>
+            {dict.nav.close}
+          </button>
+        ) : null}
+        {showMessengers ? <ContactMessengers dict={dict} /> : null}
+      </div>
+    );
+  }
+
   return (
     <form className="contact-request-form" onSubmit={handleSubmit}>
       <p className="contact-form-lead">{lead}</p>
-      {resolved.model ? (
-        <p className="contact-form-about">
-          <span className="contact-form-about-label">{r.aboutModel}</span>
-          <span className="contact-form-about-value">{resolved.model}</span>
-        </p>
-      ) : null}
       {resolved.model ? <input type="hidden" name="model" value={resolved.model} /> : null}
       {resolved.source ? <input type="hidden" name="source" value={resolved.source} /> : null}
       <label className="sr-only" htmlFor={`${formId}-name`}>
@@ -126,11 +146,6 @@ export function ContactRequestForm({
         <ArrowIcon className="contact-form-submit-arrow" />
       </button>
       <p className="contact-form-note">{r.note}</p>
-      {status === "success" ? (
-        <p className="contact-form-status contact-form-status--ok" role="status">
-          {r.saved}
-        </p>
-      ) : null}
       {status === "error" ? (
         <p className="contact-form-status contact-form-status--error" role="alert">
           {r.error}

@@ -89,7 +89,6 @@ const sv = {
       "Lämna en förfrågan om {model} — eller berätta kort om ditt projekt så hjälper vi dig vidare.",
     leadProject:
       "Berätta om ditt projekt — stil, mått eller frågor — så hjälper vi dig att välja rätt.",
-    aboutModel: "Förfrågan om",
     name: "Namn",
     phoneLabel: "Telefon",
     emailLabel: "E-post",
@@ -412,7 +411,6 @@ const en: Dictionary = {
       "Leave a request for {model} — or briefly tell us about your project and we’ll help you next.",
     leadProject:
       "Tell us about your project — style, measurements or questions — and we’ll help you choose.",
-    aboutModel: "Request about",
     name: "Name",
     phoneLabel: "Phone",
     emailLabel: "Email",

@@ -71,12 +71,12 @@ export default function AppHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-99999 flex w-full border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
+    <header className="sticky top-0 z-99999 flex w-full border-gray-200 bg-white lg:border-b">
       <div className="flex w-full grow flex-col items-center justify-between lg:flex-row lg:px-6">
-        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
+        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
           <button
             type="button"
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 dark:border-gray-800 dark:text-gray-400 lg:h-11 lg:w-11"
+            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 lg:h-11 lg:w-11"
             onClick={handleToggle}
             aria-label="Toggle sidebar"
           >
@@ -107,13 +107,13 @@ export default function AppHeader() {
               alt="HOME HUB"
               width={120}
               height={40}
-              className="h-7 w-auto dark:brightness-0 dark:invert"
+              className="h-7 w-auto"
             />
           </Link>
 
           <button
             type="button"
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden"
+            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Open menu"
           >
@@ -139,7 +139,7 @@ export default function AppHeader() {
               <div className="relative">
                 <span className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2">
                   <svg
-                    className="fill-gray-500 dark:fill-gray-400"
+                    className="fill-gray-500"
                     width="18"
                     height="18"
                     viewBox="0 0 20 20"
@@ -157,11 +157,11 @@ export default function AppHeader() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search products…"
-                  className="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-[280px] dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                  className="h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-[280px]"
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs text-gray-500 dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
+                  className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs text-gray-500"
                 >
                   <span>⌘</span>
                   <span>K</span>
@@ -169,7 +169,7 @@ export default function AppHeader() {
               </div>
             </form>
             {query && (
-              <ul className="absolute z-50 mt-1 max-h-72 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+              <ul className="absolute z-50 mt-1 max-h-72 w-full overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg">
                 {filtered.length === 0 ? (
                   <li className="px-4 py-3 text-sm text-gray-500">
                     No products found
@@ -179,7 +179,7 @@ export default function AppHeader() {
                     <li key={p.id}>
                       <Link
                         href={`/admin/products/${p.id}/edit`}
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
+                        className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
                         onClick={() => setQuery("")}
                       >
                         {p.name}

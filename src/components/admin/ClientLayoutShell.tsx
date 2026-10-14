@@ -25,12 +25,18 @@ export default function ClientLayoutShell({
   const [tourActive, setTourActive] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.remove("dark");
+    const root = document.documentElement;
+    const prevScheme = root.style.colorScheme;
+    root.classList.remove("dark");
+    root.style.colorScheme = "light";
     try {
       localStorage.removeItem("theme");
     } catch {
       /* ignore */
     }
+    return () => {
+      root.style.colorScheme = prevScheme;
+    };
   }, []);
 
   useEffect(() => {

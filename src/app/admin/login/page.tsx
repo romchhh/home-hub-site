@@ -76,16 +76,16 @@ export default function AdminLoginPage() {
         </div>
 
         <div className="w-full max-w-md lg:flex-1">
-          <div className="rounded-3xl border border-white/10 bg-white/95 p-8 shadow-2xl backdrop-blur-md dark:bg-gray-900/95">
-            <h2 className="mb-1 text-2xl font-semibold text-gray-900 dark:text-white">
+          <div className="rounded-3xl border border-white/10 bg-white/95 p-8 shadow-2xl backdrop-blur-md">
+            <h2 className="mb-1 text-2xl font-semibold text-gray-900">
               Sign in
             </h2>
-            <p className="mb-8 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mb-8 text-sm text-gray-500">
               Use your admin credentials to continue
             </p>
 
             {error ? (
-              <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300">
+              <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
               </div>
             ) : null}
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
               <div>
                 <label
                   htmlFor="username"
-                  className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="mb-2 block text-sm font-medium text-gray-700"
                 >
                   Username
                 </label>
@@ -104,14 +104,14 @@ export default function AdminLoginPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   required
                   autoComplete="username"
-                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-[#3c2412] focus:ring-4 focus:ring-[#3c2412]/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-[#3c2412] focus:ring-4 focus:ring-[#3c2412]/10"
                   placeholder="admin"
                 />
               </div>
               <div>
                 <label
                   htmlFor="password"
-                  className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="mb-2 block text-sm font-medium text-gray-700"
                 >
                   Password
                 </label>
@@ -123,13 +123,13 @@ export default function AdminLoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     autoComplete="current-password"
-                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 pr-12 text-gray-900 outline-none transition focus:border-[#3c2412] focus:ring-4 focus:ring-[#3c2412]/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 pr-12 text-gray-900 outline-none transition focus:border-[#3c2412] focus:ring-4 focus:ring-[#3c2412]/10"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPass((v) => !v)}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 text-xs font-medium text-gray-500 hover:text-gray-800 dark:hover:text-gray-200"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 text-xs font-medium text-gray-500 hover:text-gray-800"
                   >
                     {showPass ? "Hide" : "Show"}
                   </button>
