@@ -1,0 +1,24 @@
+{
+  "name": "braces",
+  "description": "Patched braces 3.0.3 + depth guards (GHSA-vfj7-8cjw-p6xm)",
+  "version": "3.0.4",
+  "homepage": "https://github.com/micromatch/braces",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "micromatch/braces",
+  "bugs": {
+    "url": "https://github.com/micromatch/braces/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "lib",
+    "PATCH.md"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "fill-range": "^7.1.1"
+  }
+}
