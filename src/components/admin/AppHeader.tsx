@@ -2,7 +2,7 @@
 
 import { useSidebar } from "@/lib/admin/SidebarContext";
 import { requestAdminTour } from "@/lib/admin/tour";
-import Image from "next/image";
+import AdminLogo from "@/components/admin/AdminLogo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -74,46 +74,40 @@ export default function AppHeader() {
     <header className="sticky top-0 z-99999 flex w-full border-gray-200 bg-white lg:border-b">
       <div className="flex w-full grow flex-col items-center justify-between lg:flex-row lg:px-6">
         <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
-          <button
-            type="button"
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-500 lg:h-11 lg:w-11"
-            onClick={handleToggle}
-            aria-label="Toggle sidebar"
-          >
-            {isMobileOpen ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M6 6l12 12M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M4 7h16M4 12h16M4 17h10"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="admin-btn admin-btn-secondary z-99999 !min-h-10 !w-10 !rounded-lg !p-0 text-gray-500 lg:!min-h-11 lg:!w-11"
+              onClick={handleToggle}
+              aria-label="Toggle sidebar"
+            >
+              {isMobileOpen ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4 7h16M4 12h16M4 17h10"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </button>
 
-          <Link href="/admin" className="lg:hidden">
-            <Image
-              src="/logos/wordmark-dark.webp"
-              alt="HOME HUB"
-              width={120}
-              height={40}
-              className="h-7 w-auto"
-            />
-          </Link>
+            <AdminLogo className="lg:hidden" showWordmark />
+          </div>
 
           <button
             type="button"
-            className="z-99999 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 lg:hidden"
+            className="admin-btn admin-btn-ghost z-99999 !min-h-10 !w-10 !p-0 lg:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Open menu"
           >
@@ -191,7 +185,7 @@ export default function AppHeader() {
             )}
           </div>
 
-          <div className="flex items-center gap-2 2xsm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               data-tour="tour-instructions"
@@ -199,21 +193,21 @@ export default function AppHeader() {
                 requestAdminTour();
                 router.push("/admin");
               }}
-              className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
+              className="admin-btn admin-btn-secondary"
             >
               Instructions
             </button>
             <Link
               href="/sv"
               target="_blank"
-              className="hidden rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 sm:inline-flex"
+              className="admin-btn admin-btn-secondary hidden sm:inline-flex"
             >
               View site
             </Link>
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-lg bg-[#3c2412] px-3 py-2 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
+              className="admin-btn admin-btn-ghost"
             >
               Sign out
             </button>

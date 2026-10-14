@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/lib/admin/SidebarContext";
+import AdminLogo from "@/components/admin/AdminLogo";
 import {
   ChevronDownIcon,
   GridIcon,
@@ -113,29 +113,9 @@ export default function AppSidebar() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex py-8 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}
+        className={`flex py-7 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}
       >
-        <Link href="/admin" className="flex items-center gap-3">
-          {showLabel ? (
-            <Image
-              src="/logos/wordmark-dark.webp"
-              alt="HOME HUB"
-              width={160}
-              height={56}
-              className="h-9 w-auto"
-              priority
-            />
-          ) : (
-            <Image
-              src="/icon.png"
-              alt="HOME HUB"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-lg object-contain"
-              priority
-            />
-          )}
-        </Link>
+        <AdminLogo showWordmark={showLabel} />
       </div>
 
       <div className="no-scrollbar flex flex-1 flex-col overflow-y-auto duration-300 ease-linear">

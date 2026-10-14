@@ -722,18 +722,18 @@ export default function ProductForm({
         </div>
       </Section>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2">
         <button
           type="submit"
           disabled={saving}
-          className="rounded-xl bg-[#3c2412] px-5 py-2.5 text-sm font-semibold text-[#f5ebe0] hover:bg-[#2a180c] disabled:opacity-60"
+          className="admin-btn admin-btn-primary"
         >
           {saving ? "Saving…" : values.id ? "Save changes" : "Create product"}
         </button>
         <button
           type="button"
           onClick={() => router.push("/admin/products")}
-          className="rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
+          className="admin-btn admin-btn-secondary"
         >
           {values.id ? "Back to list" : "Cancel"}
         </button>

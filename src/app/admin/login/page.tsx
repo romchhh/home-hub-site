@@ -55,14 +55,24 @@ export default function AdminLoginPage() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center gap-10 px-5 py-12 lg:flex-row lg:items-center lg:gap-16 lg:px-10">
         <div className="max-w-md text-[#f5ebe0] lg:flex-1">
-          <Image
-            src="/logos/wordmark-dark.webp"
-            alt="HOME HUB"
-            width={220}
-            height={76}
-            className="mb-8 h-12 w-auto brightness-0 invert"
-            priority
-          />
+          <div className="mb-8 flex items-center gap-3">
+            <Image
+              src="/icon.png"
+              alt=""
+              width={44}
+              height={44}
+              className="h-11 w-11 rounded-xl object-contain shadow-sm ring-1 ring-white/15"
+              priority
+            />
+            <Image
+              src="/logos/wordmark-dark.webp"
+              alt="HOME HUB"
+              width={220}
+              height={76}
+              className="h-10 w-auto brightness-0 invert"
+              priority
+            />
+          </div>
           <p className="mb-3 text-xs tracking-[0.22em] text-[#e8d2ba]/uppercase">
             Admin console
           </p>
@@ -138,7 +148,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center rounded-xl bg-[#3c2412] px-4 py-3.5 text-sm font-semibold text-[#f5ebe0] transition hover:bg-[#2a180c] disabled:cursor-not-allowed disabled:opacity-60"
+                className="admin-btn admin-btn-primary admin-btn-block !min-h-11 !text-[0.875rem]"
               >
                 {loading ? "Signing in…" : "Sign in"}
               </button>

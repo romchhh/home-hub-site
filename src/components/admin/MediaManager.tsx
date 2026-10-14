@@ -117,18 +117,18 @@ export default function MediaManager({ initial }: { initial: MediaFile[] }) {
               <p className="truncate text-xs font-medium text-gray-700">
                 {file.filename}
               </p>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5">
                 <button
                   type="button"
                   onClick={() => copyName(file.filename)}
-                  className="flex-1 rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-xs font-medium text-gray-800 hover:bg-gray-50"
+                  className="admin-btn admin-btn-secondary admin-btn-sm flex-1"
                 >
                   {copied === file.filename ? "Copied" : "Copy name"}
                 </button>
                 <button
                   type="button"
                   onClick={() => remove(file.filename)}
-                  className="rounded-lg border border-red-200 px-2 py-1.5 text-xs font-medium text-red-700 hover:bg-red-50"
+                  className="admin-btn admin-btn-danger admin-btn-sm"
                 >
                   Delete
                 </button>

@@ -39,40 +39,31 @@ export default function AdminDashboardPage() {
         data-tour="tour-dashboard-actions"
         className="mb-6 flex flex-wrap gap-2"
       >
-        <Link
-          href="/admin/products/add"
-          className="rounded-xl bg-[#3c2412] px-4 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
-        >
+        <Link href="/admin/products/add" className="admin-btn admin-btn-primary">
           Add product
         </Link>
         <Link
           href="/admin/inquiries?status=new"
-          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
+          className="admin-btn admin-btn-secondary"
         >
           New inquiries
           {stats.newInquiries > 0 ? (
-            <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800">
+            <span className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-amber-100 px-1.5 py-0.5 text-[11px] font-semibold text-amber-800">
               {stats.newInquiries}
             </span>
           ) : null}
         </Link>
-        <Link
-          href="/admin/media"
-          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
-        >
+        <Link href="/admin/media" className="admin-btn admin-btn-secondary">
           Media
         </Link>
-        <Link
-          href="/admin/settings"
-          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
-        >
+        <Link href="/admin/settings" className="admin-btn admin-btn-secondary">
           Settings
         </Link>
         <a
           href="/feeds/products.xml"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50"
+          className="admin-btn admin-btn-secondary"
         >
           Product feed
         </a>

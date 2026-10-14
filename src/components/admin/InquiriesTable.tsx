@@ -93,17 +93,13 @@ export default function InquiriesTable({
           />
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5">
           {["all", ...statuses].map((s) => (
             <button
               key={s}
               type="button"
               onClick={() => setFilter(s)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize ${
-                filter === s
-                  ? "bg-[#3c2412] text-[#f5ebe0]"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`admin-chip ${filter === s ? "admin-chip-active" : ""}`}
             >
               {s.replace("_", " ")}
             </button>
@@ -162,17 +158,17 @@ export default function InquiriesTable({
                     {new Date(row.created_at + "Z").toLocaleString("en-GB")}
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end gap-1.5">
                       <Link
                         href={`/admin/inquiries/${row.id}`}
-                        className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium hover:bg-gray-50"
+                        className="admin-btn admin-btn-secondary admin-btn-sm"
                       >
                         Open
                       </Link>
                       <button
                         type="button"
                         onClick={() => remove(row.id)}
-                        className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                        className="admin-btn admin-btn-danger admin-btn-sm"
                       >
                         Delete
                       </button>

@@ -229,7 +229,7 @@ export default function ImageDropzone({
                     #{index + 1}
                   </span>
                   {isMain ? (
-                    <span className="absolute top-2 left-2 rounded-full bg-[#3c2412] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-[#f5ebe0] uppercase">
+                    <span className="absolute top-2 left-2 rounded-full bg-[#3c2412] px-2 py-0.5 text-[10px] font-semibold tracking-wide !text-white uppercase">
                       Main
                     </span>
                   ) : null}
@@ -349,7 +349,7 @@ export default function ImageDropzone({
                               sizes="160px"
                             />
                             {selected ? (
-                              <span className="absolute inset-x-2 bottom-2 rounded-full bg-[#3c2412] px-2 py-0.5 text-center text-[10px] font-semibold text-[#f5ebe0]">
+                              <span className="absolute inset-x-2 bottom-2 rounded-full bg-[#3c2412] px-2 py-0.5 text-center text-[10px] font-semibold !text-white">
                                 Added
                               </span>
                             ) : null}

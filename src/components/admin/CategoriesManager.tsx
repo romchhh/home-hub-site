@@ -158,10 +158,7 @@ export default function CategoriesManager({
               setForm((f) => ({ ...f, priority: Number(e.target.value) }))
             }
           />
-          <button
-            type="submit"
-            className="rounded-xl bg-[#3c2412] px-4 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
-          >
+          <button type="submit" className="admin-btn admin-btn-primary">
             Create
           </button>
         </div>
@@ -265,14 +262,14 @@ export default function CategoriesManager({
                           type="button"
                           disabled={!dirty || savingId === row.id}
                           onClick={() => saveRow(row)}
-                          className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                          className="admin-btn admin-btn-secondary admin-btn-sm"
                         >
                           {savingId === row.id ? "Saving…" : "Save"}
                         </button>
                         <button
                           type="button"
                           onClick={() => removeRow(row.id)}
-                          className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                          className="admin-btn admin-btn-danger admin-btn-sm"
                         >
                           Delete
                         </button>

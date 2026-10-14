@@ -302,7 +302,7 @@ export function AdminTour({ onComplete, onSkip }: Props) {
 
           {step.action ? (
             <p className="mt-3 rounded-xl border border-[#3c2412]/15 bg-[#3c2412]/6 px-3.5 py-2.5 text-[12.5px] leading-snug font-semibold text-[#3c2412]">
-              <span className="mr-1.5 inline-block rounded bg-[#3c2412] px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#f5ebe0] uppercase">
+              <span className="mr-1.5 inline-block rounded bg-[#3c2412] px-1.5 py-0.5 text-[10px] font-bold tracking-wide !text-white uppercase">
                 Do this
               </span>
               {step.action}
@@ -341,7 +341,7 @@ export function AdminTour({ onComplete, onSkip }: Props) {
                 type="button"
                 onClick={goBack}
                 disabled={!stepReady}
-                className="flex-1 rounded-xl border border-gray-200 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                className="admin-btn admin-btn-secondary flex-1"
               >
                 Back
               </button>
@@ -350,7 +350,7 @@ export function AdminTour({ onComplete, onSkip }: Props) {
               type="button"
               onClick={goNext}
               disabled={!stepReady}
-              className="flex-[1.4] rounded-xl bg-[#3c2412] px-3 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c] disabled:opacity-50"
+              className="admin-btn admin-btn-primary flex-[1.4]"
             >
               {isLast ? "Start working" : "Next"}
             </button>

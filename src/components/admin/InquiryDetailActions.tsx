@@ -82,7 +82,7 @@ export default function InquiryDetailActions({
           {email ? (
             <a
               href={`mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`}
-              className="block rounded-xl bg-[#3c2412] px-4 py-2.5 text-center text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
+              className="admin-btn admin-btn-primary admin-btn-block"
             >
               Email customer
             </a>
@@ -90,7 +90,7 @@ export default function InquiryDetailActions({
           {phone ? (
             <a
               href={`tel:${phone}`}
-              className="block rounded-xl border border-gray-200 px-4 py-2.5 text-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="admin-btn admin-btn-secondary admin-btn-block"
             >
               Call {phone}
             </a>
@@ -100,7 +100,7 @@ export default function InquiryDetailActions({
               href={`https://wa.me/${digits}?text=${waText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-xl border border-gray-200 px-4 py-2.5 text-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="admin-btn admin-btn-secondary admin-btn-block"
             >
               WhatsApp
             </a>

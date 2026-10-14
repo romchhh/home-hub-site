@@ -115,25 +115,18 @@ export default function ProductsTable({
           placeholder="Filter by name, slug or category…"
           className="w-full max-w-md rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400"
         />
-        <Link
-          href="/admin/products/add"
-          className="inline-flex items-center justify-center rounded-xl bg-[#3c2412] px-4 py-2.5 text-sm font-medium text-[#f5ebe0] hover:bg-[#2a180c]"
-        >
+        <Link href="/admin/products/add" className="admin-btn admin-btn-primary">
           Add product
         </Link>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {filters.map((f) => (
           <button
             key={f.key}
             type="button"
             onClick={() => setStatusFilter(f.key)}
-            className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-              statusFilter === f.key
-                ? "bg-[#3c2412] text-[#f5ebe0]"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+            className={`admin-chip ${statusFilter === f.key ? "admin-chip-active" : ""}`}
           >
             {f.label}
           </button>
@@ -233,18 +226,18 @@ export default function ProductsTable({
                     </label>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <div className="flex flex-wrap justify-end gap-2">
+                    <div className="flex flex-wrap justify-end gap-1.5">
                       <Link
                         href={`/sv/catalog/${p.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                        className="admin-btn admin-btn-secondary admin-btn-sm"
                       >
                         View
                       </Link>
                       <Link
                         href={`/admin/products/${p.id}/edit`}
-                        className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                        className="admin-btn admin-btn-secondary admin-btn-sm"
                       >
                         Edit
                       </Link>
@@ -252,7 +245,7 @@ export default function ProductsTable({
                         type="button"
                         disabled={busyId === p.id}
                         onClick={() => onDelete(p.id, p.name)}
-                        className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+                        className="admin-btn admin-btn-danger admin-btn-sm"
                       >
                         Delete
                       </button>

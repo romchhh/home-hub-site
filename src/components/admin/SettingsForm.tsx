@@ -78,7 +78,7 @@ export default function SettingsForm({
             <button
               type="submit"
               disabled={saving}
-              className="rounded-xl bg-[#3c2412] px-4 py-2.5 text-sm font-medium text-[#f5ebe0] disabled:opacity-60"
+              className="admin-btn admin-btn-primary"
             >
               {saving ? "Saving…" : "Save settings"}
             </button>

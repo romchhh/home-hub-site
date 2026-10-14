@@ -127,7 +127,7 @@ const raw: {
     ],
     description: ["Loft M18 med fräst dekorlinje — industriell känsla i målad MDF med dolda beslag.", "Loft M18 with a milled decorative line — an industrial look in painted MDF with concealed hardware."],
     detailIntro: ["Loft M18, målad. Innerdörr med fräst dekor och standardutrustning för dold montering.", "Loft M18, painted. Interior door with milled décor and standard concealed fitting hardware."],
-        detailBullets: [
+    detailBullets: [
       {
         title: ["Koplanär karm", "Coplanar frame"],
         text: ["Karm typ 1 håller dörrblad och foder i samma plan — en ren, grafisk kontur mot väggen.", "Type 1 keeps the leaf and casing in one plane — a clean graphic outline against the wall."],
@@ -154,9 +154,9 @@ const raw: {
       { label: ["Dörrbladets färg", "Leaf colour"], value: ["RAL Standard", "RAL Standard"] },
       { label: ["Karm", "Frame"], value: ["Sammanställt från tillverkarens webbplats. Priser ingår inte. 7 / 18", "Compiled from the manufacturer website. Prices are not included. 1 / 18"] },
       { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] },
-    ],
-  },
-  {
+        ],
+      },
+      {
     slug: "vetro-01",
     name: "Vetro 01",
     image: "/images/doors/vetro-01/01.jpg",
@@ -204,9 +204,9 @@ const raw: {
       { label: ["Dörrbladets färg", "Leaf colour"], value: ["RAL Standard", "RAL Standard"] },
       { label: ["Karm", "Frame"], value: ["Karmens material furuvirke", "Frame material pine timber"] },
       { label: ["Garanti", "Warranty"], value: ["12 månader", "12 months"] },
-    ],
-  },
-  {
+        ],
+      },
+      {
     slug: "aura-02",
     name: "Aura 02",
     image: "/images/doors/aura-02/01.jpg",
@@ -327,7 +327,7 @@ const raw: {
     ],
     description: ["Loft 08 — enkel, målad loft-dörr med dolda gångjärn och magnetlås.", "Loft 08 — a simple painted loft door with concealed hinges and a magnetic lock."],
     detailIntro: ["Loft 08, målad. Ren loft-silhuett för projekt där dörren ska vara lugn och tydlig.", "Loft 08, painted. A clean loft silhouette where the door should stay calm and clear."],
-        detailBullets: [
+    detailBullets: [
       {
         title: ["Koplanär karm", "Coplanar frame"],
         text: ["Karm typ 1 håller dörrblad och foder i samma plan — en ren, grafisk kontur mot väggen.", "Type 1 keeps the leaf and casing in one plane — a clean graphic outline against the wall."],

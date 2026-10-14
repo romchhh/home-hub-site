@@ -9,6 +9,16 @@
   color: #101828;
 }
 
+/*
+ * Site globals use unlayered `a { color: inherit }`, which beats Tailwind
+ * text-* utilities on <Link>. Force readable text on dark primary CTAs.
+ */
+.admin-root a[class*="bg-[#3c2412]"],
+.admin-root button[class*="bg-[#3c2412]"],
+.admin-root .admin-btn-primary {
+  color: #ffffff !important;
+}
+
 .admin-root input,
 .admin-root textarea,
 .admin-root select {
@@ -19,6 +29,128 @@
 .admin-root textarea::placeholder {
   color: #9ca3af;
   opacity: 1;
+}
+
+/* —— Logo —— */
+.admin-logo-mark {
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06);
+}
+
+/* —— Buttons —— */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: 2.25rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.625rem;
+  border: 1px solid transparent;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.admin-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(60 36 18 / 0.18);
+}
+
+.admin-btn:disabled {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.admin-btn-primary {
+  background-color: #3c2412;
+  color: #ffffff !important;
+}
+
+.admin-btn-primary:hover {
+  background-color: #2a180c;
+}
+
+.admin-btn-secondary {
+  background-color: #ffffff;
+  border-color: #e5e7eb;
+  color: #1f2937 !important;
+}
+
+.admin-btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.admin-btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: #4b5563 !important;
+}
+
+.admin-btn-ghost:hover {
+  background-color: #f3f4f6;
+  color: #111827 !important;
+}
+
+.admin-btn-danger {
+  background-color: #ffffff;
+  border-color: #fecaca;
+  color: #dc2626 !important;
+}
+
+.admin-btn-danger:hover {
+  background-color: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.admin-btn-sm {
+  min-height: 1.875rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.admin-btn-block {
+  width: 100%;
+}
+
+.admin-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.admin-chip:hover {
+  background-color: #e5e7eb;
+}
+
+.admin-chip-active {
+  background-color: #3c2412;
+  color: #ffffff !important;
+}
+
+.admin-chip-active:hover {
+  background-color: #2a180c;
+  color: #ffffff !important;
 }
 
 @theme {
