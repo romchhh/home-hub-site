@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import { getStaticCatalogSeed } from "../src/data/models.ts";
+import { getStaticCatalogSeed } from "../src/data/models";
 
 const db = new Database("data/homehub.db");
 
