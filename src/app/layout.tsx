@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   other: {
     "geo.region": "SE-AB",
-    "geo.placename": "Stockholm",
-    "geo.position": "59.3431;18.0584",
-    ICBM: "59.3431, 18.0584",
+    "geo.placename": "Sundbyberg",
+    "geo.position": "59.3779;17.9692",
+    ICBM: "59.3779, 17.9692",
   },
 };
 

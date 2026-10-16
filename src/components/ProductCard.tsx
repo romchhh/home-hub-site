@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import type { DoorModel } from "@/data/models";
 import { formatDoorPrice } from "@/lib/formatPrice";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -28,11 +28,23 @@ export function ProductCard({
 }) {
   const href = localePath(locale, `/catalog/${model.slug}`);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
+  const galleryRef = useRef<HTMLAnchorElement>(null);
+  const hasCarousel = model.gallery.length > 1;
+
+  const scrollGallery = useCallback((dir: -1 | 1) => {
+    const el = galleryRef.current;
+    if (!el) return;
+    const width = el.clientWidth || 1;
+    const current = Math.round(el.scrollLeft / width);
+    const next = Math.max(0, Math.min(model.gallery.length - 1, current + dir));
+    el.scrollTo({ left: next * width, behavior: "smooth" });
+  }, [model.gallery.length]);
 
   return (
     <article className="product product-card">
       <div className="product-card-media">
         <Link
+          ref={galleryRef}
           href={href}
           className="product-card-gallery"
           aria-label={`${model.name} — ${detailsLabel}`}
@@ -63,12 +75,51 @@ export function ProductCard({
             </div>
           ))}
           <span className="product-tag">{model.label}</span>
-          {model.gallery.length > 1 ? (
-            <span className="product-gallery-scroll-hint" aria-hidden>
-              ← →
-            </span>
-          ) : null}
         </Link>
+        {hasCarousel ? (
+          <div className="product-gallery-nav">
+            <button
+              type="button"
+              className="product-gallery-nav-btn product-gallery-nav-btn--prev"
+              aria-label="Previous image"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollGallery(-1);
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <path
+                  d="M10 3L5 8l5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="product-gallery-nav-btn product-gallery-nav-btn--next"
+              aria-label="Next image"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                scrollGallery(1);
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <path
+                  d="M6 3l5 5-5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        ) : null}
         {allowSave && saveLabels ? (
           <SaveModelToggle
             slug={model.slug}

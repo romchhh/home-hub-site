@@ -31,12 +31,12 @@ export const contactInfo = {
   phone: phoneRaw.replace(/\s/g, ""),
   phoneDisplay: formatPhoneDisplay(phoneRaw),
   email: process.env.NEXT_PUBLIC_SHOWROOM_EMAIL?.trim() || "hello@homehub.se",
-  addressLine1: "Kungstensgatan 34",
-  addressLine2: "113 59 Stockholm",
+  addressLine1: "Fredensvägen 4C",
+  addressLine2: "174 53 Sundbyberg",
   country: "Sweden",
-  /** For map links and embed marker (showroom area, Stockholm). */
-  coordinates: { lat: 59.3431, lng: 18.0584 },
-  mapSearchQuery: "Kungstensgatan 34, 113 59 Stockholm, Sweden",
+  /** For map links and embed marker (showroom, Sundbyberg). */
+  coordinates: { lat: 59.3779, lng: 17.9692 },
+  mapSearchQuery: "Fredensvägen 4C, 174 53 Sundbyberg, Sweden",
   hours: {
     sv: ["Mån–fre: 10:00–18:00", "Lör: 11:00–15:00", "Sön: stängt"],
     en: ["Mon–Fri: 10:00–18:00", "Sat: 11:00–15:00", "Sun: closed"],

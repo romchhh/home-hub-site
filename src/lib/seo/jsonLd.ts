@@ -37,8 +37,8 @@ export function organizationJsonLd(locale: Locale, description: string) {
     address: {
       "@type": "PostalAddress",
       streetAddress: contactInfo.addressLine1,
-      postalCode: "113 59",
-      addressLocality: "Stockholm",
+      postalCode: "174 53",
+      addressLocality: "Sundbyberg",
       addressCountry: "SE",
     },
     geo: {

@@ -172,7 +172,7 @@ const sv = {
     savedItems: {
       title: "Valda modeller",
       subtitle: "Spara modeller du vill jämföra eller ta med till showroomet.",
-      add: "Lägg till i valda",
+      add: "Lägg till favoriter",
       remove: "Ta bort från valda",
       inList: "Sparad i valda",
       empty: "Du har inga valda modeller än. Lägg till den här modellen eller utforska katalogen.",
@@ -242,7 +242,7 @@ const sv = {
     p3Title: "Öppet & flexibelt",
     p3Text: "Tonat glas delar av rummet och behåller känslan av ljus och rymd.",
     projectNote: "Inspirationskoncept från sortimentet.",
-    discuss: "Diskutera en liknande lösning",
+    discuss: "Diskutera med oss",
   },
   services: {
     breadcrumb: "Tjänster",
@@ -494,7 +494,7 @@ const en: Dictionary = {
     savedItems: {
       title: "Selected items",
       subtitle: "Save models you want to compare or bring to the showroom.",
-      add: "Add to selection",
+      add: "Add to favorites",
       remove: "Remove from selection",
       inList: "Saved to selection",
       empty: "You have no selected models yet. Add this model or browse the catalog.",
@@ -564,7 +564,7 @@ const en: Dictionary = {
     p3Title: "Open & flexible",
     p3Text: "Smoked glass divides the space while keeping light and a sense of volume.",
     projectNote: "Inspirational concept from the range.",
-    discuss: "Discuss a similar solution",
+    discuss: "Discuss with us",
   },
   services: {
     breadcrumb: "Services",

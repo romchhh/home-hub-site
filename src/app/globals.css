@@ -1305,10 +1305,14 @@ p {
   width: 2.625rem;
   height: 2.625rem;
   margin-bottom: 1.75rem;
-  border: 1px solid var(--line-outline);
+  border: none;
   border-radius: 50%;
+  background: var(--chocolate);
+  box-shadow: 0 1px 2px var(--shadow-soft);
   font-size: 0.8125rem;
-  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--on-dark);
 }
 
 .service-card p {
@@ -2158,6 +2162,44 @@ p {
   pointer-events: none;
 }
 
+.product-gallery-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.35rem;
+  pointer-events: none;
+}
+
+.product-gallery-nav-btn {
+  display: grid;
+  place-items: center;
+  width: 1.875rem;
+  height: 1.875rem;
+  border: none;
+  border-radius: 50%;
+  background: rgb(250 247 241 / 92%);
+  color: var(--ink);
+  box-shadow: 0 1px 3px var(--shadow-soft);
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.product-gallery-nav-btn:hover {
+  background: var(--on-dark);
+  transform: scale(1.05);
+}
+
+.product-gallery-nav-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(64 33 7 / 0.2);
+}
+
 .product-card-link {
   display: block;
   color: inherit;
@@ -2790,7 +2832,7 @@ p {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  z-index: 3;
+  z-index: 4;
 }
 
 @media (max-width: 767px) {
