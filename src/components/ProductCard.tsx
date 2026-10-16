@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { DoorModel } from "@/data/models";
 import { formatDoorPrice } from "@/lib/formatPrice";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -29,16 +29,30 @@ export function ProductCard({
   const href = localePath(locale, `/catalog/${model.slug}`);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const galleryRef = useRef<HTMLAnchorElement>(null);
-  const hasCarousel = model.gallery.length > 1;
+  const lastIndex = model.gallery.length - 1;
+  const hasCarousel = lastIndex > 0;
+  const [slideIndex, setSlideIndex] = useState(0);
 
-  const scrollGallery = useCallback((dir: -1 | 1) => {
+  const syncSlideIndex = useCallback(() => {
     const el = galleryRef.current;
     if (!el) return;
     const width = el.clientWidth || 1;
-    const current = Math.round(el.scrollLeft / width);
-    const next = Math.max(0, Math.min(model.gallery.length - 1, current + dir));
-    el.scrollTo({ left: next * width, behavior: "smooth" });
-  }, [model.gallery.length]);
+    const next = Math.max(0, Math.min(lastIndex, Math.round(el.scrollLeft / width)));
+    setSlideIndex(next);
+  }, [lastIndex]);
+
+  const scrollGallery = useCallback(
+    (dir: -1 | 1) => {
+      const el = galleryRef.current;
+      if (!el) return;
+      const width = el.clientWidth || 1;
+      const current = Math.round(el.scrollLeft / width);
+      const next = Math.max(0, Math.min(lastIndex, current + dir));
+      setSlideIndex(next);
+      el.scrollTo({ left: next * width, behavior: "smooth" });
+    },
+    [lastIndex],
+  );
 
   return (
     <article className="product product-card">
@@ -48,6 +62,7 @@ export function ProductCard({
           href={href}
           className="product-card-gallery"
           aria-label={`${model.name} — ${detailsLabel}`}
+          onScroll={syncSlideIndex}
           onPointerDown={(e) => {
             pointerStart.current = { x: e.clientX, y: e.clientY };
           }}
@@ -82,6 +97,7 @@ export function ProductCard({
               type="button"
               className="product-gallery-nav-btn product-gallery-nav-btn--prev"
               aria-label="Previous image"
+              disabled={slideIndex <= 0}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -102,6 +118,7 @@ export function ProductCard({
               type="button"
               className="product-gallery-nav-btn product-gallery-nav-btn--next"
               aria-label="Next image"
+              disabled={slideIndex >= lastIndex}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

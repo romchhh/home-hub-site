@@ -2190,12 +2190,18 @@ p {
     transform 0.15s ease;
 }
 
-.product-gallery-nav-btn:hover {
+.product-gallery-nav-btn:hover:not(:disabled) {
   background: var(--on-dark);
   transform: scale(1.05);
 }
 
-.product-gallery-nav-btn:focus-visible {
+.product-gallery-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  box-shadow: none;
+}
+
+.product-gallery-nav-btn:focus-visible:not(:disabled) {
   outline: none;
   box-shadow: 0 0 0 3px rgb(64 33 7 / 0.2);
 }
