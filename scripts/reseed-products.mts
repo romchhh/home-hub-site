@@ -61,5 +61,20 @@ const after = (
 ).c;
 const sample = db.prepare("SELECT slug, image FROM products LIMIT 5").all();
 
-console.log(JSON.stringify({ before, seeded: seed.length, after, sample }, null, 2));
+const entrance = (
+  db.prepare("SELECT COUNT(*) AS c FROM products WHERE category = 'entrance'").get() as {
+    c: number;
+  }
+).c;
+
+console.log(
+  JSON.stringify(
+    { before, seeded: seed.length, after, entrance, sample },
+    null,
+    2,
+  ),
+);
+console.log(
+  "\nDB updated. If the site still shows old products, rebuild & restart: npm run build && (restart your process).",
+);
 db.close();

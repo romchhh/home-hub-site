@@ -15,6 +15,9 @@ import { itemListJsonLd, webPageJsonLd } from "@/lib/seo/jsonLd";
 import { getSeoForPage } from "@/lib/seo/pageMeta";
 import { notFound } from "next/navigation";
 
+/** Home product strip reads catalog DB at request time. */
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   return generateLocalePageMetadata(locale, "home");

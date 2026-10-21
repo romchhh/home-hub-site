@@ -15,9 +15,9 @@ import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonLd";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 import { notFound } from "next/navigation";
 
-/** Reviews are managed in admin — keep product pages fresh enough to pick them up. */
-export const revalidate = 60;
-/** Unknown slugs (e.g. newly added in admin) generate on first request; known ones are prerendered. */
+/** Live product + reviews from admin DB. */
+export const dynamic = "force-dynamic";
+/** Unknown slugs (e.g. newly added in admin) still resolve. */
 export const dynamicParams = true;
 
 export function generateStaticParams() {

@@ -16,6 +16,9 @@ import {
 import { getSeoForPage } from "@/lib/seo/pageMeta";
 import { notFound } from "next/navigation";
 
+/** Always read live catalog DB (admin edits / reseed) — do not bake at build. */
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps<"/[locale]/catalog">) {
   const { locale } = await params;
   return generateLocalePageMetadata(locale, "catalog");

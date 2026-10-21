@@ -10,9 +10,11 @@ import { getDictionary } from "@/dictionaries";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 
-/** Prerender all locale routes at build time (sv / en). */
-export const dynamic = "force-static";
-
+/**
+ * Locale shells still prerender via generateStaticParams.
+ * Do not force-static the whole tree — catalog/home must read the live product DB
+ * after reseed / admin edits without a full rebuild.
+ */
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
