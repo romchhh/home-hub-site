@@ -1,4 +1,10 @@
-import { getDb, type DbCategory, type DbInquiry, type DbProduct } from "@/lib/db";
+import {
+  getDb,
+  type DbCategory,
+  type DbInquiry,
+  type DbProduct,
+  type DbProductReview,
+} from "@/lib/db";
 
 export function listCategories(): DbCategory[] {
   return getDb()
@@ -256,6 +262,96 @@ function setSetting(key: string, value: string) {
 
 export function getInquiryToEmailsSetting(): string {
   return getSetting(SETTING_INQUIRY_TO_EMAILS);
+}
+
+export type ProductReviewInput = {
+  author_name: string;
+  rating: number;
+  title_sv: string;
+  title_en: string;
+  body_sv: string;
+  body_en: string;
+  published: number;
+};
+
+export function listProductReviews(
+  productId: number,
+  opts?: { includeDrafts?: boolean },
+): DbProductReview[] {
+  const includeDrafts = opts?.includeDrafts ?? true;
+  const sql = includeDrafts
+    ? `SELECT * FROM product_reviews WHERE product_id = ? ORDER BY created_at DESC, id DESC`
+    : `SELECT * FROM product_reviews WHERE product_id = ? AND published = 1 ORDER BY created_at DESC, id DESC`;
+  return getDb().prepare(sql).all(productId) as DbProductReview[];
+}
+
+export function listPublishedReviewsByProductSlug(
+  slug: string,
+): DbProductReview[] {
+  return getDb()
+    .prepare(
+      `SELECT r.*
+       FROM product_reviews r
+       INNER JOIN products p ON p.id = r.product_id
+       WHERE p.slug = ? AND r.published = 1 AND p.published = 1
+       ORDER BY r.created_at DESC, r.id DESC`,
+    )
+    .all(slug) as DbProductReview[];
+}
+
+export function getProductReview(id: number): DbProductReview | undefined {
+  return getDb()
+    .prepare("SELECT * FROM product_reviews WHERE id = ?")
+    .get(id) as DbProductReview | undefined;
+}
+
+export function createProductReview(
+  productId: number,
+  data: ProductReviewInput,
+): number {
+  const result = getDb()
+    .prepare(
+      `INSERT INTO product_reviews (
+        product_id, author_name, rating,
+        title_sv, title_en, body_sv, body_en, published
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .run(
+      productId,
+      data.author_name,
+      data.rating,
+      data.title_sv,
+      data.title_en,
+      data.body_sv,
+      data.body_en,
+      data.published,
+    );
+  return Number(result.lastInsertRowid);
+}
+
+export function updateProductReview(id: number, data: ProductReviewInput) {
+  getDb()
+    .prepare(
+      `UPDATE product_reviews SET
+        author_name = ?, rating = ?,
+        title_sv = ?, title_en = ?, body_sv = ?, body_en = ?,
+        published = ?, updated_at = datetime('now')
+      WHERE id = ?`,
+    )
+    .run(
+      data.author_name,
+      data.rating,
+      data.title_sv,
+      data.title_en,
+      data.body_sv,
+      data.body_en,
+      data.published,
+      id,
+    );
+}
+
+export function deleteProductReview(id: number) {
+  getDb().prepare("DELETE FROM product_reviews WHERE id = ?").run(id);
 }
 
 export function setInquiryToEmailsSetting(value: string) {

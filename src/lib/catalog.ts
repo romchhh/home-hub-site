@@ -15,12 +15,14 @@ export type { CatalogCategoryOption };
 export { getRelatedModels };
 
 const FALLBACK_CATEGORIES: CatalogCategoryOption[] = [
+  { slug: "entrance", name: "Entrance doors", priority: 5 },
   { slug: "interior", name: "Interior doors", priority: 10 },
   { slug: "hidden", name: "Hidden doors", priority: 20 },
   { slug: "flooring", name: "Flooring", priority: 30 },
 ];
 
 const FALLBACK_CATEGORIES_SV: CatalogCategoryOption[] = [
+  { slug: "entrance", name: "Ytterdörrar", priority: 5 },
   { slug: "interior", name: "Innerdörrar", priority: 10 },
   { slug: "hidden", name: "Dolda dörrar", priority: 20 },
   { slug: "flooring", name: "Golv", priority: 30 },

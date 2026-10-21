@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import PageBreadcrumb from "@/components/admin/PageBreadCrumb";
 import ProductForm from "@/components/admin/ProductForm";
+import ProductReviewsManager from "@/components/admin/ProductReviewsManager";
 import { getProduct, listCategories } from "@/lib/admin/queries";
 
 export const dynamic = "force-dynamic";
@@ -48,6 +49,7 @@ export default async function AdminEditProductPage({
           specs_json: product.specs_json,
         }}
       />
+      <ProductReviewsManager productId={product.id} />
     </div>
   );
 }

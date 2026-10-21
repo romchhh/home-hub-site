@@ -9,6 +9,7 @@ import { formatDoorPrice } from "@/lib/formatPrice";
 import { useDoorGalleryScroll } from "@/hooks/useDoorGalleryScroll";
 import { localePath, type Locale } from "@/lib/i18n";
 import { mediaUrl } from "@/lib/mediaUrl";
+import type { ProductReview } from "@/lib/productReviewTypes";
 import { Pill } from "./Pill";
 import { DoorRequestPill } from "./DoorRequestPill";
 import { PhotoGalleryModal } from "./PhotoGalleryModal";
@@ -24,12 +25,14 @@ export function DoorDetailView({
   model,
   related,
   catalogModels,
+  reviews = [],
 }: {
   locale: Locale;
   dict: Dictionary;
   model: DoorModel;
   related: DoorModel[];
   catalogModels: DoorModel[];
+  reviews?: ProductReview[];
 }) {
   const c = dict.catalog;
   const d = dict.doorPage;
@@ -297,7 +300,43 @@ export function DoorDetailView({
               aria-labelledby="door-tab-reviews"
               className="door-tab-panel"
             >
-              <p className="text-body-sm text-muted">{d.reviewsEmpty}</p>
+              {reviews.length === 0 ? (
+                <p className="text-body-sm text-muted">{d.reviewsEmpty}</p>
+              ) : (
+                <ul className="door-reviews">
+                  {reviews.map((review) => (
+                    <li key={review.id} className="door-review">
+                      <div className="door-review-meta">
+                        <span className="door-review-author">
+                          {review.authorName}
+                        </span>
+                        <span
+                          className="door-review-stars"
+                          aria-label={`${review.rating} / 5`}
+                        >
+                          {"★".repeat(review.rating)}
+                          <span className="door-review-stars-empty">
+                            {"☆".repeat(5 - review.rating)}
+                          </span>
+                        </span>
+                        <time
+                          className="door-review-date"
+                          dateTime={review.createdAt}
+                        >
+                          {new Date(review.createdAt + "Z").toLocaleDateString(
+                            locale === "en" ? "en-GB" : "sv-SE",
+                            { year: "numeric", month: "short", day: "numeric" },
+                          )}
+                        </time>
+                      </div>
+                      {review.title ? (
+                        <h3 className="door-review-title">{review.title}</h3>
+                      ) : null}
+                      <p className="door-review-body">{review.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ) : null}
         </div>

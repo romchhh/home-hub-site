@@ -8,8 +8,8 @@ const sv = {
   },
   notFound: {
     code: "404",
-    title: "Sidan hittades inte.",
-    lead: "Länken kan vara felaktig eller sidan kan ha flyttats. Gå tillbaka till startsidan.",
+    title: "Sidan hittades inte",
+    lead: "Länken kan vara felaktig eller sidan kan ha flyttats.",
     cta: "Till startsidan",
   },
   nav: {
@@ -133,6 +133,7 @@ const sv = {
     priceRangeTo: "till",
     filters: {
       all: "Alla modeller",
+      entrance: "Ytterdörrar",
       interior: "Innerdörrar",
       hidden: "Dolda dörrar",
       flooring: "Golv",
@@ -330,8 +331,8 @@ const en: Dictionary = {
   },
   notFound: {
     code: "404",
-    title: "Page not found.",
-    lead: "The link may be wrong or the page may have moved. Return to the home page.",
+    title: "Page not found",
+    lead: "The link may be wrong, or the page may have moved.",
     cta: "Back to home",
   },
   nav: {
@@ -455,6 +456,7 @@ const en: Dictionary = {
     priceRangeTo: "to",
     filters: {
       all: "All models",
+      entrance: "Entrance doors",
       interior: "Interior doors",
       hidden: "Hidden doors",
       flooring: "Flooring",

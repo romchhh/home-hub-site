@@ -979,6 +979,90 @@ p {
   padding-bottom: var(--space-section-y);
 }
 
+/* ——— 404 ——— */
+.not-found {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: min(70vh, 40rem);
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+}
+
+.not-found-panel {
+  width: min(36rem, 100%);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--surface) 70%, var(--bg)) 0%,
+      var(--bg) 55%,
+      color-mix(in srgb, var(--accent-sand) 18%, var(--bg)) 100%
+    );
+}
+
+.not-found-brand {
+  display: inline-block;
+  margin-bottom: 1.75rem;
+}
+
+.not-found-wordmark {
+  display: block;
+  height: 2.25rem;
+  width: auto;
+}
+
+.not-found-code {
+  margin: 0 0 0.75rem;
+  font-size: var(--font-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.not-found-title {
+  margin: 0 0 0.85rem;
+  max-width: 18ch;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: var(--leading-title);
+  letter-spacing: var(--track-section);
+  color: var(--ink);
+}
+
+.not-found-lead {
+  margin: 0 0 1.75rem;
+  max-width: 32ch;
+  font-size: var(--font-body-sm);
+  line-height: var(--leading-body);
+  color: var(--muted);
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.not-found-actions .pill {
+  justify-content: center;
+  min-width: 0;
+  padding-inline: 1.25rem;
+}
+
+.not-found-alt {
+  margin: 1.35rem 0 0;
+  font-size: var(--font-caption);
+  color: var(--muted);
+}
+
+.not-found-alt a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .page-head {
   padding-top: 1.25rem;
   padding-bottom: 1.5rem;
@@ -3000,6 +3084,65 @@ p {
 .door-detail-list li strong {
   color: var(--ink);
   font-weight: 600;
+}
+
+.door-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.door-review {
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 55%, var(--bg));
+}
+
+.door-review-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem 0.85rem;
+  margin-bottom: 0.55rem;
+}
+
+.door-review-author {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.door-review-stars {
+  letter-spacing: 0.04em;
+  color: var(--chocolate);
+  font-size: 0.875rem;
+}
+
+.door-review-stars-empty {
+  color: var(--line-outline);
+}
+
+.door-review-date {
+  margin-left: auto;
+  font-size: var(--font-caption);
+  color: var(--muted);
+}
+
+.door-review-title {
+  margin: 0 0 0.35rem;
+  font-size: var(--font-body-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.door-review-body {
+  margin: 0;
+  font-size: var(--font-body-sm);
+  line-height: var(--leading-body);
+  color: var(--muted);
 }
 
 .door-detail-list--compact li {

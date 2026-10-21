@@ -9,13 +9,14 @@ import {
   getRelatedModels,
 } from "@/lib/catalog";
 import { formatDoorPrice } from "@/lib/formatPrice";
+import { getPublishedProductReviews } from "@/lib/productReviews";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonLd";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 import { notFound } from "next/navigation";
 
-/** Prerender every locale × product slug at build time. */
-export const dynamic = "force-static";
+/** Reviews are managed in admin — keep product pages fresh enough to pick them up. */
+export const revalidate = 60;
 /** Unknown slugs (e.g. newly added in admin) generate on first request; known ones are prerendered. */
 export const dynamicParams = true;
 
@@ -52,6 +53,7 @@ export default async function DoorPage({
   const dict = getDictionary(locale);
   const all = getModels(locale);
   const related = getRelatedModels(model, all, 4);
+  const reviews = getPublishedProductReviews(slug, locale);
 
   return (
     <>
@@ -72,6 +74,7 @@ export default async function DoorPage({
           model={model}
           related={related}
           catalogModels={all}
+          reviews={reviews}
         />
       </section>
       <ContactSection dict={dict} />

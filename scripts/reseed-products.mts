@@ -3,13 +3,21 @@ import { getStaticCatalogSeed } from "../src/data/models";
 
 const db = new Database("data/homehub.db");
 
+const ensureCat = db.prepare(
+  `INSERT OR IGNORE INTO categories (slug, name_sv, name_en, priority) VALUES (?, ?, ?, ?)`,
+);
+ensureCat.run("entrance", "Ytterdörrar", "Entrance doors", 5);
+ensureCat.run("interior", "Innerdörrar", "Interior doors", 10);
+ensureCat.run("hidden", "Dolda dörrar", "Hidden doors", 20);
+ensureCat.run("flooring", "Golv", "Flooring", 30);
+
 const cats = db.prepare("SELECT id, slug FROM categories").all() as {
   id: number;
   slug: string;
 }[];
 const catMap = Object.fromEntries(cats.map((c) => [c.slug, c.id]));
 
-if (!catMap.interior) {
+if (!catMap.interior || !catMap.entrance) {
   throw new Error("Categories missing — run the app once to create schema first");
 }
 

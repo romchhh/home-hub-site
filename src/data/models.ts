@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { entranceDoorsRaw } from "@/data/entranceDoors.generated";
 
 /** `"all"` or a category slug from the database / static catalogue. */
 export type DoorCategory = "all" | (string & {});
@@ -1572,6 +1573,7 @@ const raw: {
       { label: ["Golvvärme", "Underfloor heating"], value: ["Ja, upp till 28 °C", "Yes, up to 28 °C"] },
     ],
   },
+  ...entranceDoorsRaw,
 ];
 
 function mapModel(m: (typeof raw)[number], locale: Locale): DoorModel {

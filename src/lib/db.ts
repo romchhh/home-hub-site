@@ -92,9 +92,24 @@ function migrate(database: SqliteDb) {
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
+    CREATE TABLE IF NOT EXISTS product_reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+      author_name TEXT NOT NULL DEFAULT '',
+      rating INTEGER NOT NULL DEFAULT 5,
+      title_sv TEXT NOT NULL DEFAULT '',
+      title_en TEXT NOT NULL DEFAULT '',
+      body_sv TEXT NOT NULL DEFAULT '',
+      body_en TEXT NOT NULL DEFAULT '',
+      published INTEGER NOT NULL DEFAULT 1,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
     CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
     CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
     CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries(status);
+    CREATE INDEX IF NOT EXISTS idx_product_reviews_product ON product_reviews(product_id);
   `);
 
   ensureColumn(database, "inquiries", "source", "TEXT NOT NULL DEFAULT ''");
@@ -118,6 +133,7 @@ function seedIfEmpty(database: SqliteDb) {
   const insertCat = database.prepare(
     `INSERT INTO categories (slug, name_sv, name_en, priority) VALUES (?, ?, ?, ?)`,
   );
+  insertCat.run("entrance", "Ytterdörrar", "Entrance doors", 5);
   insertCat.run("interior", "Innerdörrar", "Interior doors", 10);
   insertCat.run("hidden", "Dolda dörrar", "Hidden doors", 20);
   insertCat.run("flooring", "Golv", "Flooring", 30);
@@ -207,6 +223,20 @@ export type DbInquiry = {
   source: string;
   message: string;
   status: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type DbProductReview = {
+  id: number;
+  product_id: number;
+  author_name: string;
+  rating: number;
+  title_sv: string;
+  title_en: string;
+  body_sv: string;
+  body_en: string;
+  published: number;
   created_at: string;
   updated_at: string;
 };
