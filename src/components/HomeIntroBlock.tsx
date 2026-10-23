@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Em } from "./Em";
+import { SplitTitle } from "./SplitTitle";
 
 const introDoors = [
   { src: "/images/doors/aurelia-01/01.jpg", alt: "Aurelia 01" },
-  { src: "/images/doors/vetro-01/01.jpg", alt: "Vetro 01" },
+  { src: "/images/doors/vetro-01/01.jpg", alt: "Ventro 01 innerdörr" },
   { src: "/images/doors/loft-m18/01.jpg", alt: "Loft M18" },
 
 ] as const;
@@ -20,11 +20,7 @@ export function HomeIntroBlock({
   return (
     <section className="intro-block site-section">
       <div className="intro-block-copy">
-        <h2>
-          {title}
-          <br />
-          <Em>{titleEm}</Em>
-        </h2>
+        <SplitTitle as="h2" title={title} titleEm={titleEm} />
         <p>{text}</p>
       </div>
       <div className="intro-gallery">

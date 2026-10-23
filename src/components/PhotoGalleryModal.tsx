@@ -55,11 +55,11 @@ export function PhotoGalleryModal({
         ×
       </button>
       <div ref={trackRef} className="photo-gallery-modal-track">
-        {images.map((key) => (
+        {images.map((key, index) => (
           <figure key={key} data-gallery-slide className="photo-gallery-modal-slide">
             <Image
               src={mediaUrl(key)}
-              alt={title}
+              alt={`${title} — ${index + 1}${images.length > 1 ? ` / ${images.length}` : ""}`}
               fill
               className="photo-gallery-modal-image"
               sizes="100vw"

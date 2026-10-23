@@ -52,7 +52,7 @@ export default async function OffersPage({ params }: PageProps<"/[locale]/offers
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
-          <OffersActions cta={o.cta} className="notice-actions text-left" />
+          <OffersActions cta={dict.nav.contactCta} className="notice-actions text-left" />
         </div>
       </section>
       <ContactSection dict={dict} />

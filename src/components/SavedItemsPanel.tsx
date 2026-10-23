@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { DoorModel } from "@/data/models";
 import { useSavedItems } from "@/context/SavedItemsContext";
-import { formatDoorPrice } from "@/lib/formatPrice";
+import { formatPublishedPrice } from "@/lib/formatPrice";
 import { localePath, type Locale } from "@/lib/i18n";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { ProductCard } from "./ProductCard";
@@ -147,16 +147,21 @@ export function SavedItemsPanel({
         </div>
       ) : (
         <ul className={listClass} role="list">
-          {resolved.map(({ item, model, colorName }) => {
+          {resolved.map(({ item, model }) => {
             const href = localePath(locale, `/catalog/${model.slug}`);
             const isCurrent = currentSlug === model.slug;
+            const priceText = formatPublishedPrice(locale, model.priceSek, {
+              perSqm: model.category === "flooring",
+              withFromPrefix: true,
+              fromLabel: c.priceFrom,
+            });
             return (
               <li key={item.slug} className={`door-saved-item ${isCurrent ? "door-saved-item--current" : ""}`}>
                 <Link href={href} className="door-saved-item-link">
                   <span className="door-saved-item-media">
                     <Image
                       src={mediaUrl(model.image)}
-                      alt=""
+                      alt={model.name}
                       width={88}
                       height={112}
                       className="door-saved-item-image"
@@ -165,11 +170,8 @@ export function SavedItemsPanel({
                   <span className="door-saved-item-body">
                     <span className="door-saved-item-name">{model.name}</span>
                     <span className="door-saved-item-meta text-caption text-muted">
-                      {model.label} · {c.priceFrom}{" "}
-                      {formatDoorPrice(locale, model.priceSek, {
-                        perSqm: model.category === "flooring",
-                      })}
-                      {colorName ? ` · ${colorName}` : null}
+                      {model.label}
+                      {priceText ? ` · ${priceText}` : null}
                     </span>
                   </span>
                 </Link>

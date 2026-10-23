@@ -54,7 +54,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
           <div className="contact-card-media" aria-hidden>
             <Image
               src="/images/hero.png"
-              alt=""
+              alt={dict.home.heroImageAlt}
               fill
               className="object-cover"
               sizes="(max-width: 767px) 100vw, 50vw"

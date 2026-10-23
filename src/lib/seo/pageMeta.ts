@@ -2,60 +2,123 @@ import type { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/dictionaries";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
-const pageKeys = {
-  home: (d: ReturnType<typeof getDictionary>) => ({
-    path: "",
-    title: d.meta.siteName,
-    description: `${d.meta.tagline} ${d.meta.description}`,
-  }),
-  about: (d: ReturnType<typeof getDictionary>) => ({
+type SeoFields = {
+  path: string;
+  title: string;
+  description: string;
+  noIndex?: true;
+};
+
+export type SeoPageKey =
+  | "home"
+  | "about"
+  | "catalog"
+  | "catalogSaved"
+  | "contact"
+  | "offers"
+  | "partnerships"
+  | "projects"
+  | "services"
+  | "privacy"
+  | "terms"
+  | "cookies";
+
+type Dict = ReturnType<typeof getDictionary>;
+
+/** Keyword-focused titles for <title> / OG — independent of on-page H1 marketing copy. */
+const seoCopy: Record<Exclude<SeoPageKey, "home">, (d: Dict, locale: Locale) => SeoFields> = {
+  about: (_d, locale) => ({
     path: "/about",
-    title: `${d.about.title} ${d.about.titleEm}`.replace(/\s+/g, " ").trim(),
-    description: d.about.lead,
+    title:
+      locale === "sv"
+        ? "Om oss — showroom för dörrar och golv i Stockholm"
+        : "About us — door and flooring showroom in Stockholm",
+    description: _d.about.lead,
   }),
-  catalog: (d: ReturnType<typeof getDictionary>) => ({
+  catalog: (d, locale) => ({
     path: "/catalog",
-    title: `${d.catalog.title} ${d.catalog.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Katalog — innerdörrar, ytterdörrar, dolda dörrar och golv"
+        : "Catalogue — interior doors, entrance doors, hidden doors and flooring",
     description: d.catalog.lead,
   }),
-  catalogSaved: (d: ReturnType<typeof getDictionary>) => ({
+  catalogSaved: (d) => ({
     path: "/catalog/saved",
     title: `${d.savedPage.title} ${d.savedPage.titleEm}`.replace(/\s+/g, " ").trim(),
     description: d.savedPage.lead,
-    noIndex: true as const,
+    noIndex: true,
   }),
-  contact: (d: ReturnType<typeof getDictionary>) => ({
+  contact: (d, locale) => ({
     path: "/contact",
-    title: `${d.contactPage.title} ${d.contactPage.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Kontakt — showroom Fredensvägen 4C, Sundbyberg"
+        : "Contact — showroom Fredensvägen 4C, Sundbyberg",
     description: d.contactPage.lead,
   }),
-  offers: (d: ReturnType<typeof getDictionary>) => ({
+  offers: (d, locale) => ({
     path: "/offers",
-    title: `${d.offers.title} ${d.offers.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Aktuell kampanj — erbjudande på dörrar och golv"
+        : "Current campaign — offer on doors and flooring",
     description: d.offers.paragraphs[0] ?? d.meta.description,
   }),
-  partnerships: (d: ReturnType<typeof getDictionary>) => ({
+  partnerships: (d, locale) => ({
     path: "/partnerships",
-    title: `${d.partnerships.title} ${d.partnerships.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Samarbete — arkitekter, inredare och byggare"
+        : "Partnership — architects, designers and builders",
     description: d.partnerships.lead,
   }),
-  projects: (d: ReturnType<typeof getDictionary>) => ({
+  projects: (d, locale) => ({
     path: "/projects",
-    title: `${d.projects.title} ${d.projects.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Referenser — dörrar och golv i Stockholm"
+        : "References — doors and flooring in Stockholm",
     description: d.projects.lead,
   }),
-  services: (d: ReturnType<typeof getDictionary>) => ({
+  services: (d, locale) => ({
     path: "/services",
-    title: `${d.services.title} ${d.services.titleEm}`.replace(/\s+/g, " ").trim(),
+    title:
+      locale === "sv"
+        ? "Tjänster — rådgivning, mått, leverans och montering"
+        : "Services — advice, measuring, delivery and installation",
     description: d.services.lead,
   }),
-} as const;
+  privacy: (d) => ({
+    path: "/integritetspolicy",
+    title: d.legal.privacyTitle,
+    description: d.legal.placeholder,
+  }),
+  terms: (d) => ({
+    path: "/kopvillkor",
+    title: d.legal.termsTitle,
+    description: d.legal.placeholder,
+  }),
+  cookies: (d) => ({
+    path: "/cookies",
+    title: d.legal.cookiesTitle,
+    description: d.legal.placeholder,
+  }),
+};
 
-export type SeoPageKey = keyof typeof pageKeys;
-
-export function getSeoForPage(locale: Locale, key: SeoPageKey) {
+export function getSeoForPage(locale: Locale, key: SeoPageKey): SeoFields {
   const dict = getDictionary(locale);
-  return pageKeys[key](dict);
+  if (key === "home") {
+    return {
+      path: "",
+      title:
+        locale === "sv"
+          ? "Innerdörrar, dolda dörrar och golv i Stockholm"
+          : "Interior doors, hidden doors and flooring in Stockholm",
+      description: `${dict.meta.tagline} ${dict.meta.description}`,
+    };
+  }
+  return seoCopy[key](dict, locale);
 }
 
 export function metadataForPage(locale: Locale, key: SeoPageKey) {

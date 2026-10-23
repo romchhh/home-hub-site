@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import type { DoorModel } from "@/data/models";
-import { formatDoorPrice } from "@/lib/formatPrice";
+import { formatPublishedPrice } from "@/lib/formatPrice";
 import { localePath, type Locale } from "@/lib/i18n";
+import { pickGalleryAlt } from "@/lib/imageAlt";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { ArrowIcon } from "./ArrowIcon";
 import { SaveModelToggle } from "./SaveModelToggle";
@@ -30,6 +31,11 @@ export function ProductCard({
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const galleryRef = useRef<HTMLAnchorElement>(null);
   const lastIndex = model.gallery.length - 1;
+  const priceText = formatPublishedPrice(locale, model.priceSek, {
+    perSqm: model.category === "flooring",
+    withFromPrefix: true,
+    fromLabel: priceFromLabel,
+  });
   const hasCarousel = lastIndex > 0;
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -81,7 +87,7 @@ export function ProductCard({
             <div key={`${model.slug}-${key}-${index}`} className="product-card-slide">
               <Image
                 src={mediaUrl(key)}
-                alt={index === 0 ? `${model.name} — ${model.material}` : ""}
+                alt={pickGalleryAlt(locale, model.name, index, model.gallery.length)}
                 fill
                 className="product-card-image"
                 sizes="(max-width: 768px) 46vw, 22vw"
@@ -153,23 +159,11 @@ export function ProductCard({
           <h3 className="product-title">{model.name}</h3>
           <ArrowIcon />
         </div>
-        <p className="product-price">
-          {priceFromLabel}{" "}
-          {formatDoorPrice(locale, model.priceSek, { perSqm: model.category === "flooring" })}
-        </p>
+        {priceText ? <p className="product-price">{priceText}</p> : null}
         <p className="mt-1.5 text-caption text-muted md:mt-2">
           {model.material} · {model.finish}
         </p>
         <div className="swatch-row">
-          {model.colors.map((color) => (
-            <i
-              key={color.hex}
-              className="color-swatch"
-              style={{ background: color.hex }}
-              title={color.name}
-              aria-hidden
-            />
-          ))}
           <span className="product-details-link">{detailsLabel}</span>
         </div>
       </Link>

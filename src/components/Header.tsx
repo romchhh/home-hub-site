@@ -15,13 +15,13 @@ import { SavedItemsNavButton } from "./SavedItemsNavButton";
 
 const navItems = [
   { key: "home", path: "" },
-  { key: "about", path: "/about" },
   { key: "offers", path: "/offers" },
-  { key: "projects", path: "/projects" },
-  { key: "services", path: "/services" },
-  { key: "contact", path: "/contact" },
   { key: "catalog", path: "/catalog" },
+  { key: "services", path: "/services" },
+  { key: "projects", path: "/projects" },
   { key: "partnerships", path: "/partnerships" },
+  { key: "contact", path: "/contact" },
+  { key: "about", path: "/about" },
 ] as const;
 
 type HeaderProps = {

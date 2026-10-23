@@ -50,7 +50,13 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       />
       <section className="editorial site-section site-section--tight-top">
         <div className="editorial-media">
-          <Image src="/images/hero.png" alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+          <Image
+            src="/images/hero.png"
+            alt={dict.home.heroImageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </div>
         <div className="editorial-copy">
           <h2>

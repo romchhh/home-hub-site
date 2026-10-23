@@ -5,12 +5,12 @@ import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { DoorModel } from "@/data/models";
-import { formatDoorPrice } from "@/lib/formatPrice";
+import { formatPublishedPrice } from "@/lib/formatPrice";
 import { useDoorGalleryScroll } from "@/hooks/useDoorGalleryScroll";
 import { localePath, type Locale } from "@/lib/i18n";
+import { pickGalleryAlt } from "@/lib/imageAlt";
 import { mediaUrl } from "@/lib/mediaUrl";
 import type { ProductReview } from "@/lib/productReviewTypes";
-import { Pill } from "./Pill";
 import { DoorRequestPill } from "./DoorRequestPill";
 import { PhotoGalleryModal } from "./PhotoGalleryModal";
 import { ProductCard } from "./ProductCard";
@@ -38,7 +38,6 @@ export function DoorDetailView({
   const d = dict.doorPage;
   const savedLabels = d.savedItems;
   const [activeImage, setActiveImage] = useState(0);
-  const [colorIndex, setColorIndex] = useState(0);
   const [gallerySlug, setGallerySlug] = useState(model.slug);
   const [tab, setTab] = useState<TabId>("description");
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -48,12 +47,15 @@ export function DoorDetailView({
   if (model.slug !== gallerySlug) {
     setGallerySlug(model.slug);
     setActiveImage(0);
-    setColorIndex(0);
   }
 
-  const priceLabel = `${c.priceFrom} ${formatDoorPrice(locale, model.priceSek, {
+  const priceLabel = formatPublishedPrice(locale, model.priceSek, {
     perSqm: model.category === "flooring",
-  })}`;
+    withFromPrefix: true,
+    fromLabel: c.priceFrom,
+  });
+  const showPaintNote = model.category === "interior" || model.category === "hidden";
+  const contactCta = dict.nav.contactCta;
   const gallery = model.gallery;
 
   useDoorGalleryScroll(heroGalleryRef, thumbTrackRef, activeImage, gallery.length, model.slug);
@@ -70,18 +72,19 @@ export function DoorDetailView({
   function openGalleryModal() {
     setGalleryOpen(true);
   }
-  const activeColor = model.colors[colorIndex];
-
-  const specRows = useMemo(
-    () => [
+  const specRows = useMemo(() => {
+    const rows: [string, string][] = [
       [c.material, model.material],
       [c.finish, model.finish],
       [c.hardware, model.hardware],
-      [c.priceLabel, formatDoorPrice(locale, model.priceSek, { perSqm: model.category === "flooring" })],
-      ...model.specs.map((s) => [s.label, s.value] as [string, string]),
-    ],
-    [c, model, locale],
-  );
+    ];
+    const specPrice = formatPublishedPrice(locale, model.priceSek, {
+      perSqm: model.category === "flooring",
+    });
+    if (specPrice) rows.push([c.priceLabel, specPrice]);
+    rows.push(...model.specs.map((s) => [s.label, s.value] as [string, string]));
+    return rows;
+  }, [c, model, locale]);
 
   const tabs: { id: TabId; label: string }[] = [
     { id: "description", label: d.tabs.description },
@@ -111,15 +114,12 @@ export function DoorDetailView({
               <div key={`${key}-${index}`} className="door-hero-slide">
                 <Image
                   src={mediaUrl(key)}
-                  alt={index === 0 ? model.name : ""}
+                  alt={pickGalleryAlt(locale, model.name, index, gallery.length)}
                   fill
                   priority={index === 0}
                   className="door-hero-image"
                   sizes="(max-width: 768px) 100vw, 55vw"
                   draggable={false}
-                  style={{
-                    filter: colorIndex === 0 ? undefined : `brightness(${0.92 + colorIndex * 0.04})`,
-                  }}
                 />
               </div>
             ))}
@@ -154,7 +154,7 @@ export function DoorDetailView({
               >
                 <Image
                   src={mediaUrl(key)}
-                  alt=""
+                  alt={pickGalleryAlt(locale, model.name, index, gallery.length)}
                   width={120}
                   height={120}
                   className="door-gallery-thumb-img object-cover object-center"
@@ -167,34 +167,14 @@ export function DoorDetailView({
         <div className="door-hero-info">
           <span className="product-tag door-hero-tag">{model.label}</span>
           <h1 className="door-hero-title">{model.name}</h1>
-          <p className="door-hero-price">{priceLabel}</p>
+          {priceLabel ? <p className="door-hero-price">{priceLabel}</p> : null}
           <p className="door-hero-lead text-body-sm text-muted">{model.description}</p>
-
-          <div className="door-color-picker">
-            <p className="door-color-label">{d.colorLabel}</p>
-            <div className="door-color-options" role="listbox" aria-label={d.colorLabel}>
-              {model.colors.map((color, index) => (
-                <button
-                  key={color.hex}
-                  type="button"
-                  role="option"
-                  aria-selected={index === colorIndex}
-                  className={`door-color-option ${index === colorIndex ? "door-color-option--active" : ""}`}
-                  onClick={() => setColorIndex(index)}
-                >
-                  <span className="door-color-swatch" style={{ background: color.hex }} aria-hidden />
-                  <span className="door-color-name">{color.name}</span>
-                </button>
-              ))}
-            </div>
-            {activeColor ? (
-              <p className="door-color-active text-caption text-muted">{activeColor.name}</p>
-            ) : null}
-          </div>
+          {showPaintNote ? (
+            <p className="door-paint-note text-body-sm text-muted">{d.paintColorNote}</p>
+          ) : null}
 
           <SaveModelToggle
             slug={model.slug}
-            colorHex={activeColor?.hex}
             addLabel={savedLabels.add}
             removeLabel={savedLabels.remove}
             inListLabel={savedLabels.inList}
@@ -203,19 +183,11 @@ export function DoorDetailView({
 
           <div className="door-hero-actions">
             <DoorRequestPill
-              label={d.orderCta}
+              label={contactCta}
               modelName={model.name}
               className="door-cta door-cta--primary"
             />
-            <Pill
-              outline
-              href={localePath(locale, "/contact")}
-              className="door-cta door-cta--secondary"
-            >
-              {d.contactManager}
-            </Pill>
           </div>
-          <p className="text-caption text-muted">{c.priceNote}</p>
         </div>
       </div>
 
@@ -386,13 +358,15 @@ export function DoorDetailView({
         closeLabel={dict.nav.close}
       />
 
-      <div className="door-mobile-order-bar" aria-label={d.orderCta}>
+      <div className="door-mobile-order-bar" aria-label={contactCta}>
         <p className="door-mobile-order-bar__meta">
           <span className="door-mobile-order-bar__name">{model.name}</span>
-          <span className="door-mobile-order-bar__price">{priceLabel}</span>
+          {priceLabel ? (
+            <span className="door-mobile-order-bar__price">{priceLabel}</span>
+          ) : null}
         </p>
         <DoorRequestPill
-          label={d.orderCta}
+          label={contactCta}
           modelName={model.name}
           className="door-cta door-cta--primary door-cta--sticky"
         />

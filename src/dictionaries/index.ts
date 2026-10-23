@@ -43,8 +43,9 @@ const sv = {
     heroLead:
       "Exklusiv design och hantverksmässig kvalitet.\nDirekt från noggrant utvalda tillverkare till ditt rum.",
     heroCta: "Utforska sortimentet",
-    heroBadgeTitle: "140 m² showroom i Stockholm.",
-    heroBadgeSub: "Se. Känn. Jämför.",
+    heroImageAlt: "Showroom med innerdörrar och golv i Stockholm",
+    heroShowroomTitle: "Showroom 140 m² i Stockholm",
+    heroShowroomAddress: "Fredensvägen 4C, 174 53 Sundbyberg",
     introTitle: "Produkter som sticker ut.",
     introTitleEm: "Med karaktär.",
     introText:
@@ -98,6 +99,10 @@ const sv = {
     contact: "Telefon eller e-post",
     interest: "Modell eller ämne",
     message: "Berätta om projektet",
+    messageLabel: "Meddelande",
+    messagePlaceholder: "Skriv ditt meddelande",
+    consentLabel:
+      "Jag godkänner att Home Hub Stockholm AB behandlar mina uppgifter för att besvara min förfrågan.",
     submit: "Skicka",
     orLabel: "Eller",
     writeUsOn: "Skriv till oss på",
@@ -145,9 +150,11 @@ const sv = {
     priceLabel: "Pris",
     priceNote:
       "Priset avser standardmått (dörrar) eller från-pris per m² (golv) och exkluderar montering. Slutligt pris bekräftas i offert efter mått och specifikation.",
-    note: "Material, mått, tillgänglighet och pris bekräftas av leverantören. Golvpriser anges från per m².",
+    note: "Material, mått och tillgänglighet bekräftas i offerten.",
   },
   doorPage: {
+    paintColorNote:
+      "Dörren kan målas i valfri RAL- eller NCS-kulör. Kontakta oss så hjälper vi dig att välja.",
     colorLabel: "Välj färg",
     relatedTitle: "Liknande modeller",
     relatedSubtitle: "Från samma kategori eller närliggande ton.",
@@ -315,9 +322,22 @@ const sv = {
   },
   footer: {
     note: "Showroom · Stockholm",
-    copyright: "© 2026 HOME HUB",
+    companyName: "Home Hub Stockholm AB",
+    orgNr: "556218-7475",
+    copyright: "© 2026 Home Hub Stockholm AB",
     navHeading: "Navigering",
     contactHeading: "Showroom & kontakt",
+    legalHeading: "Juridiskt",
+    privacy: "Integritetspolicy",
+    terms: "Köpvillkor",
+    cookies: "Cookies",
+  },
+  legal: {
+    privacyTitle: "Integritetspolicy",
+    termsTitle: "Köpvillkor",
+    cookiesTitle: "Cookies",
+    placeholder:
+      "Fullständig text kommer att publiceras här. Kontakta oss om du har frågor under tiden.",
   },
 };
 
@@ -366,8 +386,9 @@ const en: Dictionary = {
     heroLead:
       "Exclusive design and craftsmanship.\nDirect from carefully selected manufacturers to your space.",
     heroCta: "Explore the range",
-    heroBadgeTitle: "140 m² showroom in Stockholm.",
-    heroBadgeSub: "See. Feel. Compare.",
+    heroImageAlt: "Showroom with interior doors and flooring in Stockholm",
+    heroShowroomTitle: "Showroom 140 m² in Stockholm",
+    heroShowroomAddress: "Fredensvägen 4C, 174 53 Sundbyberg",
     introTitle: "Products that stand out.",
     introTitleEm: "With character.",
     introText:
@@ -421,6 +442,10 @@ const en: Dictionary = {
     contact: "Phone or email",
     interest: "Model or topic",
     message: "Tell us about the project",
+    messageLabel: "Message",
+    messagePlaceholder: "Write your message",
+    consentLabel:
+      "I agree that Home Hub Stockholm AB may process my details to respond to my enquiry.",
     submit: "Send",
     orLabel: "Or",
     writeUsOn: "Write to us on",
@@ -468,9 +493,11 @@ const en: Dictionary = {
     priceLabel: "Price",
     priceNote:
       "Price is for standard sizes (doors) or from-price per m² (flooring) and excludes installation. Final price is confirmed in the quote after measurements and specification.",
-    note: "Material, sizes, availability and price are confirmed by the supplier. Flooring prices are from per m².",
+    note: "Material, sizes and availability are confirmed in the quote.",
   },
   doorPage: {
+    paintColorNote:
+      "The door can be painted in any RAL or NCS colour. Contact us and we will help you choose.",
     colorLabel: "Choose colour",
     relatedTitle: "Similar models",
     relatedSubtitle: "From the same category or a close tone.",
@@ -638,9 +665,22 @@ const en: Dictionary = {
   },
   footer: {
     note: "Showroom · Stockholm",
-    copyright: "© 2026 HOME HUB",
+    companyName: "Home Hub Stockholm AB",
+    orgNr: "556218-7475",
+    copyright: "© 2026 Home Hub Stockholm AB",
     navHeading: "Navigation",
     contactHeading: "Showroom & contact",
+    legalHeading: "Legal",
+    privacy: "Privacy policy",
+    terms: "Terms of purchase",
+    cookies: "Cookies",
+  },
+  legal: {
+    privacyTitle: "Privacy policy",
+    termsTitle: "Terms of purchase",
+    cookiesTitle: "Cookies",
+    placeholder:
+      "The full text will be published here. Contact us if you have questions in the meantime.",
   },
 };
 

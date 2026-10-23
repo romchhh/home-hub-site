@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { mediaFilenameAlt } from "@/lib/imageAlt";
 import { mediaUrl } from "@/lib/mediaUrl";
 import { uploadImages } from "@/lib/admin/uploadImages";
 
@@ -219,7 +220,7 @@ export default function ImageDropzone({
                 <div className="relative aspect-4/3 bg-gray-100">
                   <Image
                     src={mediaUrl(img)}
-                    alt=""
+                    alt={mediaFilenameAlt(img, index)}
                     fill
                     className="pointer-events-none object-cover"
                     sizes="220px"
@@ -343,7 +344,7 @@ export default function ImageDropzone({
                           <div className="relative aspect-square bg-gray-100">
                             <Image
                               src={file.url}
-                              alt=""
+                              alt={mediaFilenameAlt(file.filename)}
                               fill
                               className="object-cover"
                               sizes="160px"

@@ -35,14 +35,20 @@ function urlEntry(opts: {
   lastmod: string;
   changefreq: string;
   priority: string;
-  images?: string[];
+  images?: { loc: string; title?: string; caption?: string }[];
 }): string {
   const imageBlocks = (opts.images ?? [])
-    .map(
-      (src) => `    <image:image>
-      <image:loc>${escapeXml(src)}</image:loc>
-    </image:image>`,
-    )
+    .map((img) => {
+      const title = img.title
+        ? `\n      <image:title>${escapeXml(img.title)}</image:title>`
+        : "";
+      const caption = img.caption
+        ? `\n      <image:caption>${escapeXml(img.caption)}</image:caption>`
+        : "";
+      return `    <image:image>
+      <image:loc>${escapeXml(img.loc)}</image:loc>${title}${caption}
+    </image:image>`;
+    })
     .join("\n");
 
   return `  <url>
@@ -114,7 +120,11 @@ export function buildProductsSitemapXml(): string {
       const images = [model.image, ...model.gallery]
         .filter(Boolean)
         .map((key) => absoluteMediaUrl(key));
-      const uniqueImages = [...new Set(images)].slice(0, 10);
+      const uniqueImages = [...new Set(images)].slice(0, 10).map((loc, i) => ({
+        loc,
+        title: i === 0 ? model.name : `${model.name} — ${i + 1}`,
+        caption: model.description,
+      }));
 
       entries.push(
         urlEntry({
@@ -147,7 +157,13 @@ export function buildImagesSitemapXml(): string {
   for (const locale of locales) {
     for (const model of models) {
       const path = `/catalog/${model.slug}`;
-      const images = [...new Set([model.image, ...model.gallery].filter(Boolean).map(absoluteMediaUrl))];
+      const images = [...new Set([model.image, ...model.gallery].filter(Boolean).map(absoluteMediaUrl))].map(
+        (loc, i) => ({
+          loc,
+          title: i === 0 ? model.name : `${model.name} — ${i + 1}`,
+          caption: model.description,
+        }),
+      );
 
       entries.push(
         urlEntry({
@@ -164,6 +180,10 @@ export function buildImagesSitemapXml(): string {
 
   // Key marketing visuals tied to the home page
   for (const locale of locales) {
+    const heroTitle =
+      locale === "sv"
+        ? "Showroom med dörrar och golv i Stockholm"
+        : "Showroom with doors and flooring in Stockholm";
     entries.push(
       urlEntry({
         loc: absoluteUrl(locale as Locale, ""),
@@ -172,9 +192,19 @@ export function buildImagesSitemapXml(): string {
         changefreq: "weekly",
         priority: "0.9",
         images: [
-          absoluteMediaUrl("/images/hero.png"),
-          absoluteMediaUrl("/images/floors/geometric/01.jpg"),
-          absoluteMediaUrl("/images/floors/chevron/01.jpg"),
+          {
+            loc: absoluteMediaUrl("/images/hero.png"),
+            title: heroTitle,
+            caption: heroTitle,
+          },
+          {
+            loc: absoluteMediaUrl("/images/floors/geometric/01.jpg"),
+            title: locale === "sv" ? "Geometrisk parkett" : "Geometric parquet",
+          },
+          {
+            loc: absoluteMediaUrl("/images/floors/chevron/01.jpg"),
+            title: "Chevron",
+          },
         ],
       }),
     );

@@ -8,7 +8,7 @@ import {
   getModels,
   getRelatedModels,
 } from "@/lib/catalog";
-import { formatDoorPrice } from "@/lib/formatPrice";
+import { formatPublishedPrice } from "@/lib/formatPrice";
 import { getPublishedProductReviews } from "@/lib/productReviews";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonLd";
@@ -32,12 +32,26 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/catalog/
   const model = getModelBySlug(slug, locale);
   if (!model) return {};
   const dict = getDictionary(locale);
+  const pricePart = formatPublishedPrice(locale, model.priceSek, {
+    perSqm: model.category === "flooring",
+    withFromPrefix: true,
+    fromLabel: dict.catalog.priceFrom,
+  });
+  const description = pricePart ? `${model.description} ${pricePart}.` : `${model.description}.`;
+
   return createPageMetadata({
     locale,
     path: `/catalog/${slug}`,
-    title: model.name,
-    description: `${model.description} ${dict.catalog.priceFrom} ${formatDoorPrice(locale, model.priceSek, { perSqm: model.category === "flooring" })}.`,
+    title: `${model.name} — ${model.label}`,
+    description,
     image: model.image,
+    keywords: [
+      model.name,
+      model.label,
+      model.material,
+      locale === "sv" ? "dörrar Stockholm" : "doors Stockholm",
+      "HOME HUB",
+    ],
   });
 }
 
@@ -59,7 +73,7 @@ export default async function DoorPage({
     <>
       <JsonLd
         data={[
-          productJsonLd(locale, model),
+          productJsonLd(locale, model, reviews),
           breadcrumbJsonLd(locale, [
             { name: dict.nav.home, path: "" },
             { name: dict.catalog.breadcrumb, path: "/catalog" },

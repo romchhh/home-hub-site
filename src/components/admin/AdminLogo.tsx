@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LOGO_ALT } from "@/lib/imageAlt";
 
 type AdminLogoProps = {
   /** Show wordmark when sidebar/header has room */
@@ -19,7 +20,7 @@ export default function AdminLogo({
     >
       <Image
         src="/icon.png"
-        alt=""
+        alt={LOGO_ALT}
         width={36}
         height={36}
         className="admin-logo-mark h-9 w-9 shrink-0 rounded-lg object-contain"

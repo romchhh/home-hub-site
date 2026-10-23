@@ -14,7 +14,7 @@ export function HomeDetailBand({ dict }: { dict: Dictionary }) {
         imageSrc="/images/handle.png"
         title={h.detailTitle}
         titleEm={h.detailTitleEm}
-        ctaLabel={h.detailCta}
+        ctaLabel={dict.nav.contactCta}
         onCta={() =>
           openRequest({
             intent: "project",

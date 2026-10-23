@@ -161,7 +161,7 @@ export default function ProductsTable({
                       <div className="relative h-12 w-10 overflow-hidden rounded-lg bg-gray-100">
                         <Image
                           src={mediaUrl(p.image)}
-                          alt=""
+                          alt={p.name}
                           fill
                           className="object-cover"
                           sizes="40px"

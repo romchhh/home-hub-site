@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactSection } from "@/components/ContactSection";
-import { Em } from "@/components/Em";
+import { SplitTitle } from "@/components/SplitTitle";
 import { HomeDetailBand } from "@/components/HomeDetailBand";
 import { HomeIntroBlock } from "@/components/HomeIntroBlock";
 import { HomeDoorProducts } from "@/components/HomeDoorProducts";
@@ -59,31 +59,32 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <section className="hero site-section--flush">
         <div className="hero-copy">
           <div className="hero-copy-inner">
-            <h1>
-              {h.heroTitle}
-              <br />
-              <Em>{h.heroTitleEm}</Em>
-            </h1>
+            <SplitTitle as="h1" title={h.heroTitle} titleEm={h.heroTitleEm} />
             <p className="hero-lead">{h.heroLead}</p>
             <Pill href={localePath(locale, "/catalog")}>{h.heroCta}</Pill>
           </div>
         </div>
-        <div className="hero-img relative">
-          <Image src="/images/hero.png" alt="" fill className="object-cover" priority sizes="(max-width: 640px) 100vw, 55vw" />
-          <div className="hero-badge">
-            <strong>{h.heroBadgeTitle}</strong>
-            <span className="hero-badge-sub">{h.heroBadgeSub}</span>
+        <div className="hero-visual">
+          <div className="hero-img relative">
+            <Image
+              src="/images/hero.png"
+              alt={h.heroImageAlt}
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 640px) 100vw, 55vw"
+            />
           </div>
+          <p className="hero-showroom-caption">
+            <strong>{h.heroShowroomTitle}</strong>
+            <span>{h.heroShowroomAddress}</span>
+          </p>
         </div>
       </section>
 
       <section className="site-section site-section--tight-top">
         <div className="section-heading">
-          <h2>
-            {h.featuredTitle}
-            <br />
-            <Em>{h.featuredTitleEm}</Em>
-          </h2>
+          <SplitTitle as="h2" title={h.featuredTitle} titleEm={h.featuredTitleEm} />
           <Pill href={localePath(locale, "/catalog")} outline>
             {h.featuredCta}
           </Pill>
@@ -102,11 +103,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
       <section className="site-section">
         <div className="section-heading">
-          <h2>
-            {h.servicesTitle}
-            <br />
-            <Em>{h.servicesTitleEm}</Em>
-          </h2>
+          <SplitTitle as="h2" title={h.servicesTitle} titleEm={h.servicesTitleEm} />
           <Pill href={localePath(locale, "/services")} outline>
             {h.servicesCta}
           </Pill>

@@ -1,4 +1,5 @@
 import type { DoorCategory, DoorModel } from "@/data/models";
+import { isPricePublished } from "@/lib/formatPrice";
 
 export const CATALOG_PRICE_STEP = 1_000;
 
@@ -20,14 +21,15 @@ export type CatalogColorFilterOption = {
   name: string;
 };
 
-export function getCatalogPriceBounds(models: DoorModel[]): CatalogPriceBounds {
-  if (models.length === 0) {
-    return { min: 0, max: 100_000 };
+export function getCatalogPriceBounds(models: DoorModel[]): CatalogPriceBounds | null {
+  const priced = models.filter((model) => isPricePublished(model.priceSek));
+  if (priced.length === 0) {
+    return null;
   }
 
   let min = Infinity;
   let max = -Infinity;
-  for (const model of models) {
+  for (const model of priced) {
     min = Math.min(min, model.priceSek);
     max = Math.max(max, model.priceSek);
   }
@@ -38,11 +40,11 @@ export function getCatalogPriceBounds(models: DoorModel[]): CatalogPriceBounds {
   };
 }
 
-export function createDefaultCatalogFilters(bounds: CatalogPriceBounds): CatalogFilterState {
+export function createDefaultCatalogFilters(bounds: CatalogPriceBounds | null): CatalogFilterState {
   return {
     category: "all",
-    priceMin: bounds.min,
-    priceMax: bounds.max,
+    priceMin: bounds?.min ?? 0,
+    priceMax: bounds?.max ?? 0,
     material: "all",
     colorHex: "all",
   };
@@ -53,7 +55,11 @@ export function snapCatalogPrice(value: number, bounds: CatalogPriceBounds): num
   return Math.min(bounds.max, Math.max(bounds.min, snapped));
 }
 
-export function isPriceFilterActive(filters: CatalogFilterState, bounds: CatalogPriceBounds): boolean {
+export function isPriceFilterActive(
+  filters: CatalogFilterState,
+  bounds: CatalogPriceBounds | null,
+): boolean {
+  if (!bounds) return false;
   return filters.priceMin > bounds.min || filters.priceMax < bounds.max;
 }
 
@@ -92,7 +98,12 @@ export function filterCatalogModels(
       const target = filters.colorHex.toLowerCase();
       if (!model.colors.some((color) => color.hex.toLowerCase() === target)) return false;
     }
-    if (model.priceSek < filters.priceMin || model.priceSek > filters.priceMax) return false;
+    if (
+      isPricePublished(model.priceSek) &&
+      (model.priceSek < filters.priceMin || model.priceSek > filters.priceMax)
+    ) {
+      return false;
+    }
 
     if (!q) return true;
 
@@ -113,7 +124,7 @@ export function filterCatalogModels(
 
 export function countActiveCatalogFilters(
   filters: CatalogFilterState,
-  bounds: CatalogPriceBounds,
+  bounds: CatalogPriceBounds | null,
 ): number {
   let count = 0;
   if (filters.category !== "all") count += 1;

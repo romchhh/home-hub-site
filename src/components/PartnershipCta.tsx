@@ -18,7 +18,7 @@ export function PartnershipCta({ dict }: { dict: Dictionary }) {
         })
       }
     >
-      {p.cta}
+      {dict.nav.contactCta}
     </Pill>
   );
 }

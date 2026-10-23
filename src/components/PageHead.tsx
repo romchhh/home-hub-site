@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
-import { Em } from "./Em";
+import { SplitTitle } from "./SplitTitle";
 
 export function PageHead({
   locale,
@@ -35,15 +35,7 @@ export function PageHead({
         {breadcrumb}
       </div>
       <div className="catalog-title">
-        <h1>
-          {title}
-          {titleEm ? (
-            <>
-              <br />
-              <Em>{titleEm}</Em>
-            </>
-          ) : null}
-        </h1>
+        <SplitTitle as="h1" title={title} titleEm={titleEm} />
         {lead ? <p className="page-lead">{lead}</p> : null}
       </div>
     </section>

@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
           <div className="mb-8 flex items-center gap-3">
             <Image
               src="/icon.png"
-              alt=""
+              alt="Home Hub"
               width={44}
               height={44}
               className="h-11 w-11 rounded-xl object-contain shadow-sm ring-1 ring-white/15"

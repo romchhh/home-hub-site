@@ -59,7 +59,7 @@ export default async function PartnershipsPage({
         <div className="editorial-media">
           <Image
             src="/images/doors/vetro-01/01.jpg"
-            alt=""
+            alt={locale === "sv" ? "Ventro 01 — innerdörr" : "Ventro 01 — interior door"}
             fill
             className="object-cover object-center"
             sizes="(max-width: 768px) 100vw, 50vw"

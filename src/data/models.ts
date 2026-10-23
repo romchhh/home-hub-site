@@ -159,7 +159,7 @@ const raw: {
       },
       {
     slug: "vetro-01",
-    name: "Vetro 01",
+    name: "Ventro 01",
     image: "/images/doors/vetro-01/01.jpg",
     gallery: ["/images/doors/vetro-01/01.jpg"],
     category: "interior",
@@ -176,8 +176,8 @@ const raw: {
       { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
       { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
     ],
-    description: ["Art Decor Vetro 01 med glasinsats — ljusgenomsläpp och tydlig grafisk linje.", "Art Decor Vetro 01 with a glass insert — light and a clear graphic line."],
-    detailIntro: ["Art Decor Vetro 01. Innerdörr med glasinsats — finns i målad och fanérad variant.", "Art Decor Vetro 01. Interior door with a glass insert — available painted or veneered."],
+    description: ["Art Decor Ventro 01 med glasinsats — ljusgenomsläpp och tydlig grafisk linje.", "Art Decor Ventro 01 with a glass insert — light and a clear graphic line."],
+    detailIntro: ["Art Decor Ventro 01. Innerdörr med glasinsats — finns i målad och fanérad variant.", "Art Decor Ventro 01. Interior door with a glass insert — available painted or veneered."],
         detailBullets: [
       {
         title: ["Koplanär karm", "Coplanar frame"],
@@ -359,7 +359,7 @@ const raw: {
   },
   {
     slug: "cossa-01",
-    name: "Cossa 01",
+    name: "Cosa 01",
     image: "/images/doors/cossa-01/01.jpg",
     gallery: ["/images/doors/cossa-01/01.jpg", "/images/doors/cossa-01/02.jpg", "/images/doors/cossa-01/03.jpg"],
     category: "interior",
@@ -376,8 +376,8 @@ const raw: {
       { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
       { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
     ],
-    description: ["Neo Classic Cossa 01 — klassiska proportioner i modern, målad finish.", "Neo Classic Cossa 01 — classic proportions in a modern painted finish."],
-    detailIntro: ["Neo Classic Cossa 01, målad. Klassisk form i modern Art/Neo Classic-linje.", "Neo Classic Cossa 01, painted. Classic form in a modern Art/Neo Classic line."],
+    description: ["Neo Classic Cosa 01 — klassiska proportioner i modern, målad finish.", "Neo Classic Cosa 01 — classic proportions in a modern painted finish."],
+    detailIntro: ["Neo Classic Cosa 01, målad. Klassisk form i modern Art/Neo Classic-linje.", "Neo Classic Cosa 01, painted. Classic form in a modern Art/Neo Classic line."],
         detailBullets: [
       {
         title: ["Koplanär karm", "Coplanar frame"],
@@ -459,7 +459,7 @@ const raw: {
   },
   {
     slug: "vetro-plus-05",
-    name: "Vetro Plus 05",
+    name: "Ventro Plus 05",
     image: "/images/doors/vetro-plus-05/01.jpg",
     gallery: ["/images/doors/vetro-plus-05/01.jpg"],
     category: "interior",
@@ -476,8 +476,8 @@ const raw: {
       { hex: "#f5f0e6", name: ["RAL 9001", "RAL 9001"] },
       { hex: "#f7f7f2", name: ["RAL 9010", "RAL 9010"] },
     ],
-    description: ["Vetro Plus 05 med glas — mer ljus och ett mer uttalat Art Decor-uttryck.", "Vetro Plus 05 with glass — more light and a stronger Art Decor expression."],
-    detailIntro: ["Art Decor Vetro Plus 05. Glasdörr med mer närvaro — målad eller fanérad.", "Art Decor Vetro Plus 05. A glass door with more presence — painted or veneered."],
+    description: ["Ventro Plus 05 med glas — mer ljus och ett mer uttalat Art Decor-uttryck.", "Ventro Plus 05 with glass — more light and a stronger Art Decor expression."],
+    detailIntro: ["Art Decor Ventro Plus 05. Glasdörr med mer närvaro — målad eller fanérad.", "Art Decor Ventro Plus 05. A glass door with more presence — painted or veneered."],
         detailBullets: [
       {
         title: ["Koplanär karm", "Coplanar frame"],
@@ -1240,15 +1240,15 @@ const raw: {
     label: ["Golv", "Flooring"],
     material: ["Ingenjörsparkett ek/valnöt/ask", "Engineered parquet oak/walnut/ash"],
     finish: ["UV-lack eller olja", "UV lacquer or oil"],
-    hardware: ["1 stav · parallell läggning", "1-strip · parallel layout"],
+    hardware: ["Läggning: 1-stav, parallell", "Laying: 1-strip, parallel"],
     colors: [
       { hex: "#cbb89a", name: ["Naturlig ek", "Natural oak"] },
       { hex: "#a89478", name: ["Varm ek", "Warm oak"] },
       { hex: "#8a7358", name: ["Rökig ek", "Smoky oak"] },
     ],
     description: [
-      "1 stav — minimalistisk planka med pålitligt not- och spontsystem längs hela omkretsen.",
-      "1-strip — a minimalist plank with a reliable tongue-and-groove joint around the full perimeter.",
+      "1 stav — minimalistisk planka med med not och spont på alla fyra sidor.",
+      "1-strip — a minimalist plank with with tongue and groove on all four sides.",
     ],
     detailIntro: [
       "Enstav är flerskiktsparkett för raka, lugna golvytor. Ytskikt 3–6 mm ek, valnöt eller ask på plywoodbas — stabilt även vid temperatur- och fuktväxlingar, och kompatibelt med golvvärme upp till 28 °C.",
@@ -1303,7 +1303,7 @@ const raw: {
     hardware: ["Chevron 45° / 60°", "Chevron 45° / 60°"],
     colors: [
       { hex: "#d4c4ad", name: ["Naturlig ek", "Natural oak"] },
-      { hex: "#c4b49a", name: ["Honungs ek", "Honey oak"] },
+      { hex: "#c4b49a", name: ["Honungsek", "Honey oak"] },
       { hex: "#b5a48a", name: ["Varm sand", "Warm sand"] },
     ],
     description: [
@@ -1584,7 +1584,7 @@ function mapModel(m: (typeof raw)[number], locale: Locale): DoorModel {
     image: m.image,
     gallery: m.gallery,
     category: m.category,
-    priceSek: m.priceSek,
+    priceSek: 0,
     label: m.label[i],
     material: m.material[i],
     finish: m.finish[i],
@@ -1638,7 +1638,7 @@ export function getStaticCatalogSeed() {
         value_en: s.value[1],
       })),
     ),
-    price_sek: m.priceSek,
+    price_sek: 0,
     featured: idx < 3 ? 1 : 0,
     published: 1,
     priority: (idx + 1) * 10,

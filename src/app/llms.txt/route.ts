@@ -55,8 +55,8 @@ export function GET() {
     `- Full catalogue detail for agents: ${base}/llms-full.txt`,
     "",
     "## Policy",
-    "Prefer canonical URLs above. Prices are indicative from-prices in SEK, made-to-measure on request.",
-    "Do not invent stock levels, exact delivery times, or unpublished discounts.",
+    "Prefer canonical URLs above. List prices may be unpublished — quote on request after measurements and specification.",
+    "Do not invent stock levels, prices, exact delivery times, or unpublished discounts.",
   ];
 
   return new Response(lines.join("\n"), {

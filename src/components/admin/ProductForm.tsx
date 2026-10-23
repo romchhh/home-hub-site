@@ -680,7 +680,7 @@ export default function ProductForm({
         </div>
       </Section>
 
-      <Section title="Visibility" hint="Price, order and publish state">
+      <Section title="Visibility" hint="Price (0 = hidden on site; when set, shown with inkl. moms), order and publish state">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Price (SEK)">
             <input

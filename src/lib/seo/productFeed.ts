@@ -1,4 +1,5 @@
 import { getModels } from "@/lib/catalog";
+import { isPricePublished } from "@/lib/formatPrice";
 import { absoluteMediaUrl } from "@/lib/seo/absoluteMedia";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 import type { Locale } from "@/lib/i18n";
@@ -14,6 +15,7 @@ function escapeXml(value: string): string {
 
 function productType(category: string, locale: Locale): string {
   const map: Record<string, { sv: string; en: string }> = {
+    entrance: { sv: "Dörrar > Ytterdörrar", en: "Doors > Entrance doors" },
     interior: { sv: "Dörrar > Innerdörrar", en: "Doors > Interior doors" },
     hidden: { sv: "Dörrar > Dolda dörrar", en: "Doors > Hidden doors" },
     flooring: { sv: "Golv > Parkett", en: "Flooring > Parquet" },
@@ -34,6 +36,7 @@ export function buildGoogleProductFeedXml(locale: Locale = "sv"): string {
       : `${siteName} — product catalogue`;
 
   const items = models
+    .filter((model) => isPricePublished(model.priceSek))
     .map((model) => {
       const link = absoluteUrl(locale, `/catalog/${model.slug}`);
       const image = absoluteMediaUrl(model.image);
@@ -78,8 +81,8 @@ ${additional ? `${additional}\n` : ""}      <g:availability>preorder</g:availabi
     <link>${escapeXml(base)}</link>
     <description>${escapeXml(
       locale === "sv"
-        ? "Produktfeed för Home Hub showroom — dörrar och golv. Priser från, måttanpassning på förfrågan."
-        : "Product feed for Home Hub showroom — doors and flooring. From-prices; made-to-measure on request.",
+        ? "Produktfeed för Home Hub showroom — dörrar och golv. Måttanpassning på förfrågan."
+        : "Product feed for Home Hub showroom — doors and flooring. Made-to-measure on request.",
     )}</description>
     <lastBuildDate>${now}</lastBuildDate>
 ${items}
@@ -104,7 +107,7 @@ export function buildProductFeedJson(locale: Locale = "sv") {
       material: model.material,
       finish: model.finish,
       hardware: model.hardware,
-      priceSek: model.priceSek,
+      ...(isPricePublished(model.priceSek) ? { priceSek: model.priceSek } : {}),
       url: absoluteUrl(locale, `/catalog/${model.slug}`),
       urlEn: absoluteUrl("en", `/catalog/${model.slug}`),
       urlSv: absoluteUrl("sv", `/catalog/${model.slug}`),

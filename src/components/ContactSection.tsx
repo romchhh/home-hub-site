@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import type { Dictionary } from "@/dictionaries";
 import { useRequest } from "@/context/RequestContext";
-import { Em } from "./Em";
+import { SplitTitle } from "./SplitTitle";
 import { Pill } from "./Pill";
 
 function contactSourceFromPath(pathname: string): string {
@@ -30,11 +30,7 @@ export function ContactSection({ dict }: { dict: Dictionary }) {
     <section className="site-section--flush" aria-label={c.title}>
       <div className="contact">
         <div className="contact-copy">
-          <h2>
-            {c.title}
-            <br />
-            <Em>{c.titleEm}</Em>
-          </h2>
+          <SplitTitle as="h2" title={c.title} titleEm={c.titleEm} />
           <p>{c.text}</p>
         </div>
         <Pill
@@ -47,7 +43,7 @@ export function ContactSection({ dict }: { dict: Dictionary }) {
             })
           }
         >
-          {c.cta}
+          {dict.nav.contactCta}
         </Pill>
       </div>
     </section>

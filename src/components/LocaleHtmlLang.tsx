@@ -1,12 +1,19 @@
-"use client";
-
-import { useEffect } from "react";
 import type { Locale } from "@/lib/i18n";
+import { LocaleHtmlLangClient } from "./LocaleHtmlLangClient";
 
-/** Keeps `<html lang>` in sync without reading request headers (allows static pages). */
+/**
+ * Sets `<html lang>` for the active locale without making the root layout dynamic.
+ * Inline script runs before paint / for JS-capable crawlers; effect covers client nav.
+ */
 export function LocaleHtmlLang({ locale }: { locale: Locale }) {
-  useEffect(() => {
-    document.documentElement.lang = locale;
-  }, [locale]);
-  return null;
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.lang=${JSON.stringify(locale)};`,
+        }}
+      />
+      <LocaleHtmlLangClient locale={locale} />
+    </>
+  );
 }

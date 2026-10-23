@@ -50,9 +50,9 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  // Default lang; locale routes update via LocaleHtmlLang (avoids headers() → keeps SSG).
+  // Default lang=sv; locale layout sets the real language via LocaleHtmlLang (keeps SSG).
   return (
-    <html lang="sv" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="sv" className={`${geistSans.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

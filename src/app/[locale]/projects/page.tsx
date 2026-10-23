@@ -60,7 +60,7 @@ export default async function ProjectsPage({ params }: PageProps<"/[locale]/proj
             title={row.title}
             text={row.text}
             note={p.projectNote}
-            cta={p.discuss}
+            cta={dict.nav.contactCta}
             prefill={row.value}
           />
         ))}

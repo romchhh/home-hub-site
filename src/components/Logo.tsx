@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
+import { LOGO_ALT } from "@/lib/imageAlt";
 import { localePath } from "@/lib/i18n";
 
 type LogoProps = {
@@ -20,7 +21,7 @@ export function Logo({ locale, className = "" }: LogoProps) {
     >
       <Image
         src="/logos/wordmark-dark.webp"
-        alt=""
+        alt={LOGO_ALT}
         width={WORDMARK_WIDTH}
         height={WORDMARK_HEIGHT}
         priority

@@ -8,7 +8,6 @@ import {
   CATALOG_PRICE_STEP,
   type CatalogFilterState,
   type CatalogPriceBounds,
-  getColorFilterOptions,
   getCatalogPriceBounds,
   getMaterialFilterOptions,
   snapCatalogPrice,
@@ -171,12 +170,7 @@ export function CatalogFilterSections({
 }) {
   const c = dict.catalog;
   const materials = getMaterialFilterOptions(models);
-  const colors = getColorFilterOptions(models);
   const priceBounds = getCatalogPriceBounds(models);
-  const activeColorName =
-    value.colorHex === "all"
-      ? null
-      : colors.find((color) => color.hex.toLowerCase() === value.colorHex.toLowerCase())?.name;
   const categoryOptions: { slug: DoorCategory; name: string }[] = [
     { slug: "all", name: c.filters.all },
     ...categories.map((cat) => ({ slug: cat.slug as DoorCategory, name: cat.name })),
@@ -198,16 +192,18 @@ export function CatalogFilterSections({
         </FilterSection>
       ) : null}
 
-      <section className="catalog-filter-section">
-        <h3 className="catalog-filter-section-label">{c.filterPriceLabel}</h3>
-        <CatalogPriceRangeSlider
-          locale={locale}
-          bounds={priceBounds}
-          value={{ priceMin: value.priceMin, priceMax: value.priceMax }}
-          rangeToLabel={c.priceRangeTo}
-          onChange={(price) => onChange({ ...value, ...price })}
-        />
-      </section>
+      {priceBounds ? (
+        <section className="catalog-filter-section">
+          <h3 className="catalog-filter-section-label">{c.filterPriceLabel}</h3>
+          <CatalogPriceRangeSlider
+            locale={locale}
+            bounds={priceBounds}
+            value={{ priceMin: value.priceMin, priceMax: value.priceMax }}
+            rangeToLabel={c.priceRangeTo}
+            onChange={(price) => onChange({ ...value, ...price })}
+          />
+        </section>
+      ) : null}
 
       <FilterSection label={c.filterMaterialLabel}>
         <CatalogFilterChip
@@ -227,29 +223,6 @@ export function CatalogFilterSections({
         ))}
       </FilterSection>
 
-      <section className="catalog-filter-section">
-        <h3 className="catalog-filter-section-label">{c.filterColorLabel}</h3>
-        <div className="catalog-filter-colors">
-          <CatalogColorSwatch
-            active={value.colorHex === "all"}
-            hex="all"
-            allLabel={c.filterColorAll}
-            onClick={() => onChange({ ...value, colorHex: "all" })}
-          />
-          {colors.map((color) => (
-            <CatalogColorSwatch
-              key={color.hex}
-              active={value.colorHex.toLowerCase() === color.hex.toLowerCase()}
-              hex={color.hex}
-              name={color.name}
-              onClick={() => onChange({ ...value, colorHex: color.hex })}
-            />
-          ))}
-        </div>
-        {activeColorName ? (
-          <p className="catalog-filter-color-caption">{activeColorName}</p>
-        ) : null}
-      </section>
     </>
   );
 }

@@ -3506,26 +3506,84 @@ button.pill-solid span {
   object-position: 70% center;
 }
 
-.hero-badge {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  left: 16px;
+.hero-visual {
   display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 13px;
-  border-radius: 18px;
-  background: var(--badge-glass);
-  font-size: 11px;
-  line-height: 1.35;
-  backdrop-filter: blur(10px);
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
 }
 
-.hero-badge-sub {
-  max-width: 100px;
-  text-align: right;
+.hero-showroom-caption {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: var(--font-body-sm);
+  line-height: 1.45;
+  pointer-events: none;
+}
+
+.hero-showroom-caption strong {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.hero-showroom-caption span {
   color: var(--muted);
+}
+
+.floating-contact-wrap {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  pointer-events: none;
+}
+
+.floating-contact-btn {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  background: var(--olive);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--ink) 22%, transparent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.floating-contact-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
+.contact-field--textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.contact-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: var(--font-body-sm);
+  line-height: 1.45;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.contact-consent input {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.footer-company {
+  margin: 0;
+  line-height: 1.5;
 }
 
 @media (min-width: 641px) {
@@ -3558,18 +3616,6 @@ button.pill-solid span {
     border-radius: 210px 210px 32px 32px;
   }
 
-  .hero-badge {
-    right: 25px;
-    bottom: 25px;
-    left: 25px;
-    padding: 19px 22px;
-    border-radius: 24px;
-    font-size: inherit;
-  }
-
-  .hero-badge-sub {
-    max-width: none;
-  }
 }
 
 @media (min-width: 1100px) {
@@ -4091,7 +4137,7 @@ button.pill-solid span {
   }
 
   .footer-grid {
-    grid-template-columns: minmax(12rem, 1.15fr) minmax(0, 1fr) minmax(14rem, 1.2fr);
+    grid-template-columns: minmax(12rem, 1.15fr) minmax(0, 1fr) minmax(14rem, 1.2fr) minmax(10rem, 0.85fr);
     gap: clamp(2rem, 4vw, 4rem);
     align-items: start;
   }

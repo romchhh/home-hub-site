@@ -13,8 +13,10 @@ export const siteKeywords = {
     "dolda dörrar",
     "parkett",
     "showroom Stockholm",
+    "Sundbyberg",
     "HOME HUB",
     "Danapris Doors",
+    "Straj",
     "golv Stockholm",
   ],
   en: [
@@ -24,8 +26,10 @@ export const siteKeywords = {
     "concealed doors",
     "parquet",
     "showroom Stockholm",
+    "Sundbyberg",
     "HOME HUB",
     "Danapris Doors",
+    "Straj",
     "flooring Stockholm",
   ],
 } as const;
@@ -43,6 +47,23 @@ type PageMetadataInput = {
   ogType?: "website" | "article";
 };
 
+/** Strip trailing brand suffixes so we never emit "… | Home Hub | HOME HUB". */
+function withSiteBrand(title: string): string {
+  const cleaned = title
+    .replace(/\s*[|·–-]\s*(HOME\s*HUB|Home\s*Hub)\s*$/i, "")
+    .trim();
+  if (!cleaned) return siteName;
+  return `${cleaned} | ${siteName}`;
+}
+
+function clampDescription(text: string, max = 160): string {
+  const compact = text.replace(/\s+/g, " ").trim();
+  if (compact.length <= max) return compact;
+  const cut = compact.slice(0, max - 1);
+  const at = cut.lastIndexOf(" ");
+  return `${(at > 80 ? cut.slice(0, at) : cut).trimEnd()}…`;
+}
+
 export function createPageMetadata({
   locale,
   path = "",
@@ -55,13 +76,14 @@ export function createPageMetadata({
 }: PageMetadataInput): Metadata {
   const canonical = absoluteUrl(locale, path);
   const ogLocale = locale === "sv" ? "sv_SE" : "en_GB";
-  const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+  const fullTitle = withSiteBrand(title);
+  const metaDescription = clampDescription(description);
   const imageUrl = absoluteMediaUrl(image);
   const resolvedKeywords = keywords ?? [...siteKeywords[locale]];
 
   return {
     title: { absolute: fullTitle },
-    description,
+    description: metaDescription,
     keywords: resolvedKeywords,
     applicationName: siteName,
     authors: [{ name: siteName, url: getSiteUrl() }],
@@ -92,7 +114,7 @@ export function createPageMetadata({
       url: canonical,
       siteName,
       title: fullTitle,
-      description,
+      description: metaDescription,
       images: [
         {
           url: imageUrl,
@@ -105,8 +127,8 @@ export function createPageMetadata({
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
-      description,
-      images: [imageUrl],
+      description: metaDescription,
+      images: [{ url: imageUrl, alt: fullTitle }],
     },
     robots: noIndex
       ? {

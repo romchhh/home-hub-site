@@ -38,6 +38,7 @@ export function ContactRequestForm({
   );
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [sending, setSending] = useState(false);
+  const [consent, setConsent] = useState(false);
   const formId = useId();
 
   const lead = useMemo(() => {
@@ -66,11 +67,14 @@ export function ContactRequestForm({
           phone: data.get("phone"),
           email: data.get("email"),
           model,
+          message: data.get("message"),
           source,
+          consent: data.get("consent") === "on",
         }),
       });
       if (!res.ok) throw new Error("failed");
       form.reset();
+      setConsent(false);
       setStatus("success");
       onSuccess?.();
     } catch {
@@ -141,7 +145,28 @@ export function ContactRequestForm({
         placeholder={r.emailPlaceholder}
         aria-label={r.emailLabel}
       />
-      <button type="submit" className="contact-form-submit" disabled={sending}>
+      <label className="sr-only" htmlFor={`${formId}-message`}>
+        {r.messageLabel}
+      </label>
+      <textarea
+        id={`${formId}-message`}
+        name="message"
+        rows={4}
+        className="contact-field contact-field--textarea"
+        placeholder={r.messagePlaceholder}
+        aria-label={r.messageLabel}
+      />
+      <label className="contact-consent">
+        <input
+          type="checkbox"
+          name="consent"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          required
+        />
+        <span>{r.consentLabel}</span>
+      </label>
+      <button type="submit" className="contact-form-submit" disabled={sending || !consent}>
         <span>{sending ? "…" : r.submit}</span>
         <ArrowIcon className="contact-form-submit-arrow" />
       </button>

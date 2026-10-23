@@ -79,7 +79,7 @@ export default async function AdminInquiryDetailPage({
                 <div className="relative h-24 w-16 overflow-hidden rounded-lg bg-gray-100">
                   <Image
                     src={mediaUrl(linkedProduct.image)}
-                    alt=""
+                    alt={linkedProduct.name}
                     fill
                     className="object-cover"
                     sizes="64px"

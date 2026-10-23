@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { Em } from "./Em";
+import { SplitTitle } from "./SplitTitle";
 import { Pill } from "./Pill";
 
 type DetailBandProps = {
@@ -27,22 +27,18 @@ export function DetailBand({
       <div className="detail-band-media relative">
         <Image
           src={imageSrc}
-          alt=""
+          alt={
+            typeof title === "string"
+              ? [title, titleEm].filter(Boolean).join(" ")
+              : "Product detail"
+          }
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
       <div className="detail-band-copy">
-        <h2>
-          {title}
-          {titleEm ? (
-            <>
-              <br />
-              <Em>{titleEm}</Em>
-            </>
-          ) : null}
-        </h2>
+        <SplitTitle as="h2" title={title} titleEm={titleEm} />
         <div className="detail-band-body">{children}</div>
         <Pill light onClick={onCta}>
           {ctaLabel}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LOGO_ALT } from "@/lib/imageAlt";
 import { localePath, type Locale } from "@/lib/i18n";
 
 type NotFoundViewProps = {
@@ -34,7 +35,7 @@ export function NotFoundView({
         >
           <Image
             src="/logos/wordmark-dark.webp"
-            alt=""
+            alt={LOGO_ALT}
             width={200}
             height={70}
             className="not-found-wordmark"

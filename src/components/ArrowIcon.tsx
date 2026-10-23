@@ -5,7 +5,7 @@ export function ArrowIcon({ className = "" }: { className?: string }) {
     <span className={`arrow-icon ${className}`.trim()} aria-hidden>
       <Image
         src="/images/arrow-up-right.svg"
-        alt=""
+        alt="Arrow"
         width={18}
         height={18}
         className="block"

@@ -56,12 +56,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/admin/"],
       },
     ],
-    sitemap: [
-      `${siteUrl}/sitemap.xml`,
-      `${siteUrl}/sitemaps/pages.xml`,
-      `${siteUrl}/sitemaps/products.xml`,
-      `${siteUrl}/sitemaps/images.xml`,
-    ],
-    host: siteUrl.replace(/^https?:\/\//, ""),
+    // Child sitemaps are linked from the index — listing only the index avoids duplicate discovery.
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 }
