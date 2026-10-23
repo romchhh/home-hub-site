@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "100mb",
     },
+    // Marks this install as the security-advisory upgrade path (16.4.0 → 16.4.2).
+    agentUpgrade: "security",
   },
   async redirects() {
     return [
