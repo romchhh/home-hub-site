@@ -1,22 +1,12 @@
-import Script from "next/script";
+import { GoogleAnalytics as NextGoogleAnalytics } from "@next/third-parties/google";
 
-const GA_MEASUREMENT_ID = "G-BRDQP3CR67";
+/** GA4 measurement ID for stream “home” (https://home-hub.se). */
+export const GA_MEASUREMENT_ID = "G-BRDQP3CR67";
 
+/**
+ * Official Next.js GA4 loader — must sit in the root layout (not inside client providers)
+ * so gtag.js actually runs for Google’s tag diagnostics.
+ */
 export function GoogleAnalytics() {
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}');
-        `}
-      </Script>
-    </>
-  );
+  return <NextGoogleAnalytics gaId={GA_MEASUREMENT_ID} />;
 }
