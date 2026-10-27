@@ -4,6 +4,7 @@ import { ScrollToTopOnNavigate } from "@/components/ScrollToTopOnNavigate";
 import { notFound } from "next/navigation";
 import { FloatingContactButton } from "@/components/FloatingContactButton";
 import { Footer } from "@/components/Footer";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/Header";
 import { RequestProvider } from "@/context/RequestContext";
 import { SavedItemsProvider } from "@/context/SavedItemsContext";
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
   return (
     <RequestProvider dict={dict}>
       <SavedItemsProvider>
+        <GoogleAnalytics />
         <LocaleHtmlLang locale={locale} />
         <ScrollToTopOnNavigate />
         <JsonLd
