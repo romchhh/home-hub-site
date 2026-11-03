@@ -1,20 +1,28 @@
-import Link from "next/link";
+"use client";
+
 import type { Dictionary } from "@/dictionaries";
+import { useRequest } from "@/context/RequestContext";
 import type { Locale } from "@/lib/i18n";
-import { localePath } from "@/lib/i18n";
 
 export function FloatingContactButton({
-  locale,
   dict,
 }: {
   locale: Locale;
   dict: Dictionary;
 }) {
+  const { openRequest } = useRequest();
+
   return (
     <div className="floating-contact-wrap">
-      <Link href={localePath(locale, "/contact")} className="floating-contact-btn">
+      <button
+        type="button"
+        className="floating-contact-btn"
+        onClick={() =>
+          openRequest({ intent: "general", source: "Floating · Kontakta oss" })
+        }
+      >
         {dict.nav.contactCta}
-      </Link>
+      </button>
     </div>
   );
 }

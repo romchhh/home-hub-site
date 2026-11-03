@@ -339,6 +339,13 @@ const sv = {
     placeholder:
       "Fullständig text kommer att publiceras här. Kontakta oss om du har frågor under tiden.",
   },
+  cookieBanner: {
+    title: "Vi använder cookies",
+    text: "Vi använder nödvändiga cookies för att webbplatsen ska fungera, och analyscookies för att förstå hur den används. Du kan acceptera alla eller endast nödvändiga.",
+    acceptAll: "Acceptera alla",
+    essentialOnly: "Endast nödvändiga",
+    learnMore: "Läs mer om cookies",
+  },
 };
 
 export type Dictionary = typeof sv;
@@ -681,6 +688,13 @@ const en: Dictionary = {
     cookiesTitle: "Cookies",
     placeholder:
       "The full text will be published here. Contact us if you have questions in the meantime.",
+  },
+  cookieBanner: {
+    title: "We use cookies",
+    text: "We use necessary cookies to make the site work, and analytics cookies to understand how it is used. You can accept all or necessary cookies only.",
+    acceptAll: "Accept all",
+    essentialOnly: "Necessary only",
+    learnMore: "Learn more about cookies",
   },
 };
 

@@ -2,6 +2,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { LocaleHtmlLang } from "@/components/LocaleHtmlLang";
 import { ScrollToTopOnNavigate } from "@/components/ScrollToTopOnNavigate";
 import { notFound } from "next/navigation";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import { FloatingContactButton } from "@/components/FloatingContactButton";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
         </main>
         <Footer locale={locale} dict={dict} />
         <FloatingContactButton locale={locale} dict={dict} />
+        <CookieConsentBanner locale={locale} dict={dict} />
       </SavedItemsProvider>
     </RequestProvider>
   );
