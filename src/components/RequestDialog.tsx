@@ -23,6 +23,15 @@ export function RequestDialog({ dict, open, options, onClose }: RequestDialogPro
     if (open) setSent(false);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
@@ -40,19 +49,40 @@ export function RequestDialog({ dict, open, options, onClose }: RequestDialogPro
         className={`contact-sheet${sent ? " contact-sheet--success" : ""}`}
       >
         <div className="contact-sheet-handle" aria-hidden />
-        {!sent ? (
-          <h2 id="contact-sheet-title" className="contact-sheet-title">
-            {r.dialogTitle}
-          </h2>
-        ) : null}
-        <ContactRequestForm
-          key={`${options.intent}-${options.model}-${options.source}-${open}`}
-          dict={dict}
-          options={options}
-          fillSuccess
-          onSuccess={() => setSent(true)}
-          onDismiss={onClose}
-        />
+        <div className="contact-sheet-header">
+          {!sent ? (
+            <h2 id="contact-sheet-title" className="contact-sheet-title">
+              {r.dialogTitle}
+            </h2>
+          ) : (
+            <span className="contact-sheet-title-spacer" aria-hidden />
+          )}
+          <button
+            type="button"
+            className="contact-sheet-close"
+            aria-label={dict.nav.close}
+            onClick={onClose}
+          >
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path
+                d="M3.5 3.5l9 9M12.5 3.5l-9 9"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="contact-sheet-body">
+          <ContactRequestForm
+            key={`${options.intent}-${options.model}-${options.source}-${open}`}
+            dict={dict}
+            options={options}
+            fillSuccess
+            onSuccess={() => setSent(true)}
+            onDismiss={onClose}
+          />
+        </div>
         {sent ? (
           <span id="contact-sheet-success" className="sr-only">
             {r.saved}
