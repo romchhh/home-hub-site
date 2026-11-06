@@ -2,11 +2,11 @@ import fs from "fs";
 import path from "path";
 import PageBreadcrumb from "@/components/admin/PageBreadCrumb";
 import MediaManager from "@/components/admin/MediaManager";
+import { uploadDir } from "@/lib/uploadStorage";
 
 export const dynamic = "force-dynamic";
 
 export default function AdminMediaPage() {
-  const uploadDir = path.join(process.cwd(), "public", "uploads");
   let initial: {
     filename: string;
     url: string;

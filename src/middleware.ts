@@ -85,6 +85,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   // Skip upload API so large multipart bodies are not buffered/truncated by middleware.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|api/admin/uploads).*)",
+    "/((?!_next/static|_next/image|favicon.ico|api/admin/uploads|uploads/).*)",
   ],
 };

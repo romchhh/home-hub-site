@@ -4,8 +4,7 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 import { randomBytes } from "crypto";
-
-const uploadDir = path.join(process.cwd(), "public", "uploads");
+import { uploadDir } from "@/lib/uploadStorage";
 
 export async function GET(request: NextRequest) {
   const denied = requireAdmin(request);
