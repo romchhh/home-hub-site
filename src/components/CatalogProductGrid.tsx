@@ -80,9 +80,19 @@ export function CatalogProductGrid({
   const activeFilterCount = countActiveCatalogFilters(appliedFilters, priceBounds);
   const hasActiveQuery = searchQuery.trim().length > 0 || activeFilterCount > 0;
 
+  const selectedCategory = useMemo(
+    () => categories.find((cat) => cat.slug === appliedFilters.category) ?? null,
+    [categories, appliedFilters.category],
+  );
+  const openSubcategories = selectedCategory?.subcategories?.length
+    ? selectedCategory.subcategories
+    : [];
+
   /** Sectioned "Alla modeller" browse mode — sticky jump bar applies here. */
   const sectionMode =
-    appliedFilters.category === "all" && searchQuery.trim().length === 0;
+    appliedFilters.category === "all" &&
+    appliedFilters.subcategory === "all" &&
+    searchQuery.trim().length === 0;
 
   const sections = useMemo(
     () => (sectionMode ? buildCategorySections(categories, visible) : []),
@@ -211,23 +221,75 @@ export function CatalogProductGrid({
           </button>
         </div>
 
-        <div className="catalog-category-track" role="group" aria-label={c.filterCategoryLabel}>
-          {(
-            [
-              { slug: "all" as const, name: c.filters.all },
-              ...categories.map((cat) => ({ slug: cat.slug as DoorCategory, name: cat.name })),
-            ] as { slug: DoorCategory; name: string }[]
-          ).map((cat) => (
-            <CatalogFilterChip
-              key={cat.slug}
-              active={appliedFilters.category === cat.slug}
-              onClick={() =>
-                setAppliedFilters((prev) => ({ ...prev, category: cat.slug }))
-              }
+        <div className="catalog-category-nav">
+          <div className="catalog-category-track" role="group" aria-label={c.filterCategoryLabel}>
+            {(
+              [
+                { slug: "all" as const, name: c.filters.all },
+                ...categories.map((cat) => ({
+                  slug: cat.slug as DoorCategory,
+                  name: cat.name,
+                  hasSubs: Boolean(cat.subcategories?.length),
+                })),
+              ] as { slug: DoorCategory; name: string; hasSubs?: boolean }[]
+            ).map((cat) => {
+              const active = appliedFilters.category === cat.slug;
+              return (
+                <CatalogFilterChip
+                  key={cat.slug}
+                  active={active}
+                  onClick={() =>
+                    setAppliedFilters((prev) => ({
+                      ...prev,
+                      category: cat.slug,
+                      subcategory: "all",
+                    }))
+                  }
+                >
+                  {cat.name}
+                  {cat.hasSubs ? (
+                    <span
+                      className={`catalog-category-chevron${active ? " catalog-category-chevron--open" : ""}`}
+                      aria-hidden
+                    >
+                      ▾
+                    </span>
+                  ) : null}
+                </CatalogFilterChip>
+              );
+            })}
+          </div>
+
+          {openSubcategories.length > 0 ? (
+            <div
+              className="catalog-subcategory-track"
+              role="group"
+              aria-label={c.filterSubcategoryLabel}
             >
-              {cat.name}
-            </CatalogFilterChip>
-          ))}
+              <CatalogFilterChip
+                active={appliedFilters.subcategory === "all"}
+                onClick={() =>
+                  setAppliedFilters((prev) => ({ ...prev, subcategory: "all" }))
+                }
+              >
+                {c.filterSubcategoryAll}
+              </CatalogFilterChip>
+              {openSubcategories.map((sub) => (
+                <CatalogFilterChip
+                  key={sub.slug}
+                  active={appliedFilters.subcategory === sub.slug}
+                  onClick={() =>
+                    setAppliedFilters((prev) => ({
+                      ...prev,
+                      subcategory: sub.slug,
+                    }))
+                  }
+                >
+                  {sub.name}
+                </CatalogFilterChip>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <div className="catalog-controls-meta">

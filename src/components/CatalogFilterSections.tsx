@@ -175,6 +175,8 @@ export function CatalogFilterSections({
     { slug: "all", name: c.filters.all },
     ...categories.map((cat) => ({ slug: cat.slug as DoorCategory, name: cat.name })),
   ];
+  const selectedCategory = categories.find((cat) => cat.slug === value.category);
+  const subcategories = selectedCategory?.subcategories || [];
 
   return (
     <>
@@ -184,9 +186,31 @@ export function CatalogFilterSections({
             <CatalogFilterChip
               key={cat.slug}
               active={value.category === cat.slug}
-              onClick={() => onChange({ ...value, category: cat.slug })}
+              onClick={() =>
+                onChange({ ...value, category: cat.slug, subcategory: "all" })
+              }
             >
               {cat.name}
+            </CatalogFilterChip>
+          ))}
+        </FilterSection>
+      ) : null}
+
+      {showCategory && subcategories.length > 0 ? (
+        <FilterSection label={c.filterSubcategoryLabel}>
+          <CatalogFilterChip
+            active={value.subcategory === "all"}
+            onClick={() => onChange({ ...value, subcategory: "all" })}
+          >
+            {c.filterSubcategoryAll}
+          </CatalogFilterChip>
+          {subcategories.map((sub) => (
+            <CatalogFilterChip
+              key={sub.slug}
+              active={value.subcategory === sub.slug}
+              onClick={() => onChange({ ...value, subcategory: sub.slug })}
+            >
+              {sub.name}
             </CatalogFilterChip>
           ))}
         </FilterSection>

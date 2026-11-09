@@ -10,6 +10,8 @@ export type CatalogPriceBounds = {
 
 export type CatalogFilterState = {
   category: DoorCategory;
+  /** `"all"` or a subcategory slug within the selected category. */
+  subcategory: "all" | string;
   priceMin: number;
   priceMax: number;
   material: string;
@@ -43,6 +45,7 @@ export function getCatalogPriceBounds(models: DoorModel[]): CatalogPriceBounds |
 export function createDefaultCatalogFilters(bounds: CatalogPriceBounds | null): CatalogFilterState {
   return {
     category: "all",
+    subcategory: "all",
     priceMin: bounds?.min ?? 0,
     priceMax: bounds?.max ?? 0,
     material: "all",
@@ -93,6 +96,9 @@ export function filterCatalogModels(
 
   return models.filter((model) => {
     if (filters.category !== "all" && model.category !== filters.category) return false;
+    if (filters.subcategory !== "all") {
+      if (model.subcategory?.slug !== filters.subcategory) return false;
+    }
     if (filters.material !== "all" && model.material !== filters.material) return false;
     if (filters.colorHex !== "all") {
       const target = filters.colorHex.toLowerCase();
@@ -110,6 +116,7 @@ export function filterCatalogModels(
     const haystack = [
       model.name,
       model.label,
+      model.subcategory?.name,
       model.material,
       model.finish,
       model.hardware,
@@ -128,6 +135,7 @@ export function countActiveCatalogFilters(
 ): number {
   let count = 0;
   if (filters.category !== "all") count += 1;
+  if (filters.subcategory !== "all") count += 1;
   if (isPriceFilterActive(filters, bounds)) count += 1;
   if (filters.material !== "all") count += 1;
   if (filters.colorHex !== "all") count += 1;
