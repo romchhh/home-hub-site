@@ -71,9 +71,9 @@ export default function AppHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-99999 flex w-full border-gray-200 bg-white lg:border-b">
+    <header className="admin-header sticky top-0 z-99999 flex w-full border-gray-200 lg:border-b">
       <div className="flex w-full grow flex-col items-center justify-between lg:flex-row lg:px-6">
-        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
+        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-3.5">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -151,11 +151,11 @@ export default function AppHeader() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search products…"
-                  className="h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-[280px]"
+                  className="h-11 w-full rounded-xl border border-gray-200 bg-white/80 py-2.5 pr-14 pl-12 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden xl:w-[300px]"
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs text-gray-500"
+                  className="absolute top-1/2 right-2.5 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-[#f7f3ec] px-[7px] py-[4.5px] text-xs text-gray-500"
                 >
                   <span>⌘</span>
                   <span>K</span>

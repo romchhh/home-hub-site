@@ -19,10 +19,12 @@ function StatCard({
   return (
     <Link
       href={href}
-      className="rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-[#3c2412]/30 hover:shadow-sm"
+      className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#3c2412]/25 hover:shadow-md"
     >
       <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-2 text-3xl font-semibold text-gray-900">{value}</p>
+      <p className="mt-2 text-3xl font-semibold tracking-tight text-gray-900">
+        {value}
+      </p>
       {hint ? <p className="mt-1 text-xs text-gray-400">{hint}</p> : null}
     </Link>
   );
@@ -37,7 +39,7 @@ export default function AdminDashboardPage() {
 
       <div
         data-tour="tour-dashboard-actions"
-        className="mb-6 flex flex-wrap gap-2"
+        className="mb-7 flex flex-wrap gap-2"
       >
         <Link href="/admin/products/add" className="admin-btn admin-btn-primary">
           Add product
@@ -71,7 +73,7 @@ export default function AdminDashboardPage() {
 
       <div
         data-tour="tour-dashboard-stats"
-        className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        className="mb-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
       >
         <StatCard
           label="Products"
@@ -99,18 +101,18 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 xl:col-span-2">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm xl:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-base font-semibold text-gray-900">
+            <h3 className="text-base font-semibold tracking-tight text-gray-900">
               Inquiries over time
             </h3>
           </div>
           <DashboardCharts monthly={stats.monthly} />
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-base font-semibold text-gray-900">
+            <h3 className="text-base font-semibold tracking-tight text-gray-900">
               Recent inquiries
             </h3>
             <Link

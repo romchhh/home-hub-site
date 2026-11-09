@@ -105,7 +105,7 @@ export default function AppSidebar() {
   return (
     <aside
       data-tour="tour-sidebar"
-      className={`fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out 
+      className={`admin-sidebar fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 px-4 text-gray-900 transition-all duration-300 ease-in-out 
         ${isExpanded || isMobileOpen ? "w-[290px]" : isHovered ? "w-[290px]" : "w-[90px]"}
         ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0`}
@@ -113,7 +113,7 @@ export default function AppSidebar() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex py-7 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}
+        className={`flex py-6 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}
       >
         <AdminLogo showWordmark={showLabel} />
       </div>
@@ -122,7 +122,7 @@ export default function AppSidebar() {
         <nav className="mb-6">
           <div>
             <h2
-              className={`mb-4 flex text-xs uppercase leading-[20px] text-gray-400 ${
+              className={`mb-3 flex px-1 text-[11px] font-medium tracking-[0.08em] uppercase leading-[20px] text-gray-400 ${
                 !isExpanded && !isHovered
                   ? "lg:justify-center"
                   : "justify-start"
@@ -130,7 +130,7 @@ export default function AppSidebar() {
             >
               {showLabel ? "Menu" : <HorizontaLDots />}
             </h2>
-            <ul className="flex flex-col gap-1.5">
+            <ul className="flex flex-col gap-1">
               {navItems.map((nav, index) => (
                 <li key={nav.name}>
                   {nav.subItems ? (

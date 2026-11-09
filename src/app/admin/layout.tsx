@@ -24,7 +24,7 @@ export default function AdminLayout({
 }) {
   return (
     <div
-      className={`${dmSans.variable} ${dmSans.className} admin-root min-h-screen bg-gray-50 text-gray-900 antialiased`}
+      className={`${dmSans.variable} ${dmSans.className} admin-root min-h-screen antialiased`}
     >
       <SidebarProvider>
         <ClientLayoutShell>{children}</ClientLayoutShell>
