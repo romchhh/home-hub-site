@@ -7,13 +7,13 @@ import {
   type RefObject,
 } from "react";
 
-export type HomeCategoryJumpItem = {
+export type CategoryJumpItem = {
   slug: string;
   name: string;
 };
 
 type JumpBarProps = {
-  sections: HomeCategoryJumpItem[];
+  sections: CategoryJumpItem[];
   activeSlug: string | null;
   ariaLabel: string;
   /** Products block — bar only appears while browsing this zone. */
@@ -29,7 +29,7 @@ function readHeaderOffset() {
   return Number.isFinite(n) ? n : 84;
 }
 
-export function HomeCategoryJumpBar({
+export function CategoryJumpBar({
   sections,
   activeSlug,
   ariaLabel,
@@ -56,9 +56,7 @@ export function HomeCategoryJumpBar({
       if (!gate) return;
       const rect = gate.getBoundingClientRect();
       const header = readHeaderOffset();
-      // Enter after the product block rises into the upper half of the screen.
       const started = rect.top < window.innerHeight * 0.52;
-      // Leave once the whole block has scrolled away under the header.
       const stillHere = rect.bottom > header + 72;
       const next = started && stillHere;
       inProductsRef.current = next;
@@ -120,7 +118,6 @@ export function HomeCategoryJumpBar({
         return;
       }
 
-      // Ignore trackpad jitter
       if (Math.abs(delta) < 8) return;
 
       if (delta < 0) {
@@ -170,16 +167,12 @@ export function HomeCategoryJumpBar({
 
   return (
     <div
-      className={`home-category-jump${visible ? " home-category-jump--visible" : ""}`}
+      className={`category-jump${visible ? " category-jump--visible" : ""}`}
       aria-hidden={!visible}
     >
-      <div className="home-category-jump-shell page-gutter-x">
-        <nav
-          className="home-category-jump-panel"
-          aria-label={ariaLabel}
-          inert={!visible}
-        >
-          <div ref={trackRef} className="home-category-jump-track">
+      <div className="category-jump-shell page-gutter-x">
+        <nav className="category-jump-panel" aria-label={ariaLabel} inert={!visible}>
+          <div ref={trackRef} className="category-jump-track">
             {sections.map((section) => {
               const active = activeSlug === section.slug;
               return (
@@ -189,7 +182,7 @@ export function HomeCategoryJumpBar({
                     btnRefs.current[section.slug] = node;
                   }}
                   type="button"
-                  className={`home-category-jump-chip${active ? " home-category-jump-chip--active" : ""}`}
+                  className={`category-jump-chip${active ? " category-jump-chip--active" : ""}`}
                   aria-current={active ? "true" : undefined}
                   tabIndex={visible ? 0 : -1}
                   onClick={() => onJump(section.slug)}
@@ -203,4 +196,19 @@ export function HomeCategoryJumpBar({
       </div>
     </div>
   );
+}
+
+export function readCategoryJumpHeaderOffset() {
+  return readHeaderOffset();
+}
+
+export function scrollToCategorySection(sectionId: string, jumpBarReserve = 64) {
+  const el = document.getElementById(sectionId);
+  if (!el) return;
+  const top =
+    el.getBoundingClientRect().top +
+    window.scrollY -
+    readHeaderOffset() -
+    jumpBarReserve;
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }

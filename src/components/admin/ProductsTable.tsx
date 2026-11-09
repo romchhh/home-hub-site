@@ -15,6 +15,7 @@ export type AdminProductRow = {
   published: number;
   featured: number;
   category_name_en?: string;
+  subcategory_name_en?: string | null;
   priority: number;
 };
 
@@ -42,7 +43,8 @@ export default function ProductsTable({
       return (
         p.name.toLowerCase().includes(term) ||
         p.slug.toLowerCase().includes(term) ||
-        (p.category_name_en || "").toLowerCase().includes(term)
+        (p.category_name_en || "").toLowerCase().includes(term) ||
+        (p.subcategory_name_en || "").toLowerCase().includes(term)
       );
     });
   }, [products, q, statusFilter]);
@@ -174,7 +176,12 @@ export default function ProductsTable({
                     </div>
                   </td>
                   <td className="px-4 py-3 text-gray-600">
-                    {p.category_name_en || "—"}
+                    <div>{p.category_name_en || "—"}</div>
+                    {p.subcategory_name_en ? (
+                      <div className="text-xs text-gray-400">
+                        {p.subcategory_name_en}
+                      </div>
+                    ) : null}
                   </td>
                   <td className="px-4 py-3">
                     <input

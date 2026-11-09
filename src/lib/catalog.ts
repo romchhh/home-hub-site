@@ -8,24 +8,28 @@ import {
   modelSlugs as staticModelSlugs,
 } from "@/data/models";
 import { isAdminDbEnabled } from "@/lib/adminDbEnabled";
-import { listCategories, listProducts } from "@/lib/admin/queries";
+import {
+  listCategories,
+  listProducts,
+  listSubcategories,
+} from "@/lib/admin/queries";
 import type { Locale } from "@/lib/i18n";
 
 export type { CatalogCategoryOption };
 export { getRelatedModels };
 
 const FALLBACK_CATEGORIES: CatalogCategoryOption[] = [
-  { slug: "entrance", name: "Entrance doors", priority: 5 },
-  { slug: "interior", name: "Interior doors", priority: 10 },
-  { slug: "hidden", name: "Hidden doors", priority: 20 },
-  { slug: "flooring", name: "Flooring", priority: 30 },
+  { slug: "entrance", name: "Entrance doors", priority: 5, subcategories: [] },
+  { slug: "interior", name: "Interior doors", priority: 10, subcategories: [] },
+  { slug: "hidden", name: "Hidden doors", priority: 20, subcategories: [] },
+  { slug: "flooring", name: "Flooring", priority: 30, subcategories: [] },
 ];
 
 const FALLBACK_CATEGORIES_SV: CatalogCategoryOption[] = [
-  { slug: "entrance", name: "Ytterdörrar", priority: 5 },
-  { slug: "interior", name: "Innerdörrar", priority: 10 },
-  { slug: "hidden", name: "Dolda dörrar", priority: 20 },
-  { slug: "flooring", name: "Golv", priority: 30 },
+  { slug: "entrance", name: "Ytterdörrar", priority: 5, subcategories: [] },
+  { slug: "interior", name: "Innerdörrar", priority: 10, subcategories: [] },
+  { slug: "hidden", name: "Dolda dörrar", priority: 20, subcategories: [] },
+  { slug: "flooring", name: "Golv", priority: 30, subcategories: [] },
 ];
 
 export function getCatalogCategories(locale: Locale): CatalogCategoryOption[] {
@@ -34,10 +38,18 @@ export function getCatalogCategories(locale: Locale): CatalogCategoryOption[] {
       const rows = listCategories();
       if (rows.length > 0) {
         const en = locale === "en";
+        const subs = listSubcategories();
         return rows.map((c) => ({
           slug: c.slug,
           name: en ? c.name_en : c.name_sv,
           priority: c.priority,
+          subcategories: subs
+            .filter((s) => s.category_id === c.id)
+            .map((s) => ({
+              slug: s.slug,
+              name: en ? s.name_en : s.name_sv,
+              priority: s.priority,
+            })),
         }));
       }
     } catch {
@@ -54,6 +66,9 @@ function mapDbProduct(
     image: string;
     gallery_json: string;
     category_slug?: string;
+    subcategory_slug?: string | null;
+    subcategory_name_sv?: string | null;
+    subcategory_name_en?: string | null;
     price_sek: number;
     label_sv: string;
     label_en: string;
@@ -93,6 +108,13 @@ function mapDbProduct(
     value_en?: string;
   }[];
   const category = (p.category_slug || "interior") as Exclude<DoorCategory, "all">;
+  const subcategory =
+    p.subcategory_slug
+      ? {
+          slug: p.subcategory_slug,
+          name: (en ? p.subcategory_name_en : p.subcategory_name_sv) || p.subcategory_slug,
+        }
+      : null;
 
   return {
     slug: p.slug,
@@ -100,6 +122,7 @@ function mapDbProduct(
     image: p.image,
     gallery: JSON.parse(p.gallery_json || "[]") as string[],
     category,
+    subcategory,
     priceSek: p.price_sek,
     label: en ? p.label_en : p.label_sv,
     material: en ? p.material_en : p.material_sv,

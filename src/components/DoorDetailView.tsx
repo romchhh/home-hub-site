@@ -165,7 +165,9 @@ export function DoorDetailView({
         </div>
 
         <div className="door-hero-info">
-          <span className="product-tag door-hero-tag">{model.label}</span>
+          <span className="product-tag door-hero-tag">
+            {model.subcategory?.name || model.label}
+          </span>
           <h1 className="door-hero-title">{model.name}</h1>
           {priceLabel ? <p className="door-hero-price">{priceLabel}</p> : null}
           <p className="door-hero-lead text-body-sm text-muted">{model.description}</p>

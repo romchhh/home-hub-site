@@ -8,7 +8,19 @@ import {
   type DbInquiry,
   type DbProduct,
   type DbProductReview,
+  type DbSubcategory,
 } from "@/lib/db";
+
+const PRODUCT_SELECT = `SELECT p.*,
+  c.slug AS category_slug,
+  c.name_en AS category_name_en,
+  c.priority AS category_priority,
+  s.slug AS subcategory_slug,
+  s.name_sv AS subcategory_name_sv,
+  s.name_en AS subcategory_name_en
+FROM products p
+JOIN categories c ON c.id = p.category_id
+LEFT JOIN subcategories s ON s.id = p.subcategory_id`;
 
 export function listCategories(): DbCategory[] {
   return getDb()
@@ -33,7 +45,7 @@ export function createCategory(data: {
       `INSERT INTO categories (slug, name_sv, name_en, priority) VALUES (?, ?, ?, ?)`,
     )
     .run(data.slug, data.name_sv, data.name_en, data.priority ?? 0);
-  return result.lastInsertRowid;
+  return Number(result.lastInsertRowid);
 }
 
 export function updateCategory(
@@ -63,40 +75,136 @@ export function deleteCategory(id: number) {
   if (used.c > 0) {
     throw new Error("Cannot delete a category that still has products");
   }
+  getDb().prepare("DELETE FROM subcategories WHERE category_id = ?").run(id);
   getDb().prepare("DELETE FROM categories WHERE id = ?").run(id);
+}
+
+export function listSubcategories(categoryId?: number): DbSubcategory[] {
+  if (categoryId != null) {
+    return getDb()
+      .prepare(
+        `SELECT s.*, c.slug AS category_slug
+         FROM subcategories s
+         JOIN categories c ON c.id = s.category_id
+         WHERE s.category_id = ?
+         ORDER BY s.priority ASC, s.id ASC`,
+      )
+      .all(categoryId) as DbSubcategory[];
+  }
+  return getDb()
+    .prepare(
+      `SELECT s.*, c.slug AS category_slug
+       FROM subcategories s
+       JOIN categories c ON c.id = s.category_id
+       ORDER BY c.priority ASC, s.priority ASC, s.id ASC`,
+    )
+    .all() as DbSubcategory[];
+}
+
+export function getSubcategory(id: number): DbSubcategory | undefined {
+  return getDb()
+    .prepare(
+      `SELECT s.*, c.slug AS category_slug
+       FROM subcategories s
+       JOIN categories c ON c.id = s.category_id
+       WHERE s.id = ?`,
+    )
+    .get(id) as DbSubcategory | undefined;
+}
+
+export function createSubcategory(data: {
+  category_id: number;
+  slug: string;
+  name_sv: string;
+  name_en: string;
+  priority?: number;
+}) {
+  if (!getCategory(data.category_id)) {
+    throw new Error("Category not found");
+  }
+  const result = getDb()
+    .prepare(
+      `INSERT INTO subcategories (category_id, slug, name_sv, name_en, priority)
+       VALUES (?, ?, ?, ?, ?)`,
+    )
+    .run(
+      data.category_id,
+      data.slug,
+      data.name_sv,
+      data.name_en,
+      data.priority ?? 0,
+    );
+  return Number(result.lastInsertRowid);
+}
+
+export function updateSubcategory(
+  id: number,
+  data: Partial<
+    Pick<DbSubcategory, "slug" | "name_sv" | "name_en" | "priority" | "category_id">
+  >,
+) {
+  const current = getSubcategory(id);
+  if (!current) return false;
+  const categoryId = data.category_id ?? current.category_id;
+  if (!getCategory(categoryId)) {
+    throw new Error("Category not found");
+  }
+  getDb()
+    .prepare(
+      `UPDATE subcategories
+       SET category_id = ?, slug = ?, name_sv = ?, name_en = ?, priority = ?
+       WHERE id = ?`,
+    )
+    .run(
+      categoryId,
+      data.slug ?? current.slug,
+      data.name_sv ?? current.name_sv,
+      data.name_en ?? current.name_en,
+      data.priority ?? current.priority,
+      id,
+    );
+  return true;
+}
+
+export function deleteSubcategory(id: number) {
+  const used = getDb()
+    .prepare("SELECT COUNT(*) AS c FROM products WHERE subcategory_id = ?")
+    .get(id) as { c: number };
+  if (used.c > 0) {
+    throw new Error("Cannot delete a subcategory that still has products");
+  }
+  getDb().prepare("DELETE FROM subcategories WHERE id = ?").run(id);
+}
+
+function normalizeSubcategoryId(
+  categoryId: number,
+  subcategoryId: number | null | undefined,
+): number | null {
+  if (subcategoryId == null || subcategoryId === 0) return null;
+  const sub = getSubcategory(subcategoryId);
+  if (!sub || sub.category_id !== categoryId) return null;
+  return sub.id;
 }
 
 export function listProducts(opts?: { includeDrafts?: boolean }): DbProduct[] {
   const sql = opts?.includeDrafts
-    ? `SELECT p.*, c.slug AS category_slug, c.name_en AS category_name_en,
-              c.priority AS category_priority
-       FROM products p JOIN categories c ON c.id = p.category_id
-       ORDER BY c.priority ASC, p.priority ASC, p.id DESC`
-    : `SELECT p.*, c.slug AS category_slug, c.name_en AS category_name_en,
-              c.priority AS category_priority
-       FROM products p JOIN categories c ON c.id = p.category_id
+    ? `${PRODUCT_SELECT}
+       ORDER BY c.priority ASC, COALESCE(s.priority, 9999) ASC, p.priority ASC, p.id DESC`
+    : `${PRODUCT_SELECT}
        WHERE p.published = 1
-       ORDER BY c.priority ASC, p.priority ASC, p.id DESC`;
+       ORDER BY c.priority ASC, COALESCE(s.priority, 9999) ASC, p.priority ASC, p.id DESC`;
   return getDb().prepare(sql).all() as DbProduct[];
 }
 
 export function getProduct(id: number): DbProduct | undefined {
   return getDb()
-    .prepare(
-      `SELECT p.*, c.slug AS category_slug, c.name_en AS category_name_en
-       FROM products p JOIN categories c ON c.id = p.category_id
-       WHERE p.id = ?`,
-    )
+    .prepare(`${PRODUCT_SELECT} WHERE p.id = ?`)
     .get(id) as DbProduct | undefined;
 }
 
 export function getProductBySlug(slug: string): DbProduct | undefined {
   return getDb()
-    .prepare(
-      `SELECT p.*, c.slug AS category_slug, c.name_en AS category_name_en
-       FROM products p JOIN categories c ON c.id = p.category_id
-       WHERE p.slug = ?`,
-    )
+    .prepare(`${PRODUCT_SELECT} WHERE p.slug = ?`)
     .get(slug) as DbProduct | undefined;
 }
 
@@ -104,6 +212,7 @@ export type ProductInput = {
   slug: string;
   name: string;
   category_id: number;
+  subcategory_id: number | null;
   image: string;
   gallery_json: string;
   label_sv: string;
@@ -128,17 +237,21 @@ export type ProductInput = {
 };
 
 export function createProduct(data: ProductInput) {
+  const payload = {
+    ...data,
+    subcategory_id: normalizeSubcategoryId(data.category_id, data.subcategory_id),
+  };
   const result = getDb()
     .prepare(
       `INSERT INTO products (
-        slug, name, category_id, image, gallery_json,
+        slug, name, category_id, subcategory_id, image, gallery_json,
         label_sv, label_en, material_sv, material_en,
         finish_sv, finish_en, hardware_sv, hardware_en,
         colors_json, description_sv, description_en,
         detail_intro_sv, detail_intro_en, detail_bullets_json, specs_json,
         price_sek, featured, published, priority
       ) VALUES (
-        @slug, @name, @category_id, @image, @gallery_json,
+        @slug, @name, @category_id, @subcategory_id, @image, @gallery_json,
         @label_sv, @label_en, @material_sv, @material_en,
         @finish_sv, @finish_en, @hardware_sv, @hardware_en,
         @colors_json, @description_sv, @description_en,
@@ -146,15 +259,21 @@ export function createProduct(data: ProductInput) {
         @price_sek, @featured, @published, @priority
       )`,
     )
-    .run(data);
+    .run(payload);
   return Number(result.lastInsertRowid);
 }
 
 export function updateProduct(id: number, data: ProductInput) {
+  const payload = {
+    ...data,
+    id,
+    subcategory_id: normalizeSubcategoryId(data.category_id, data.subcategory_id),
+  };
   getDb()
     .prepare(
       `UPDATE products SET
-        slug = @slug, name = @name, category_id = @category_id, image = @image,
+        slug = @slug, name = @name, category_id = @category_id,
+        subcategory_id = @subcategory_id, image = @image,
         gallery_json = @gallery_json, label_sv = @label_sv, label_en = @label_en,
         material_sv = @material_sv, material_en = @material_en,
         finish_sv = @finish_sv, finish_en = @finish_en,
@@ -167,7 +286,7 @@ export function updateProduct(id: number, data: ProductInput) {
         updated_at = datetime('now')
       WHERE id = @id`,
     )
-    .run({ ...data, id });
+    .run(payload);
 }
 
 export function patchProductFlags(

@@ -4,10 +4,17 @@ import { entranceDoorsRaw } from "@/data/entranceDoors.generated";
 /** `"all"` or a category slug from the database / static catalogue. */
 export type DoorCategory = "all" | (string & {});
 
+export type CatalogSubcategoryOption = {
+  slug: string;
+  name: string;
+  priority: number;
+};
+
 export type CatalogCategoryOption = {
   slug: Exclude<DoorCategory, "all">;
   name: string;
   priority: number;
+  subcategories?: CatalogSubcategoryOption[];
 };
 
 export type DoorColorOption = {
@@ -26,6 +33,7 @@ export type DoorModel = {
   image: string;
   gallery: string[];
   category: Exclude<DoorCategory, "all">;
+  subcategory?: { slug: string; name: string } | null;
   label: string;
   material: string;
   finish: string;

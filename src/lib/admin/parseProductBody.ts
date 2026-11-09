@@ -8,10 +8,20 @@ export function parseProductBody(body: Record<string, unknown>): ProductInput {
         .map((s) => s.trim())
         .filter(Boolean);
 
+  const rawSub = body.subcategory_id;
+  const subcategory_id =
+    rawSub === null || rawSub === undefined || rawSub === "" || rawSub === 0
+      ? null
+      : Number(rawSub);
+
   return {
     slug: String(body.slug || "").trim(),
     name: String(body.name || "").trim(),
     category_id: Number(body.category_id),
+    subcategory_id:
+      subcategory_id != null && Number.isFinite(subcategory_id)
+        ? subcategory_id
+        : null,
     image: String(body.image || gallery[0] || "").trim(),
     gallery_json: JSON.stringify(gallery),
     label_sv: String(body.label_sv || ""),

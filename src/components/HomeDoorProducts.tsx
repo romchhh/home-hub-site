@@ -10,14 +10,24 @@ import {
 } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { CatalogCategoryOption, DoorModel } from "@/data/models";
+import {
+  buildCategoryJumpTargets,
+  buildCategorySections,
+  categorySectionDomId,
+} from "@/lib/categorySections";
 import type { Locale } from "@/lib/i18n";
-import { HomeCategoryJumpBar } from "./HomeCategoryJumpBar";
+import {
+  CategoryJumpBar,
+  readCategoryJumpHeaderOffset,
+  scrollToCategorySection,
+} from "./CategoryJumpBar";
 import { Pill } from "./Pill";
 import { ProductCard } from "./ProductCard";
 
-const PREVIEW_MOBILE = 4; // 2 rows × 2 cols
-const PREVIEW_DESKTOP = 8; // 2 rows × 4 cols
+const PREVIEW_MOBILE = 4;
+const PREVIEW_DESKTOP = 8;
 const JUMP_PIN_MS = 900;
+const SECTION_PREFIX = "home-category";
 
 function subscribePreviewCount(onStoreChange: () => void) {
   const mq = window.matchMedia("(min-width: 768px)");
@@ -41,16 +51,6 @@ function usePreviewCount() {
   );
 }
 
-function sectionDomId(slug: string) {
-  return `home-category-${slug}`;
-}
-
-function readHeaderOffset() {
-  const raw = getComputedStyle(document.documentElement).getPropertyValue("--header-h");
-  const n = Number.parseFloat(raw);
-  return Number.isFinite(n) ? n : 84;
-}
-
 export function HomeDoorProducts({
   locale,
   dict,
@@ -72,15 +72,12 @@ export function HomeDoorProducts({
   const pinTimerRef = useRef<number | null>(null);
 
   const sections = useMemo(
-    () =>
-      [...categories]
-        .sort((a, b) => a.priority - b.priority)
-        .map((cat) => ({
-          ...cat,
-          items: models.filter((m) => m.category === cat.slug),
-        }))
-        .filter((section) => section.items.length > 0),
+    () => buildCategorySections(categories, models),
     [categories, models],
+  );
+  const jumpTargets = useMemo(
+    () => buildCategoryJumpTargets(sections),
+    [sections],
   );
 
   useEffect(() => {
@@ -90,16 +87,17 @@ export function HomeDoorProducts({
   }, []);
 
   useEffect(() => {
-    if (sections.length === 0) return;
+    if (jumpTargets.length === 0) return;
 
-    const nodes = sections
-      .map((section) => document.getElementById(sectionDomId(section.slug)))
+    const nodes = jumpTargets
+      .map((target) =>
+        document.getElementById(categorySectionDomId(SECTION_PREFIX, target.id)),
+      )
       .filter((el): el is HTMLElement => Boolean(el));
 
     if (nodes.length === 0) return;
 
-    const headerOffset = readHeaderOffset();
-
+    const headerOffset = readCategoryJumpHeaderOffset();
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -111,8 +109,8 @@ export function HomeDoorProducts({
           );
         const top = visible[0];
         if (!top?.target.id) return;
-        const slug = top.target.id.replace(/^home-category-/, "");
-        setActiveSlug(slug);
+        const id = top.target.id.replace(new RegExp(`^${SECTION_PREFIX}-`), "");
+        setActiveSlug(id);
       },
       {
         rootMargin: `-${headerOffset + 72}px 0px -48% 0px`,
@@ -121,32 +119,25 @@ export function HomeDoorProducts({
     );
 
     for (const node of nodes) observer.observe(node);
-    setActiveSlug((prev) => prev ?? sections[0]?.slug ?? null);
+    setActiveSlug((prev) => prev ?? jumpTargets[0]?.id ?? null);
     return () => observer.disconnect();
-  }, [sections]);
+  }, [jumpTargets]);
 
-  const jumpToSection = useCallback((slug: string) => {
-    const el = document.getElementById(sectionDomId(slug));
-    if (!el) return;
-
-    setActiveSlug(slug);
+  const jumpToSection = useCallback((id: string) => {
+    setActiveSlug(id);
     setJumpPinned(true);
     if (pinTimerRef.current != null) window.clearTimeout(pinTimerRef.current);
     pinTimerRef.current = window.setTimeout(() => {
       setJumpPinned(false);
       pinTimerRef.current = null;
     }, JUMP_PIN_MS);
-
-    const headerOffset = readHeaderOffset();
-    const jumpBar = 64;
-    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset - jumpBar;
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    scrollToCategorySection(categorySectionDomId(SECTION_PREFIX, id));
   }, []);
 
   return (
     <div ref={rootRef} className="home-category-sections">
-      <HomeCategoryJumpBar
-        sections={sections.map((s) => ({ slug: s.slug, name: s.name }))}
+      <CategoryJumpBar
+        sections={jumpTargets.map((t) => ({ slug: t.id, name: t.name }))}
         activeSlug={activeSlug}
         ariaLabel={c.filterCategoryLabel}
         gateRef={rootRef}
@@ -156,28 +147,60 @@ export function HomeDoorProducts({
 
       {sections.map((section) => {
         const isExpanded = Boolean(expanded[section.slug]);
-        const visible = isExpanded ? section.items : section.items.slice(0, previewCount);
         const canToggle = section.items.length > previewCount;
+        const visibleSlugs = new Set(
+          (isExpanded ? section.items : section.items.slice(0, previewCount)).map(
+            (m) => m.slug,
+          ),
+        );
+        const hasNamedSubs = section.subgroups.some((g) => g.slug);
 
         return (
-          <div
-            key={section.slug}
-            id={sectionDomId(section.slug)}
-            className="home-category-section"
-          >
-            <h3 className="home-category-title">{section.name}</h3>
-            <div className="catalog-products">
-              {visible.map((m) => (
-                <ProductCard
-                  key={m.slug}
-                  locale={locale}
-                  model={m}
-                  priceFromLabel={c.priceFrom}
-                  detailsLabel={c.details}
-                  closeLabel={dict.nav.close}
-                />
-              ))}
-            </div>
+          <div key={section.slug} className="home-category-section">
+            {!hasNamedSubs ? (
+              <div id={categorySectionDomId(SECTION_PREFIX, section.slug)}>
+                <h3 className="home-category-title">{section.name}</h3>
+              </div>
+            ) : (
+              <h3 className="home-category-title">{section.name}</h3>
+            )}
+
+            {section.subgroups.map((group) => {
+              const blockId = group.slug
+                ? `${section.slug}__${group.slug}`
+                : section.slug;
+              const visible = group.items.filter((m) => visibleSlugs.has(m.slug));
+              if (visible.length === 0) return null;
+
+              return (
+                <div
+                  key={blockId}
+                  id={categorySectionDomId(SECTION_PREFIX, blockId)}
+                  className="home-category-subgroup"
+                >
+                  {group.name ? (
+                    <h4 className="home-category-subtitle">{group.name}</h4>
+                  ) : hasNamedSubs ? (
+                    <h4 className="home-category-subtitle home-category-subtitle--muted">
+                      {section.name}
+                    </h4>
+                  ) : null}
+                  <div className="catalog-products">
+                    {visible.map((m) => (
+                      <ProductCard
+                        key={m.slug}
+                        locale={locale}
+                        model={m}
+                        priceFromLabel={c.priceFrom}
+                        detailsLabel={c.details}
+                        closeLabel={dict.nav.close}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
             {canToggle ? (
               <div className="home-category-more">
                 <Pill

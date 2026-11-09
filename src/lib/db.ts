@@ -106,13 +106,31 @@ function migrate(database: SqliteDb) {
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
+    CREATE TABLE IF NOT EXISTS subcategories (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+      slug TEXT NOT NULL,
+      name_sv TEXT NOT NULL,
+      name_en TEXT NOT NULL,
+      priority INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(category_id, slug)
+    );
+
     CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
     CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
     CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries(status);
     CREATE INDEX IF NOT EXISTS idx_product_reviews_product ON product_reviews(product_id);
+    CREATE INDEX IF NOT EXISTS idx_subcategories_category ON subcategories(category_id);
   `);
 
   ensureColumn(database, "inquiries", "source", "TEXT NOT NULL DEFAULT ''");
+  ensureColumn(
+    database,
+    "products",
+    "subcategory_id",
+    "INTEGER REFERENCES subcategories(id) ON DELETE SET NULL",
+  );
 }
 
 function ensureColumn(
@@ -182,11 +200,23 @@ export type DbCategory = {
   created_at: string;
 };
 
+export type DbSubcategory = {
+  id: number;
+  category_id: number;
+  slug: string;
+  name_sv: string;
+  name_en: string;
+  priority: number;
+  created_at: string;
+  category_slug?: string;
+};
+
 export type DbProduct = {
   id: number;
   slug: string;
   name: string;
   category_id: number;
+  subcategory_id: number | null;
   image: string;
   gallery_json: string;
   label_sv: string;
@@ -212,6 +242,9 @@ export type DbProduct = {
   updated_at: string;
   category_slug?: string;
   category_name_en?: string;
+  subcategory_slug?: string | null;
+  subcategory_name_sv?: string | null;
+  subcategory_name_en?: string | null;
 };
 
 export type DbInquiry = {

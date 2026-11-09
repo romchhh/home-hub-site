@@ -169,7 +169,7 @@ export const ADMIN_TOUR_STEPS: AdminTourStep[] = [
     section: "Categories",
     title: "Organise categories",
     description:
-      "Categories group doors on the home page and in the catalogue filters. Set Swedish and English names, a slug, and priority (lower = first).",
+      "Categories group doors on the home page and in the catalogue. Expand a category to add subcategories (e.g. apartment doors under entrance). Products can then pick a subcategory in the product form.",
     action: "Add or reorder categories before assigning products.",
     tips: [
       "You cannot delete a category that still has products — reassign first",

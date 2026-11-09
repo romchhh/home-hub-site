@@ -2,7 +2,11 @@ import { notFound } from "next/navigation";
 import PageBreadcrumb from "@/components/admin/PageBreadCrumb";
 import ProductForm from "@/components/admin/ProductForm";
 import ProductReviewsManager from "@/components/admin/ProductReviewsManager";
-import { getProduct, listCategories } from "@/lib/admin/queries";
+import {
+  getProduct,
+  listCategories,
+  listSubcategories,
+} from "@/lib/admin/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -15,17 +19,20 @@ export default async function AdminEditProductPage({
   const product = getProduct(Number(id));
   if (!product) notFound();
   const categories = listCategories();
+  const subcategories = listSubcategories();
 
   return (
     <div>
       <PageBreadcrumb pageTitle={`Edit · ${product.name}`} />
       <ProductForm
         categories={categories}
+        subcategories={subcategories}
         initial={{
           id: product.id,
           slug: product.slug,
           name: product.name,
           category_id: product.category_id,
+          subcategory_id: product.subcategory_id ?? null,
           image: product.image,
           gallery_json: product.gallery_json,
           label_sv: product.label_sv,

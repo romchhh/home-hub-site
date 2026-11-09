@@ -1,9 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { CatalogCategoryOption, DoorCategory, DoorModel } from "@/data/models";
-import type { Locale } from "@/lib/i18n";
+import {
+  buildCategoryJumpTargets,
+  buildCategorySections,
+  categorySectionDomId,
+} from "@/lib/categorySections";
 import {
   countActiveCatalogFilters,
   createDefaultCatalogFilters,
@@ -11,9 +15,18 @@ import {
   getCatalogPriceBounds,
   type CatalogFilterState,
 } from "@/lib/catalogFilter";
+import type { Locale } from "@/lib/i18n";
+import {
+  CategoryJumpBar,
+  readCategoryJumpHeaderOffset,
+  scrollToCategorySection,
+} from "./CategoryJumpBar";
 import { CatalogFilterChip } from "./CatalogFilterSections";
 import { CatalogFilterSheet } from "./CatalogFilterSheet";
 import { ProductCard } from "./ProductCard";
+
+const JUMP_PIN_MS = 900;
+const SECTION_PREFIX = "catalog-category";
 
 function SearchIcon() {
   return (
@@ -54,6 +67,10 @@ export function CatalogProductGrid({
     createDefaultCatalogFilters(priceBounds),
   );
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [jumpPinned, setJumpPinned] = useState(false);
+  const sectionsRef = useRef<HTMLDivElement>(null);
+  const pinTimerRef = useRef<number | null>(null);
 
   const visible = useMemo(
     () => filterCatalogModels(models, searchQuery, appliedFilters),
@@ -62,6 +79,76 @@ export function CatalogProductGrid({
 
   const activeFilterCount = countActiveCatalogFilters(appliedFilters, priceBounds);
   const hasActiveQuery = searchQuery.trim().length > 0 || activeFilterCount > 0;
+
+  /** Sectioned "Alla modeller" browse mode — sticky jump bar applies here. */
+  const sectionMode =
+    appliedFilters.category === "all" && searchQuery.trim().length === 0;
+
+  const sections = useMemo(
+    () => (sectionMode ? buildCategorySections(categories, visible) : []),
+    [sectionMode, categories, visible],
+  );
+  const jumpTargets = useMemo(
+    () => (sectionMode ? buildCategoryJumpTargets(sections) : []),
+    [sectionMode, sections],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (pinTimerRef.current != null) window.clearTimeout(pinTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!sectionMode || jumpTargets.length === 0) {
+      setActiveSlug(null);
+      return;
+    }
+
+    const nodes = jumpTargets
+      .map((target) =>
+        document.getElementById(categorySectionDomId(SECTION_PREFIX, target.id)),
+      )
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (nodes.length === 0) return;
+
+    const headerOffset = readCategoryJumpHeaderOffset();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top ||
+              b.intersectionRatio - a.intersectionRatio,
+          );
+        const top = visibleEntries[0];
+        if (!top?.target.id) return;
+        const id = top.target.id.replace(new RegExp(`^${SECTION_PREFIX}-`), "");
+        setActiveSlug(id);
+      },
+      {
+        rootMargin: `-${headerOffset + 72}px 0px -48% 0px`,
+        threshold: [0.08, 0.2, 0.4],
+      },
+    );
+
+    for (const node of nodes) observer.observe(node);
+    setActiveSlug((prev) => prev ?? jumpTargets[0]?.id ?? null);
+    return () => observer.disconnect();
+  }, [sectionMode, jumpTargets]);
+
+  const jumpToSection = useCallback((slug: string) => {
+    setActiveSlug(slug);
+    setJumpPinned(true);
+    if (pinTimerRef.current != null) window.clearTimeout(pinTimerRef.current);
+    pinTimerRef.current = window.setTimeout(() => {
+      setJumpPinned(false);
+      pinTimerRef.current = null;
+    }, JUMP_PIN_MS);
+    scrollToCategorySection(categorySectionDomId(SECTION_PREFIX, slug));
+  }, []);
 
   function openSheet() {
     setDraftFilters(appliedFilters);
@@ -134,7 +221,9 @@ export function CatalogProductGrid({
             <CatalogFilterChip
               key={cat.slug}
               active={appliedFilters.category === cat.slug}
-              onClick={() => setAppliedFilters((prev) => ({ ...prev, category: cat.slug }))}
+              onClick={() =>
+                setAppliedFilters((prev) => ({ ...prev, category: cat.slug }))
+              }
             >
               {cat.name}
             </CatalogFilterChip>
@@ -155,18 +244,82 @@ export function CatalogProductGrid({
         </div>
       </div>
 
-      <div className="catalog-products">
-        {visible.map((m) => (
-          <ProductCard
-            key={m.slug}
-            locale={locale}
-            model={m}
-            priceFromLabel={c.priceFrom}
-            detailsLabel={c.details}
-            closeLabel={dict.nav.close}
+      {sectionMode ? (
+        <div ref={sectionsRef} className="catalog-category-sections">
+          <CategoryJumpBar
+            sections={jumpTargets.map((t) => ({ slug: t.id, name: t.name }))}
+            activeSlug={activeSlug}
+            ariaLabel={c.filterCategoryLabel}
+            gateRef={sectionsRef}
+            pinned={jumpPinned}
+            onJump={jumpToSection}
           />
-        ))}
-      </div>
+
+          {sections.map((section) => {
+            const hasNamedSubs = section.subgroups.some((g) => g.slug);
+            return (
+              <div
+                key={section.slug}
+                className="catalog-category-section home-category-section"
+              >
+                {!hasNamedSubs ? (
+                  <div id={categorySectionDomId(SECTION_PREFIX, section.slug)}>
+                    <h3 className="home-category-title">{section.name}</h3>
+                  </div>
+                ) : (
+                  <h3 className="home-category-title">{section.name}</h3>
+                )}
+
+                {section.subgroups.map((group) => {
+                  const blockId = group.slug
+                    ? `${section.slug}__${group.slug}`
+                    : section.slug;
+                  return (
+                    <div
+                      key={blockId}
+                      id={categorySectionDomId(SECTION_PREFIX, blockId)}
+                      className="home-category-subgroup"
+                    >
+                      {group.name ? (
+                        <h4 className="home-category-subtitle">{group.name}</h4>
+                      ) : hasNamedSubs ? (
+                        <h4 className="home-category-subtitle home-category-subtitle--muted">
+                          {section.name}
+                        </h4>
+                      ) : null}
+                      <div className="catalog-products">
+                        {group.items.map((m) => (
+                          <ProductCard
+                            key={m.slug}
+                            locale={locale}
+                            model={m}
+                            priceFromLabel={c.priceFrom}
+                            detailsLabel={c.details}
+                            closeLabel={dict.nav.close}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="catalog-products">
+          {visible.map((m) => (
+            <ProductCard
+              key={m.slug}
+              locale={locale}
+              model={m}
+              priceFromLabel={c.priceFrom}
+              detailsLabel={c.details}
+              closeLabel={dict.nav.close}
+            />
+          ))}
+        </div>
+      )}
 
       {visible.length === 0 ? (
         <p className="catalog-empty text-body-sm text-muted">{c.noResults}</p>

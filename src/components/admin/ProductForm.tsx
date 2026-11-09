@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ColorOptionsEditor, {
   parseColorOptions,
   serializeColorOptions,
@@ -11,6 +11,13 @@ import ColorOptionsEditor, {
 import ImageDropzone from "@/components/admin/ImageDropzone";
 
 type Category = { id: number; name_en: string; slug: string };
+type Subcategory = {
+  id: number;
+  category_id: number;
+  name_en: string;
+  name_sv: string;
+  slug: string;
+};
 
 type BulletRow = {
   title_sv: string;
@@ -31,6 +38,7 @@ type ProductFormValues = {
   slug: string;
   name: string;
   category_id: number;
+  subcategory_id: number | null;
   image: string;
   gallery: string[];
   label_sv: string;
@@ -62,6 +70,7 @@ const empty: ProductFormValues = {
   slug: "",
   name: "",
   category_id: 0,
+  subcategory_id: null,
   image: "",
   gallery: [],
   label_sv: "",
@@ -175,9 +184,11 @@ function parseSpecs(json?: string): SpecRow[] {
 
 export default function ProductForm({
   categories,
+  subcategories,
   initial,
 }: {
   categories: Category[];
+  subcategories: Subcategory[];
   initial?: Initial;
 }) {
   const router = useRouter();
@@ -187,6 +198,10 @@ export default function ProductForm({
       ...empty,
       ...initial,
       category_id: initial?.category_id || categories[0]?.id || 0,
+      subcategory_id:
+        initial?.subcategory_id === undefined
+          ? null
+          : initial.subcategory_id,
       gallery,
       image: initial?.image || gallery[0] || "",
       featured: Boolean(initial?.featured),
@@ -194,6 +209,14 @@ export default function ProductForm({
         initial?.published === undefined ? true : Boolean(initial.published),
     };
   });
+
+  const categorySubs = useMemo(
+    () =>
+      subcategories
+        .filter((s) => s.category_id === values.category_id)
+        .sort((a, b) => a.name_en.localeCompare(b.name_en)),
+    [subcategories, values.category_id],
+  );
   const [colors, setColors] = useState<ColorOptionRow[]>(() =>
     parseColorOptions(initial?.colors_json || "[]"),
   );
@@ -323,7 +346,7 @@ export default function ProductForm({
         ) : null}
       </div>
 
-      <Section title="Basics" hint="Name, slug and category">
+      <Section title="Basics" hint="Name, slug, category and optional subcategory">
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Name">
             <input
@@ -348,7 +371,14 @@ export default function ProductForm({
             <select
               className={inputClass}
               value={values.category_id}
-              onChange={(e) => set("category_id", Number(e.target.value))}
+              onChange={(e) => {
+                const category_id = Number(e.target.value);
+                setValues((prev) => ({
+                  ...prev,
+                  category_id,
+                  subcategory_id: null,
+                }));
+              }}
               required
             >
               {categories.map((c) => (
@@ -357,6 +387,36 @@ export default function ProductForm({
                 </option>
               ))}
             </select>
+          </Field>
+          <Field label="Subcategory">
+            <select
+              className={inputClass}
+              value={values.subcategory_id ?? ""}
+              onChange={(e) =>
+                set(
+                  "subcategory_id",
+                  e.target.value ? Number(e.target.value) : null,
+                )
+              }
+              disabled={categorySubs.length === 0}
+            >
+              <option value="">
+                {categorySubs.length === 0
+                  ? "No subcategories in this category"
+                  : "None — ungrouped"}
+              </option>
+              {categorySubs.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name_en}
+                  {s.name_sv && s.name_sv !== s.name_en ? ` · ${s.name_sv}` : ""}
+                </option>
+              ))}
+            </select>
+            {categorySubs.length === 0 ? (
+              <span className="mt-1 block text-xs text-gray-500">
+                Create subcategories under Categories in the admin sidebar.
+              </span>
+            ) : null}
           </Field>
         </div>
       </Section>
