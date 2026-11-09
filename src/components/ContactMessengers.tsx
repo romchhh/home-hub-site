@@ -1,5 +1,5 @@
 import type { Dictionary } from "@/dictionaries";
-import { contactInfo } from "@/lib/contactInfo";
+import type { ContactMessengerLink } from "@/lib/contactInfo";
 
 function WhatsAppIcon() {
   return (
@@ -9,15 +9,22 @@ function WhatsAppIcon() {
   );
 }
 
-export function ContactMessengers({ dict }: { dict: Dictionary }) {
+export function ContactMessengers({
+  dict,
+  messengers,
+}: {
+  dict: Dictionary;
+  messengers: ContactMessengerLink[];
+}) {
   const r = dict.request;
+  if (messengers.length === 0) return null;
 
   return (
     <div className="contact-messengers">
       <p className="contact-messengers-row">
         <span className="contact-messengers-or">{r.orLabel}</span>
         <span className="contact-messengers-lead">{r.writeUsOn}</span>
-        {contactInfo.messengers.map((item) => (
+        {messengers.map((item) => (
           <a
             key={item.id}
             href={item.href}

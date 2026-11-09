@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 import { getDictionary } from "@/dictionaries";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 type SeoFields = {
@@ -49,14 +50,18 @@ const seoCopy: Record<Exclude<SeoPageKey, "home">, (d: Dict, locale: Locale) => 
     description: d.savedPage.lead,
     noIndex: true,
   }),
-  contact: (d, locale) => ({
-    path: "/contact",
-    title:
-      locale === "sv"
-        ? "Kontakt — showroom Fredensvägen 4C, Sundbyberg"
-        : "Contact — showroom Fredensvägen 4C, Sundbyberg",
-    description: d.contactPage.lead,
-  }),
+  contact: (d, locale) => {
+    const contact = getContactInfo();
+    const place = contact.addressLine2 || contact.addressLine1;
+    return {
+      path: "/contact",
+      title:
+        locale === "sv"
+          ? `Kontakt — showroom ${place}`
+          : `Contact — showroom ${place}`,
+      description: d.contactPage.lead,
+    };
+  },
   offers: (d, locale) => ({
     path: "/offers",
     title:
@@ -109,13 +114,14 @@ const seoCopy: Record<Exclude<SeoPageKey, "home">, (d: Dict, locale: Locale) => 
 export function getSeoForPage(locale: Locale, key: SeoPageKey): SeoFields {
   const dict = getDictionary(locale);
   if (key === "home") {
+    const contact = getContactInfo();
     return {
       path: "",
       title:
         locale === "sv"
           ? "Innerdörrar, dolda dörrar och golv i Stockholm"
           : "Interior doors, hidden doors and flooring in Stockholm",
-      description: `${dict.meta.tagline} ${dict.meta.description}`,
+      description: `${contact.tagline[locale]} ${dict.meta.description}`,
     };
   }
   return seoCopy[key](dict, locale);

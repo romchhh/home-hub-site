@@ -227,14 +227,30 @@ export const ADMIN_TOUR_STEPS: AdminTourStep[] = [
     placement: "bottom",
   },
   {
+    id: "settings-contact",
+    path: "/admin/settings",
+    target: "tour-settings-contact",
+    section: "Settings",
+    title: "Showroom & contact on the site",
+    description:
+      "Edit address, phone, email, hours, social links, company name and org.nr. These values power the footer, contact page, maps, and SEO — save here instead of asking a developer to change code.",
+    action: "Update the fields → Save showroom & contact.",
+    tips: [
+      "Hours: one line per row, separately for Swedish and English",
+      "Map search query should match the public address for Google Maps embeds",
+      "WhatsApp can be left empty — it will use the phone number",
+    ],
+    placement: "bottom",
+  },
+  {
     id: "settings-emails",
     path: "/admin/settings",
     target: "tour-settings-emails",
     section: "Settings",
     title: "Who gets inquiry emails",
     description:
-      "List every address that should receive Resend notifications when someone submits the contact form. Separate with commas or new lines. Click Save settings to apply.",
-    action: "Add your team emails → Save settings.",
+      "List every address that should receive Resend notifications when someone submits the contact form. Separate with commas or new lines. Click Save inquiry emails to apply.",
+    action: "Add your team emails → Save inquiry emails.",
     tips: [
       "If this field is empty, the server uses its default recipient list from env",
       "Resend must be configured (API key + mail sender) for notifications to send",

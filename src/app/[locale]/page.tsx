@@ -9,6 +9,7 @@ import { Pill } from "@/components/Pill";
 import { ServiceCard } from "@/components/ServiceCard";
 import { getDictionary } from "@/dictionaries";
 import { getCatalogCategories, getModels } from "@/lib/catalog";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n";
 import { generateLocalePageMetadata } from "@/lib/seo/generatePageMetadata";
 import { itemListJsonLd, webPageJsonLd } from "@/lib/seo/jsonLd";
@@ -28,6 +29,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   if (!isLocale(localeParam)) notFound();
   const locale = localeParam as Locale;
   const dict = getDictionary(locale);
+  const contact = getContactInfo();
   const h = dict.home;
   const models = getModels(locale);
   const categories = getCatalogCategories(locale);
@@ -76,8 +78,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             />
           </div>
           <p className="hero-showroom-caption">
-            <strong>{h.heroShowroomTitle}</strong>
-            <span>{h.heroShowroomAddress}</span>
+            <strong>{contact.heroShowroomTitle[locale]}</strong>
+            <span>
+              {contact.addressLine1}, {contact.addressLine2}
+            </span>
           </p>
         </div>
       </section>

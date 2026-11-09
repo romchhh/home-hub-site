@@ -9,14 +9,17 @@ import { Header } from "@/components/Header";
 import { RequestProvider } from "@/context/RequestContext";
 import { SavedItemsProvider } from "@/context/SavedItemsContext";
 import { getDictionary } from "@/dictionaries";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 
 /**
  * Locale shells still prerender via generateStaticParams.
- * Do not force-static the whole tree — catalog/home must read the live product DB
- * after reseed / admin edits without a full rebuild.
+ * Do not force-static the whole tree — catalog/home/contact settings must read the
+ * live DB after admin edits without a full rebuild.
  */
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -29,15 +32,16 @@ export default async function LocaleLayout({
   if (!isLocale(localeParam)) notFound();
   const locale = localeParam as Locale;
   const dict = getDictionary(locale);
+  const contact = getContactInfo();
 
   return (
-    <RequestProvider dict={dict}>
+    <RequestProvider dict={dict} messengers={contact.messengers}>
       <SavedItemsProvider>
         <LocaleHtmlLang locale={locale} />
         <ScrollToTopOnNavigate />
         <JsonLd
           data={[
-            organizationJsonLd(locale, dict.meta.description),
+            organizationJsonLd(locale, dict.meta.description, contact),
             websiteJsonLd(locale),
           ]}
         />
@@ -45,7 +49,7 @@ export default async function LocaleLayout({
         <main lang={locale} className="page-gutter-x flex-1">
           {children}
         </main>
-        <Footer locale={locale} dict={dict} />
+        <Footer locale={locale} dict={dict} contact={contact} />
         <FloatingContactButton locale={locale} dict={dict} />
         <CookieConsentBanner locale={locale} dict={dict} />
       </SavedItemsProvider>

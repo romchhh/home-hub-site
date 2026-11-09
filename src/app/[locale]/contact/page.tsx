@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHead } from "@/components/PageHead";
 import { ShowroomVisitSection } from "@/components/ShowroomVisitSection";
 import { getDictionary } from "@/dictionaries";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { generateLocalePageMetadata } from "@/lib/seo/generatePageMetadata";
 import { breadcrumbJsonLd, contactPageJsonLd } from "@/lib/seo/jsonLd";
@@ -20,6 +21,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
   if (!isLocale(localeParam)) notFound();
   const locale = localeParam as Locale;
   const dict = getDictionary(locale);
+  const contact = getContactInfo();
   const c = dict.contactPage;
   const seo = getSeoForPage(locale, "contact");
 
@@ -45,6 +47,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
       <ShowroomVisitSection
         locale={locale}
         dict={dict}
+        contact={contact}
         title={dict.showroom.visitTitle}
         lead={dict.showroom.visitLead}
         showMap
@@ -68,7 +71,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         </article>
         <div className="inline-request">
           <h2>{dict.request.dialogTitle}</h2>
-          <ContactForm dict={dict} />
+          <ContactForm dict={dict} messengers={contact.messengers} />
         </div>
       </section>
     </>

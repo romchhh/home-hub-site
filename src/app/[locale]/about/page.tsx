@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHead } from "@/components/PageHead";
 import { ServiceCard } from "@/components/ServiceCard";
 import { getDictionary } from "@/dictionaries";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { generateLocalePageMetadata } from "@/lib/seo/generatePageMetadata";
 import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo/jsonLd";
@@ -22,6 +23,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
   if (!isLocale(localeParam)) notFound();
   const locale = localeParam as Locale;
   const dict = getDictionary(locale);
+  const contact = getContactInfo();
   const a = dict.about;
   const seo = getSeoForPage(locale, "about");
 
@@ -88,6 +90,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       <ShowroomVisitSection
         locale={locale}
         dict={dict}
+        contact={contact}
         title={dict.showroom.visitTitle}
         lead={dict.showroom.visitLead}
         showMap

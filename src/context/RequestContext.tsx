@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { Dictionary } from "@/dictionaries";
 import { RequestDialog } from "@/components/RequestDialog";
+import type { ContactMessengerLink } from "@/lib/contactInfo";
 import {
   normalizeRequestOpen,
   type RequestOpenOptions,
@@ -24,9 +25,11 @@ const RequestContext = createContext<RequestContextValue | null>(null);
 export function RequestProvider({
   children,
   dict,
+  messengers,
 }: {
   children: ReactNode;
   dict: Dictionary;
+  messengers: ContactMessengerLink[];
 }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(() => normalizeRequestOpen());
@@ -43,6 +46,7 @@ export function RequestProvider({
       {children}
       <RequestDialog
         dict={dict}
+        messengers={messengers}
         open={open}
         options={options}
         onClose={() => setOpen(false)}

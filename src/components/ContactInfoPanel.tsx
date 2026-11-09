@@ -1,8 +1,7 @@
 import type { Dictionary } from "@/dictionaries";
-import { contactInfo, getShowroomHours } from "@/lib/contactInfo";
+import type { ContactInfo, ContactSocialId } from "@/lib/contactInfo";
+import { getShowroomHours } from "@/lib/contactInfo";
 import type { Locale } from "@/lib/i18n";
-
-type SocialId = (typeof contactInfo.social)[number]["id"];
 
 function InstagramIcon() {
   return (
@@ -20,7 +19,7 @@ function FacebookIcon() {
   );
 }
 
-function SocialIcon({ id }: { id: SocialId }) {
+function SocialIcon({ id }: { id: ContactSocialId }) {
   switch (id) {
     case "instagram":
       return <InstagramIcon />;
@@ -34,13 +33,15 @@ function SocialIcon({ id }: { id: SocialId }) {
 export function ContactInfoPanel({
   locale,
   labels,
+  contact,
   compact = false,
 }: {
   locale: Locale;
   labels: Dictionary["showroom"];
+  contact: ContactInfo;
   compact?: boolean;
 }) {
-  const hours = getShowroomHours(locale);
+  const hours = getShowroomHours(contact, locale);
   const panelClass = compact ? "contact-info-panel contact-info-panel--compact" : "contact-info-panel";
 
   return (
@@ -50,25 +51,25 @@ export function ContactInfoPanel({
           <dt>{labels.addressLabel}</dt>
           <dd>
             <address className="contact-info-address">
-              {contactInfo.addressLine1}
+              {contact.addressLine1}
               <br />
-              {contactInfo.addressLine2}
+              {contact.addressLine2}
             </address>
           </dd>
         </div>
         <div className="contact-info-item">
           <dt>{labels.phoneLabel}</dt>
           <dd>
-            <a href={`tel:${contactInfo.phone}`} className="contact-info-link">
-              {contactInfo.phoneDisplay}
+            <a href={`tel:${contact.phone}`} className="contact-info-link">
+              {contact.phoneDisplay}
             </a>
           </dd>
         </div>
         <div className="contact-info-item">
           <dt>{labels.emailLabel}</dt>
           <dd>
-            <a href={`mailto:${contactInfo.email}`} className="contact-info-link">
-              {contactInfo.email}
+            <a href={`mailto:${contact.email}`} className="contact-info-link">
+              {contact.email}
             </a>
           </dd>
         </div>
@@ -83,24 +84,26 @@ export function ContactInfoPanel({
           </dd>
         </div>
       </dl>
-      <div className="contact-info-social">
-        <p className="contact-info-social-label text-label text-muted">{labels.socialLabel}</p>
-        <ul className="social-links" role="list">
-          {contactInfo.social.map((item) => (
-            <li key={item.id}>
-              <a
-                href={item.href}
-                className="social-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SocialIcon id={item.id} />
-                <span>{item.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {contact.social.length > 0 ? (
+        <div className="contact-info-social">
+          <p className="contact-info-social-label text-label text-muted">{labels.socialLabel}</p>
+          <ul className="social-links" role="list">
+            {contact.social.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={item.href}
+                  className="social-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SocialIcon id={item.id} />
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }

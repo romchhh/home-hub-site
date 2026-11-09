@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Dictionary } from "@/dictionaries";
+import type { ContactInfo } from "@/lib/contactInfo";
 import type { Locale } from "@/lib/i18n";
 import { localePath } from "@/lib/i18n";
 import { ContactInfoPanel } from "./ContactInfoPanel";
@@ -22,19 +23,28 @@ const legalLinks = [
   { key: "cookies", path: "/cookies" },
 ] as const;
 
-export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function Footer({
+  locale,
+  dict,
+  contact,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  contact: ContactInfo;
+}) {
   const n = dict.nav;
   const f = dict.footer;
+  const year = new Date().getFullYear();
   return (
     <footer className="site-footer page-gutter-x">
       <div className="footer-grid">
         <div className="footer-brand">
           <Logo locale={locale} className="footer-logo" />
-          <p className="footer-tagline">{dict.meta.tagline}</p>
+          <p className="footer-tagline">{contact.tagline[locale]}</p>
           <p className="footer-company text-body-sm text-muted">
-            {f.companyName}
+            {contact.companyName}
             <br />
-            {locale === "sv" ? "Org.nr" : "Org. no."} {f.orgNr}
+            {locale === "sv" ? "Org.nr" : "Org. no."} {contact.orgNr}
           </p>
         </div>
 
@@ -51,7 +61,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
         <div className="footer-column footer-column--contact">
           <h2 className="footer-column-heading text-label">{f.contactHeading}</h2>
-          <ContactInfoPanel locale={locale} labels={dict.showroom} compact />
+          <ContactInfoPanel locale={locale} labels={dict.showroom} contact={contact} compact />
         </div>
 
         <div className="footer-column footer-column--legal">
@@ -67,7 +77,9 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       </div>
 
       <div className="footer-bottom">
-        <span>{f.copyright}</span>
+        <span>
+          © {year} {contact.companyName}
+        </span>
         <span>{f.note}</span>
       </div>
     </footer>

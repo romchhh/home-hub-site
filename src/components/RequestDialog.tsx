@@ -3,17 +3,25 @@
 import { useEffect, useState } from "react";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import type { Dictionary } from "@/dictionaries";
+import type { ContactMessengerLink } from "@/lib/contactInfo";
 import type { RequestOpenOptions } from "@/lib/requestOpen";
 import { ContactRequestForm } from "./ContactRequestForm";
 
 type RequestDialogProps = {
   dict: Dictionary;
+  messengers: ContactMessengerLink[];
   open: boolean;
   options: RequestOpenOptions;
   onClose: () => void;
 };
 
-export function RequestDialog({ dict, open, options, onClose }: RequestDialogProps) {
+export function RequestDialog({
+  dict,
+  messengers,
+  open,
+  options,
+  onClose,
+}: RequestDialogProps) {
   const r = dict.request;
   const [sent, setSent] = useState(false);
 
@@ -77,6 +85,7 @@ export function RequestDialog({ dict, open, options, onClose }: RequestDialogPro
           <ContactRequestForm
             key={`${options.intent}-${options.model}-${options.source}-${open}`}
             dict={dict}
+            messengers={messengers}
             options={options}
             fillSuccess
             onSuccess={() => setSent(true)}

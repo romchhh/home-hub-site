@@ -1,4 +1,5 @@
 import type { Dictionary } from "@/dictionaries";
+import type { ContactInfo } from "@/lib/contactInfo";
 import type { Locale } from "@/lib/i18n";
 import { ContactInfoPanel } from "./ContactInfoPanel";
 import { ShowroomMap } from "./ShowroomMap";
@@ -6,12 +7,14 @@ import { ShowroomMap } from "./ShowroomMap";
 export function ShowroomVisitSection({
   locale,
   dict,
+  contact,
   title,
   lead,
   showMap = true,
 }: {
   locale: Locale;
   dict: Dictionary;
+  contact: ContactInfo;
   title: string;
   lead?: string;
   showMap?: boolean;
@@ -27,8 +30,14 @@ export function ShowroomVisitSection({
         {lead ? <p className="showroom-visit-lead text-body-sm text-muted">{lead}</p> : null}
       </div>
       <div className={`showroom-visit-grid ${showMap ? "showroom-visit-grid--with-map" : ""}`}>
-        <ContactInfoPanel locale={locale} labels={s} />
-        {showMap ? <ShowroomMap title={s.mapTitle} directionsLabel={s.mapDirections} /> : null}
+        <ContactInfoPanel locale={locale} labels={s} contact={contact} />
+        {showMap ? (
+          <ShowroomMap
+            title={s.mapTitle}
+            directionsLabel={s.mapDirections}
+            contact={contact}
+          />
+        ) : null}
       </div>
     </section>
   );

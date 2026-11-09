@@ -1,4 +1,8 @@
 import {
+  mergeContactInfoStored,
+  type ContactInfoStored,
+} from "@/lib/contactInfo";
+import {
   getDb,
   type DbCategory,
   type DbInquiry,
@@ -240,6 +244,7 @@ export function deleteInquiry(id: number) {
 }
 
 export const SETTING_INQUIRY_TO_EMAILS = "inquiry_to_emails";
+export const SETTING_CONTACT_INFO = "contact_info";
 
 function getSetting(key: string): string {
   const row = getDb()
@@ -262,6 +267,34 @@ function setSetting(key: string, value: string) {
 
 export function getInquiryToEmailsSetting(): string {
   return getSetting(SETTING_INQUIRY_TO_EMAILS);
+}
+
+export function setInquiryToEmailsSetting(value: string) {
+  setSetting(SETTING_INQUIRY_TO_EMAILS, value);
+}
+
+export function getContactInfoSettingRaw(): string {
+  return getSetting(SETTING_CONTACT_INFO);
+}
+
+export function setContactInfoSettingRaw(value: string) {
+  setSetting(SETTING_CONTACT_INFO, value);
+}
+
+export function getContactInfoStored(): ContactInfoStored {
+  const raw = getContactInfoSettingRaw();
+  if (!raw.trim()) return mergeContactInfoStored();
+  try {
+    const parsed = JSON.parse(raw) as Partial<ContactInfoStored>;
+    return mergeContactInfoStored(parsed);
+  } catch {
+    return mergeContactInfoStored();
+  }
+}
+
+export function setContactInfoStored(stored: ContactInfoStored) {
+  const normalized = mergeContactInfoStored(stored);
+  setContactInfoSettingRaw(JSON.stringify(normalized));
 }
 
 export type ProductReviewInput = {
@@ -352,10 +385,6 @@ export function updateProductReview(id: number, data: ProductReviewInput) {
 
 export function deleteProductReview(id: number) {
   getDb().prepare("DELETE FROM product_reviews WHERE id = ?").run(id);
-}
-
-export function setInquiryToEmailsSetting(value: string) {
-  setSetting(SETTING_INQUIRY_TO_EMAILS, value);
 }
 
 export function getDashboardStats() {

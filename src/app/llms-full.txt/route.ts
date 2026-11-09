@@ -1,12 +1,12 @@
 import { getModels } from "@/lib/catalog";
-import { contactInfo } from "@/lib/contactInfo";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 
-export const dynamic = "force-static";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export function GET() {
   const base = getSiteUrl();
+  const contact = getContactInfo();
   const modelsSv = getModels("sv");
   const modelsEn = getModels("en");
 
@@ -35,9 +35,9 @@ export function GET() {
     "Focus: interior doors, entrance doors, concealed/hidden doors, oak parquet (chevron & herringbone), plus advisory for architects and project teams.",
     "",
     "## Contact",
-    `- ${contactInfo.addressLine1}, ${contactInfo.addressLine2}`,
-    `- ${contactInfo.phoneDisplay} · ${contactInfo.email}`,
-    `- Coordinates: ${contactInfo.coordinates.lat}, ${contactInfo.coordinates.lng}`,
+    `- ${contact.addressLine1}, ${contact.addressLine2}`,
+    `- ${contact.phoneDisplay} · ${contact.email}`,
+    `- Coordinates: ${contact.coordinates.lat}, ${contact.coordinates.lng}`,
     "",
     "## Locales",
     "- `sv` (default, sv-SE)",

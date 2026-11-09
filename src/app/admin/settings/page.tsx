@@ -1,13 +1,20 @@
 import PageBreadcrumb from "@/components/admin/PageBreadCrumb";
 import SettingsForm from "@/components/admin/SettingsForm";
 import { isAdminDbEnabled } from "@/lib/adminDbEnabled";
-import { getInquiryToEmailsSetting } from "@/lib/admin/queries";
+import {
+  getContactInfoStored,
+  getInquiryToEmailsSetting,
+} from "@/lib/admin/queries";
+import { mergeContactInfoStored } from "@/lib/contactInfo";
 import { getSiteUrl } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
 export default function AdminSettingsPage() {
-  const inquiryToEmails = getInquiryToEmailsSetting();
+  const inquiryToEmails = isAdminDbEnabled() ? getInquiryToEmailsSetting() : "";
+  const contact = isAdminDbEnabled()
+    ? getContactInfoStored()
+    : mergeContactInfoStored();
   const envFallback = process.env.INQUIRY_TO_EMAIL?.trim() || "";
   const siteUrl = getSiteUrl();
 
@@ -16,6 +23,7 @@ export default function AdminSettingsPage() {
       <PageBreadcrumb pageTitle="Settings" />
       <SettingsForm
         initialInquiryToEmails={inquiryToEmails}
+        initialContact={contact}
         system={{
           siteUrl,
           emailFromConfigured: Boolean(process.env.EMAIL_FROM?.trim()),

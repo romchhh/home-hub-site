@@ -1,12 +1,24 @@
 import type { DoorModel } from "@/data/models";
 import { isPricePublished } from "@/lib/formatPrice";
-import { contactInfo } from "@/lib/contactInfo";
+import type { ContactInfo } from "@/lib/contactInfo";
+import { orgNrDigits } from "@/lib/contactInfo";
 import type { Locale } from "@/lib/i18n";
 import type { ProductReview } from "@/lib/productReviewTypes";
 import { absoluteMediaUrl } from "@/lib/seo/absoluteMedia";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 
 const siteUrl = () => getSiteUrl();
+
+function parsePostalLocality(addressLine2: string): {
+  postalCode: string;
+  addressLocality: string;
+} {
+  const match = addressLine2.trim().match(/^(\d{3}\s?\d{2})\s+(.+)$/);
+  if (match) {
+    return { postalCode: match[1], addressLocality: match[2] };
+  }
+  return { postalCode: "", addressLocality: addressLine2 };
+}
 
 export function websiteJsonLd(locale: Locale) {
   return {
@@ -20,13 +32,19 @@ export function websiteJsonLd(locale: Locale) {
   };
 }
 
-export function organizationJsonLd(locale: Locale, description: string) {
+export function organizationJsonLd(
+  locale: Locale,
+  description: string,
+  contact: ContactInfo,
+) {
+  const { postalCode, addressLocality } = parsePostalLocality(contact.addressLine2);
+  const tax = orgNrDigits(contact.orgNr);
   return {
     "@context": "https://schema.org",
     "@type": ["Organization", "HomeAndConstructionBusiness", "LocalBusiness"],
     "@id": `${siteUrl()}/#organization`,
     name: siteName,
-    legalName: "Home Hub Stockholm AB",
+    legalName: contact.companyName,
     url: siteUrl(),
     description,
     image: absoluteMediaUrl("/images/hero.png"),
@@ -36,22 +54,22 @@ export function organizationJsonLd(locale: Locale, description: string) {
       width: 512,
       height: 512,
     },
-    email: contactInfo.email,
-    telephone: contactInfo.phone,
+    email: contact.email,
+    telephone: contact.phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: contactInfo.addressLine1,
-      postalCode: "174 53",
-      addressLocality: "Sundbyberg",
+      streetAddress: contact.addressLine1,
+      postalCode,
+      addressLocality,
       addressRegion: "Stockholm",
       addressCountry: "SE",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: contactInfo.coordinates.lat,
-      longitude: contactInfo.coordinates.lng,
+      latitude: contact.coordinates.lat,
+      longitude: contact.coordinates.lng,
     },
-    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.mapSearchQuery)}`,
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.mapSearchQuery)}`,
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -66,21 +84,21 @@ export function organizationJsonLd(locale: Locale, description: string) {
         closes: "15:00",
       },
     ],
-    taxID: "5562187475",
-    vatID: "SE556218747501",
+    taxID: tax,
+    vatID: tax ? `SE${tax}01` : undefined,
     areaServed: {
       "@type": "Country",
-      name: "Sweden",
+      name: contact.country || "Sweden",
     },
-    sameAs: contactInfo.social.map((s) => s.href),
+    sameAs: contact.social.map((s) => s.href),
     currenciesAccepted: "SEK",
     paymentAccepted: "Cash, Credit Card, Invoice",
     inLanguage: locale === "sv" ? "sv-SE" : "en",
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: contactInfo.phone,
-        email: contactInfo.email,
+        telephone: contact.phone,
+        email: contact.email,
         contactType: "customer service",
         availableLanguage: ["Swedish", "English"],
         areaServed: "SE",

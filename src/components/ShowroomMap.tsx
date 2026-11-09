@@ -1,14 +1,17 @@
-import { contactInfo, getMapEmbedUrl, getMapsDirectionsUrl } from "@/lib/contactInfo";
+import type { ContactInfo } from "@/lib/contactInfo";
+import { getMapEmbedUrl, getMapsDirectionsUrl } from "@/lib/contactInfo";
 
 export function ShowroomMap({
   title,
   directionsLabel,
+  contact,
 }: {
   title: string;
   directionsLabel: string;
+  contact: ContactInfo;
 }) {
-  const embedUrl = getMapEmbedUrl();
-  const directionsUrl = getMapsDirectionsUrl();
+  const embedUrl = getMapEmbedUrl(contact);
+  const directionsUrl = getMapsDirectionsUrl(contact);
 
   return (
     <div className="showroom-map">
@@ -25,7 +28,7 @@ export function ShowroomMap({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {directionsLabel} — {contactInfo.addressLine1}, {contactInfo.addressLine2}
+        {directionsLabel} — {contact.addressLine1}, {contact.addressLine2}
       </a>
     </div>
   );

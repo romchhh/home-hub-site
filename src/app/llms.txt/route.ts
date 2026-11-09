@@ -1,13 +1,13 @@
 import { getAllModelSlugs } from "@/lib/catalog";
-import { contactInfo } from "@/lib/contactInfo";
+import { getContactInfo } from "@/lib/getContactInfo";
 import { locales } from "@/lib/i18n";
 import { absoluteUrl, getSiteUrl, siteName, staticSeoPaths } from "@/lib/site";
 
-export const dynamic = "force-static";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export function GET() {
   const base = getSiteUrl();
+  const contact = getContactInfo();
   const modelSlugs = getAllModelSlugs();
   const lines = [
     `# ${siteName}`,
@@ -31,11 +31,11 @@ export function GET() {
     `- Robots: ${base}/robots.txt`,
     "",
     "## Showroom & contact",
-    `- Address: ${contactInfo.addressLine1}, ${contactInfo.addressLine2}, ${contactInfo.country}`,
-    `- Phone: ${contactInfo.phoneDisplay}`,
-    `- Email: ${contactInfo.email}`,
-    `- Hours (SV): ${contactInfo.hours.sv.join("; ")}`,
-    `- Hours (EN): ${contactInfo.hours.en.join("; ")}`,
+    `- Address: ${contact.addressLine1}, ${contact.addressLine2}, ${contact.country}`,
+    `- Phone: ${contact.phoneDisplay}`,
+    `- Email: ${contact.email}`,
+    `- Hours (SV): ${contact.hours.sv.join("; ")}`,
+    `- Hours (EN): ${contact.hours.en.join("; ")}`,
     ...locales.map((locale) => `- Contact page (${locale}): ${absoluteUrl(locale, "/contact")}`),
     "",
     "## Main pages",

@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
+import type { ContactMessengerLink } from "@/lib/contactInfo";
 import {
   normalizeRequestOpen,
   type RequestOpenOptions,
@@ -13,6 +14,7 @@ export function ContactRequestForm({
   dict,
   prefill = "",
   options,
+  messengers = [],
   showMessengers = true,
   /** Expand the success state to fill the parent (modal sheet). */
   fillSuccess = false,
@@ -23,6 +25,7 @@ export function ContactRequestForm({
   /** @deprecated prefer `options.model` */
   prefill?: string;
   options?: string | RequestOpenOptions;
+  messengers?: ContactMessengerLink[];
   showMessengers?: boolean;
   fillSuccess?: boolean;
   onSuccess?: () => void;
@@ -97,7 +100,9 @@ export function ContactRequestForm({
             {dict.nav.close}
           </button>
         ) : null}
-        {showMessengers ? <ContactMessengers dict={dict} /> : null}
+        {showMessengers ? (
+          <ContactMessengers dict={dict} messengers={messengers} />
+        ) : null}
       </div>
     );
   }
@@ -176,7 +181,9 @@ export function ContactRequestForm({
           {r.error}
         </p>
       ) : null}
-      {showMessengers ? <ContactMessengers dict={dict} /> : null}
+      {showMessengers ? (
+        <ContactMessengers dict={dict} messengers={messengers} />
+      ) : null}
     </form>
   );
 }
