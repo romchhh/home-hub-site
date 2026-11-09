@@ -16,12 +16,10 @@ export type CategorySection = CatalogCategoryOption & {
 };
 
 export type CategoryJumpTarget = {
-  /** Unique DOM / jump id fragment, e.g. entrance or entrance__apartment */
+  /** Unique DOM / jump id fragment */
   id: string;
   slug: string;
   name: string;
-  categorySlug: string;
-  kind: "category" | "subcategory";
 };
 
 export function buildCategorySections(
@@ -68,46 +66,30 @@ function buildSubgroups(
   return groups.length > 0 ? groups : [{ slug: null, name: null, items }];
 }
 
-/** Jump targets: subcategory chips when present, else the parent category. */
+/** Sticky bar targets — always one chip per top-level category section. */
 export function buildCategoryJumpTargets(
   sections: CategorySection[],
 ): CategoryJumpTarget[] {
-  const targets: CategoryJumpTarget[] = [];
-  for (const section of sections) {
-    const namedSubs = section.subgroups.filter((g) => g.slug && g.name);
-    if (namedSubs.length === 0) {
-      targets.push({
-        id: section.slug,
-        slug: section.slug,
-        name: section.name,
-        categorySlug: section.slug,
-        kind: "category",
-      });
-      continue;
-    }
+  return sections.map((section) => ({
+    id: section.slug,
+    slug: section.slug,
+    name: section.name,
+  }));
+}
 
-    for (const sub of namedSubs) {
-      targets.push({
-        id: `${section.slug}__${sub.slug}`,
-        slug: sub.slug!,
-        name: sub.name!,
-        categorySlug: section.slug,
-        kind: "subcategory",
-      });
-    }
-
-    const ungrouped = section.subgroups.find((g) => !g.slug);
-    if (ungrouped && ungrouped.items.length > 0) {
-      targets.push({
-        id: section.slug,
-        slug: section.slug,
-        name: section.name,
-        categorySlug: section.slug,
-        kind: "category",
-      });
-    }
-  }
-  return targets;
+/** Sticky bar targets when browsing inside one category with subcategories. */
+export function buildSubcategoryJumpTargets(
+  section: CategorySection,
+): CategoryJumpTarget[] {
+  return section.subgroups
+    .filter((g): g is CategorySubgroup & { slug: string; name: string } =>
+      Boolean(g.slug && g.name),
+    )
+    .map((g) => ({
+      id: `${section.slug}__${g.slug}`,
+      slug: g.slug,
+      name: g.name,
+    }));
 }
 
 export function categorySectionDomId(prefix: string, id: string) {

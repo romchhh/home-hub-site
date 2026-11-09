@@ -65,7 +65,7 @@ export function HomeDoorProducts({
   const c = dict.catalog;
   const h = dict.home;
   const previewCount = usePreviewCount();
-  const rootRef = useRef<HTMLDivElement>(null);
+  const gateRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [jumpPinned, setJumpPinned] = useState(false);
@@ -135,90 +135,86 @@ export function HomeDoorProducts({
   }, []);
 
   return (
-    <div ref={rootRef} className="home-category-sections">
+    <>
       <CategoryJumpBar
         sections={jumpTargets.map((t) => ({ slug: t.id, name: t.name }))}
         activeSlug={activeSlug}
         ariaLabel={c.filterCategoryLabel}
-        gateRef={rootRef}
+        gateRef={gateRef}
         pinned={jumpPinned}
         onJump={jumpToSection}
       />
 
-      {sections.map((section) => {
-        const isExpanded = Boolean(expanded[section.slug]);
-        const canToggle = section.items.length > previewCount;
-        const visibleSlugs = new Set(
-          (isExpanded ? section.items : section.items.slice(0, previewCount)).map(
-            (m) => m.slug,
-          ),
-        );
-        const hasNamedSubs = section.subgroups.some((g) => g.slug);
+      <div ref={gateRef} className="home-category-sections">
+        {sections.map((section) => {
+          const isExpanded = Boolean(expanded[section.slug]);
+          const canToggle = section.items.length > previewCount;
+          const visibleSlugs = new Set(
+            (isExpanded ? section.items : section.items.slice(0, previewCount)).map(
+              (m) => m.slug,
+            ),
+          );
+          const hasNamedSubs = section.subgroups.some((g) => g.slug);
 
-        return (
-          <div key={section.slug} className="home-category-section">
-            {!hasNamedSubs ? (
-              <div id={categorySectionDomId(SECTION_PREFIX, section.slug)}>
-                <h3 className="home-category-title">{section.name}</h3>
-              </div>
-            ) : (
+          return (
+            <div
+              key={section.slug}
+              id={categorySectionDomId(SECTION_PREFIX, section.slug)}
+              className="home-category-section"
+            >
               <h3 className="home-category-title">{section.name}</h3>
-            )}
 
-            {section.subgroups.map((group) => {
-              const blockId = group.slug
-                ? `${section.slug}__${group.slug}`
-                : section.slug;
-              const visible = group.items.filter((m) => visibleSlugs.has(m.slug));
-              if (visible.length === 0) return null;
+              {section.subgroups.map((group) => {
+                const blockId = group.slug
+                  ? `${section.slug}__${group.slug}`
+                  : `${section.slug}__other`;
+                const visible = group.items.filter((m) => visibleSlugs.has(m.slug));
+                if (visible.length === 0) return null;
 
-              return (
-                <div
-                  key={blockId}
-                  id={categorySectionDomId(SECTION_PREFIX, blockId)}
-                  className="home-category-subgroup"
-                >
-                  {group.name ? (
-                    <h4 className="home-category-subtitle">{group.name}</h4>
-                  ) : hasNamedSubs ? (
-                    <h4 className="home-category-subtitle home-category-subtitle--muted">
-                      {section.name}
-                    </h4>
-                  ) : null}
-                  <div className="catalog-products">
-                    {visible.map((m) => (
-                      <ProductCard
-                        key={m.slug}
-                        locale={locale}
-                        model={m}
-                        priceFromLabel={c.priceFrom}
-                        detailsLabel={c.details}
-                        closeLabel={dict.nav.close}
-                      />
-                    ))}
+                return (
+                  <div key={blockId} className="home-category-subgroup">
+                    {group.name ? (
+                      <h4 className="home-category-subtitle">{group.name}</h4>
+                    ) : hasNamedSubs ? (
+                      <h4 className="home-category-subtitle home-category-subtitle--muted">
+                        {section.name}
+                      </h4>
+                    ) : null}
+                    <div className="catalog-products">
+                      {visible.map((m) => (
+                        <ProductCard
+                          key={m.slug}
+                          locale={locale}
+                          model={m}
+                          priceFromLabel={c.priceFrom}
+                          detailsLabel={c.details}
+                          closeLabel={dict.nav.close}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {canToggle ? (
-              <div className="home-category-more">
-                <Pill
-                  outline
-                  onClick={() =>
-                    setExpanded((prev) => ({
-                      ...prev,
-                      [section.slug]: !prev[section.slug],
-                    }))
-                  }
-                >
-                  {isExpanded ? h.showLess : h.showMore}
-                </Pill>
-              </div>
-            ) : null}
-          </div>
-        );
-      })}
-    </div>
+              {canToggle ? (
+                <div className="home-category-more">
+                  <Pill
+                    outline
+                    onClick={() =>
+                      setExpanded((prev) => ({
+                        ...prev,
+                        [section.slug]: !prev[section.slug],
+                      }))
+                    }
+                  >
+                    {isExpanded ? h.showLess : h.showMore}
+                  </Pill>
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }

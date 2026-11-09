@@ -307,7 +307,7 @@ export function CatalogProductGrid({
       </div>
 
       {sectionMode ? (
-        <div ref={sectionsRef} className="catalog-category-sections">
+        <>
           <CategoryJumpBar
             sections={jumpTargets.map((t) => ({ slug: t.id, name: t.name }))}
             activeSlug={activeSlug}
@@ -317,57 +317,50 @@ export function CatalogProductGrid({
             onJump={jumpToSection}
           />
 
-          {sections.map((section) => {
-            const hasNamedSubs = section.subgroups.some((g) => g.slug);
-            return (
-              <div
-                key={section.slug}
-                className="catalog-category-section home-category-section"
-              >
-                {!hasNamedSubs ? (
-                  <div id={categorySectionDomId(SECTION_PREFIX, section.slug)}>
-                    <h3 className="home-category-title">{section.name}</h3>
-                  </div>
-                ) : (
+          <div ref={sectionsRef} className="catalog-category-sections">
+            {sections.map((section) => {
+              const hasNamedSubs = section.subgroups.some((g) => g.slug);
+              return (
+                <div
+                  key={section.slug}
+                  id={categorySectionDomId(SECTION_PREFIX, section.slug)}
+                  className="catalog-category-section home-category-section"
+                >
                   <h3 className="home-category-title">{section.name}</h3>
-                )}
 
-                {section.subgroups.map((group) => {
-                  const blockId = group.slug
-                    ? `${section.slug}__${group.slug}`
-                    : section.slug;
-                  return (
-                    <div
-                      key={blockId}
-                      id={categorySectionDomId(SECTION_PREFIX, blockId)}
-                      className="home-category-subgroup"
-                    >
-                      {group.name ? (
-                        <h4 className="home-category-subtitle">{group.name}</h4>
-                      ) : hasNamedSubs ? (
-                        <h4 className="home-category-subtitle home-category-subtitle--muted">
-                          {section.name}
-                        </h4>
-                      ) : null}
-                      <div className="catalog-products">
-                        {group.items.map((m) => (
-                          <ProductCard
-                            key={m.slug}
-                            locale={locale}
-                            model={m}
-                            priceFromLabel={c.priceFrom}
-                            detailsLabel={c.details}
-                            closeLabel={dict.nav.close}
-                          />
-                        ))}
+                  {section.subgroups.map((group) => {
+                    const blockId = group.slug
+                      ? `${section.slug}__${group.slug}`
+                      : `${section.slug}__other`;
+                    return (
+                      <div key={blockId} className="home-category-subgroup">
+                        {group.name ? (
+                          <h4 className="home-category-subtitle">{group.name}</h4>
+                        ) : hasNamedSubs ? (
+                          <h4 className="home-category-subtitle home-category-subtitle--muted">
+                            {section.name}
+                          </h4>
+                        ) : null}
+                        <div className="catalog-products">
+                          {group.items.map((m) => (
+                            <ProductCard
+                              key={m.slug}
+                              locale={locale}
+                              model={m}
+                              priceFromLabel={c.priceFrom}
+                              detailsLabel={c.details}
+                              closeLabel={dict.nav.close}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </>
       ) : (
         <div className="catalog-products">
           {visible.map((m) => (

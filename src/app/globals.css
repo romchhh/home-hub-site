@@ -1736,6 +1736,12 @@ p {
   background: var(--bg);
 }
 
+.catalog-subcategory-track .catalog-filter-chip--active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-ink);
+}
+
 @keyframes catalog-subcats-in {
   from {
     opacity: 0;

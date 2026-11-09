@@ -40,8 +40,9 @@ export function CategoryJumpBar({
   const [visible, setVisible] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const inProductsRef = useRef(false);
   const pinnedRef = useRef(pinned);
+  const lastYRef = useRef(0);
+  const hideTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     pinnedRef.current = pinned;
@@ -49,97 +50,71 @@ export function CategoryJumpBar({
   }, [pinned]);
 
   useEffect(() => {
-    let ticking = false;
-
-    const measureZone = () => {
-      const gate = gateRef.current;
-      if (!gate) return;
-      const rect = gate.getBoundingClientRect();
-      const header = readHeaderOffset();
-      const started = rect.top < window.innerHeight * 0.52;
-      const stillHere = rect.bottom > header + 72;
-      const next = started && stillHere;
-      inProductsRef.current = next;
-      if (!next && !pinnedRef.current) setVisible(false);
-    };
-
-    const onScrollOrResize = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        measureZone();
-        ticking = false;
-      });
-    };
-
-    measureZone();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-    return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
-    };
-  }, [gateRef]);
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    let ticking = false;
-    let hideTimer: number | null = null;
+    lastYRef.current = window.scrollY;
 
     const clearHide = () => {
-      if (hideTimer != null) {
-        window.clearTimeout(hideTimer);
-        hideTimer = null;
+      if (hideTimerRef.current != null) {
+        window.clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = null;
       }
     };
 
-    const scheduleHide = () => {
-      clearHide();
-      hideTimer = window.setTimeout(() => {
-        if (!pinnedRef.current) setVisible(false);
-      }, 260);
+    const isInProductsZone = () => {
+      const gate = gateRef.current;
+      if (!gate) return false;
+      const rect = gate.getBoundingClientRect();
+      const header = readHeaderOffset();
+      const started = rect.top < window.innerHeight * 0.65;
+      const stillHere = rect.bottom > header + 48;
+      return started && stillHere && window.scrollY > 80;
     };
 
-    const update = () => {
-      const y = window.scrollY;
-      const delta = y - lastY;
-      lastY = y;
-      ticking = false;
-
-      if (pinnedRef.current) {
-        clearHide();
-        setVisible(true);
-        return;
-      }
-
-      if (!inProductsRef.current || y < 140) {
-        clearHide();
-        setVisible(false);
-        return;
-      }
-
-      if (Math.abs(delta) < 8) return;
-
-      if (delta < 0) {
-        clearHide();
-        setVisible(true);
-      } else {
-        scheduleHide();
-      }
-    };
-
+    let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(update);
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastYRef.current;
+        lastYRef.current = y;
+        ticking = false;
+
+        if (pinnedRef.current) {
+          clearHide();
+          setVisible(true);
+          return;
+        }
+
+        if (!isInProductsZone()) {
+          clearHide();
+          setVisible(false);
+          return;
+        }
+
+        if (Math.abs(delta) < 4) return;
+
+        if (delta < 0) {
+          clearHide();
+          setVisible(true);
+        } else if (delta > 0) {
+          clearHide();
+          hideTimerRef.current = window.setTimeout(() => {
+            if (!pinnedRef.current) setVisible(false);
+          }, 180);
+        }
+      });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
+
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       clearHide();
     };
-  }, []);
+  }, [gateRef]);
 
   useEffect(() => {
     if (!visible || !activeSlug) return;
