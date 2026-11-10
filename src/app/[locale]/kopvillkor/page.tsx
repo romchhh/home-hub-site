@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/JsonLd";
+import { LegalDocument } from "@/components/LegalDocument";
 import { PageHead } from "@/components/PageHead";
 import { getDictionary } from "@/dictionaries";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -41,9 +42,7 @@ export default async function TermsPage({ params }: PageProps<"/[locale]/kopvill
         breadcrumb={l.termsTitle}
         title={l.termsTitle}
       />
-      <section className="site-section site-section--tight-top">
-        <p className="text-body-sm text-muted max-w-prose">{l.placeholder}</p>
-      </section>
+      <LegalDocument intro={l.termsIntro} sections={l.termsSections} />
     </>
   );
 }

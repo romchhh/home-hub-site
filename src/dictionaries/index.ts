@@ -338,8 +338,147 @@ const sv = {
     privacyTitle: "Integritetspolicy",
     termsTitle: "Köpvillkor",
     cookiesTitle: "Cookies",
-    placeholder:
-      "Fullständig text kommer att publiceras här. Kontakta oss om du har frågor under tiden.",
+    privacyIntro:
+      "Denna integritetspolicy beskriver hur Home Hub Stockholm AB (\"vi\", \"oss\") behandlar personuppgifter när du besöker vår webbplats, kontaktar oss eller gör en beställning.",
+    privacySections: [
+      {
+        title: "Personuppgiftsansvarig",
+        paragraphs: [
+          "Personuppgiftsansvarig är Home Hub Stockholm AB, org.nr 556218-7475. Kontaktuppgifter finns på vår kontaktsida.",
+        ],
+      },
+      {
+        title: "Vilka uppgifter vi samlar in",
+        paragraphs: [
+          "När du kontaktar oss eller begär offert kan vi behandla namn, telefonnummer, e-postadress, leveransadress och uppgifter om ditt projekt.",
+          "Vid besök på webbplatsen kan tekniska uppgifter samlas in via cookies och liknande teknik, till exempel IP-adress, enhetstyp och sidor som besöks — se vår cookiepolicy.",
+        ],
+      },
+      {
+        title: "Ändamål och rättslig grund",
+        paragraphs: [
+          "Vi behandlar personuppgifter för att besvara förfrågningar, lämna offerter, fullgöra avtal, leverera produkter och ge kundservice (avtal / berättigat intresse).",
+          "Vi använder analyscookies endast om du har samtyckt till dem.",
+          "Vi kan också behandla uppgifter när det krävs enligt lag, till exempel bokföring.",
+        ],
+      },
+      {
+        title: "Delning av uppgifter",
+        paragraphs: [
+          "Vi säljer inte dina personuppgifter. Uppgifter kan delas med leverantörer och samarbetspartner som behövs för tillverkning, leverans, IT-drift eller analys — endast i den utsträckning som krävs för respektive uppdrag.",
+        ],
+      },
+      {
+        title: "Lagring",
+        paragraphs: [
+          "Uppgifter sparas så länge det behövs för ändamålet, för kundrelationen eller enligt lagkrav (till exempel bokföringsregler).",
+        ],
+      },
+      {
+        title: "Dina rättigheter",
+        paragraphs: [
+          "Du har rätt att begära tillgång, rättelse, radering, begränsning och i vissa fall dataportabilitet, samt att invända mot behandling som grundas på berättigat intresse.",
+          "Du kan när som helst återkalla samtycke till analyscookies. Du har också rätt att lämna klagomål till Integritetsskyddsmyndigheten (IMY).",
+        ],
+      },
+      {
+        title: "Kontakt",
+        paragraphs: [
+          "Har du frågor om hur vi behandlar personuppgifter? Kontakta oss via e-post eller telefon enligt uppgifterna på kontaktsidan.",
+        ],
+      },
+    ],
+    termsIntro:
+      "Dessa köpvillkor gäller när du beställer produkter från Home Hub Stockholm AB via webbplats, showroom eller offert. Genom att lägga en beställning godkänner du villkoren.",
+    termsSections: [
+      {
+        title: "Säljare",
+        paragraphs: [
+          "Säljare är Home Hub Stockholm AB, org.nr 556218-7475. Showroom och kontaktuppgifter finns på webbplatsen.",
+        ],
+      },
+      {
+        title: "Produkter och priser",
+        paragraphs: [
+          "Produkter som dörrar och golv tillverkas eller anpassas efter mått, material och övriga val. Priser i katalog och på webbplatsen är vägledande tills en skriftlig offert eller orderbekräftelse har godkänts.",
+          "Slutligt pris, leveranstid och specifikation framgår av offert eller orderbekräftelse.",
+        ],
+      },
+      {
+        title: "Beställning och betalning",
+        paragraphs: [
+          "En bindande beställning uppstår när du godkänner offert/orderbekräftelse och eventuellt avtalad förskottsbetalning har mottagits, om så anges i offerten.",
+          "Betalningsvillkor anges i offert eller faktura. Vid försenad betalning förbehåller vi oss rätten att skjuta upp produktion och leverans.",
+        ],
+      },
+      {
+        title: "Leverans och montering",
+        paragraphs: [
+          "Leveranstider anges i offerten och är ungefärliga. Vi meddelar dig när varan är klar för leverans eller hämtning.",
+          "Eventuell montering och tilläggsarbeten avtalas separat och ingår endast om det uttryckligen anges.",
+        ],
+      },
+      {
+        title: "Ångerrätt och returer",
+        paragraphs: [
+          "Varan återlämnas inte eftersom den tillverkas i sin helhet på beställning efter dina mått och val.",
+          "Produkter som tillverkas eller väsentligt anpassas efter kundens specifikation omfattas inte av lagstadgad ångerrätt vid distansavtal. När produktion har påbörjats eller varan är specialanpassad kan ordern normalt inte avbeställas, returneras eller bytas.",
+          "Om varan har ett fabrikationsfel i material eller yta gäller reklamation enligt lag och leverantörens garanti. Kontakta oss omgående vid skada eller fel.",
+        ],
+      },
+      {
+        title: "Reklamation",
+        paragraphs: [
+          "Kontrollera leveransen vid mottagandet. Synliga transportskador ska noteras och meddelas oss utan dröjsmål. Dolda fel ska reklameras inom skälig tid efter upptäckt.",
+        ],
+      },
+      {
+        title: "Ansvar",
+        paragraphs: [
+          "Vi ansvarar för fel enligt gällande konsumentköplag där den är tillämplig. Vi ansvarar inte för indirekta skador eller följdförluster utöver vad som följer av tvingande lag.",
+        ],
+      },
+      {
+        title: "Tvist",
+        paragraphs: [
+          "Tvister ska i första hand lösas i samförstånd. Konsumenter kan vända sig till Allmänna reklamationsnämnden (ARN). Svensk lag gäller.",
+        ],
+      },
+    ],
+    cookiesIntro:
+      "Denna cookiepolicy förklarar hur Home Hub Stockholm AB använder cookies och liknande teknik på webbplatsen.",
+    cookiesSections: [
+      {
+        title: "Vad är cookies?",
+        paragraphs: [
+          "Cookies är små textfiler som lagras i din webbläsare. De används för att webbplatsen ska fungera, komma ihåg val och — om du godkänner det — förstå hur webbplatsen används.",
+        ],
+      },
+      {
+        title: "Nödvändiga cookies",
+        paragraphs: [
+          "Nödvändiga cookies krävs för grundläggande funktioner, till exempel att spara ditt cookieval och att webbplatsen ska fungera säkert. Dessa används alltid.",
+        ],
+      },
+      {
+        title: "Analyscookies",
+        paragraphs: [
+          "Om du accepterar analyscookies kan vi använda Google Analytics för att förstå trafik och användning av webbplatsen. Dessa cookies sätts först efter ditt samtycke och kan återkallas när som helst via cookievalet.",
+        ],
+      },
+      {
+        title: "Hur du hanterar cookies",
+        paragraphs: [
+          "Du kan acceptera alla cookies eller endast nödvändiga via vår cookiebanner. Du kan också radera eller blockera cookies i webbläsarens inställningar. Observera att vissa funktioner då kan påverkas.",
+        ],
+      },
+      {
+        title: "Mer information",
+        paragraphs: [
+          "För hur vi behandlar personuppgifter i övrigt, se vår integritetspolicy. Kontakta oss gärna om du har frågor.",
+        ],
+      },
+    ],
   },
   cookieBanner: {
     title: "Vi använder cookies",
@@ -690,8 +829,147 @@ const en: Dictionary = {
     privacyTitle: "Privacy policy",
     termsTitle: "Terms of purchase",
     cookiesTitle: "Cookies",
-    placeholder:
-      "The full text will be published here. Contact us if you have questions in the meantime.",
+    privacyIntro:
+      "This privacy policy explains how Home Hub Stockholm AB (\"we\", \"us\") processes personal data when you visit our website, contact us or place an order.",
+    privacySections: [
+      {
+        title: "Data controller",
+        paragraphs: [
+          "The data controller is Home Hub Stockholm AB, company registration number 556218-7475. Contact details are available on our contact page.",
+        ],
+      },
+      {
+        title: "What data we collect",
+        paragraphs: [
+          "When you contact us or request a quote we may process your name, phone number, email address, delivery address and project details.",
+          "When you visit the website, technical data may be collected through cookies and similar technologies — such as IP address, device type and pages visited — see our cookie policy.",
+        ],
+      },
+      {
+        title: "Purposes and legal basis",
+        paragraphs: [
+          "We process personal data to answer enquiries, provide quotes, fulfil contracts, deliver products and provide customer service (contract / legitimate interest).",
+          "We use analytics cookies only if you have consented to them.",
+          "We may also process data when required by law, for example bookkeeping.",
+        ],
+      },
+      {
+        title: "Sharing of data",
+        paragraphs: [
+          "We do not sell your personal data. Data may be shared with suppliers and partners needed for manufacturing, delivery, IT operations or analytics — only to the extent required for each assignment.",
+        ],
+      },
+      {
+        title: "Retention",
+        paragraphs: [
+          "Data is kept for as long as needed for the purpose, the customer relationship or legal requirements (for example accounting rules).",
+        ],
+      },
+      {
+        title: "Your rights",
+        paragraphs: [
+          "You have the right to request access, rectification, erasure, restriction and in some cases data portability, and to object to processing based on legitimate interest.",
+          "You may withdraw consent to analytics cookies at any time. You also have the right to lodge a complaint with the Swedish Authority for Privacy Protection (IMY).",
+        ],
+      },
+      {
+        title: "Contact",
+        paragraphs: [
+          "If you have questions about how we process personal data, contact us by email or phone using the details on the contact page.",
+        ],
+      },
+    ],
+    termsIntro:
+      "These terms of purchase apply when you order products from Home Hub Stockholm AB via the website, showroom or quotation. By placing an order you accept these terms.",
+    termsSections: [
+      {
+        title: "Seller",
+        paragraphs: [
+          "The seller is Home Hub Stockholm AB, company registration number 556218-7475. Showroom and contact details are available on the website.",
+        ],
+      },
+      {
+        title: "Products and prices",
+        paragraphs: [
+          "Products such as doors and flooring are manufactured or adapted to measurements, materials and other choices. Prices in the catalogue and on the website are indicative until a written quote or order confirmation has been accepted.",
+          "Final price, lead time and specification are stated in the quote or order confirmation.",
+        ],
+      },
+      {
+        title: "Order and payment",
+        paragraphs: [
+          "A binding order is formed when you accept the quote/order confirmation and any agreed deposit has been received, if stated in the quote.",
+          "Payment terms are stated in the quote or invoice. In case of late payment we reserve the right to postpone production and delivery.",
+        ],
+      },
+      {
+        title: "Delivery and installation",
+        paragraphs: [
+          "Delivery times are stated in the quote and are approximate. We will notify you when the goods are ready for delivery or collection.",
+          "Any installation and additional work is agreed separately and is included only if expressly stated.",
+        ],
+      },
+      {
+        title: "Right of withdrawal and returns",
+        paragraphs: [
+          "The product cannot be returned because it is manufactured entirely to order according to your measurements and choices.",
+          "Goods that are made or substantially customised to the customer's specification are not covered by the statutory right of withdrawal for distance contracts. Once production has started or the goods are custom-made, the order can normally not be cancelled, returned or exchanged.",
+          "If the goods have a manufacturing defect in material or finish, complaints are handled under applicable law and the supplier warranty. Contact us promptly in case of damage or defect.",
+        ],
+      },
+      {
+        title: "Complaints",
+        paragraphs: [
+          "Please check the delivery upon receipt. Visible transport damage should be noted and reported to us without delay. Hidden defects should be reported within a reasonable time after discovery.",
+        ],
+      },
+      {
+        title: "Liability",
+        paragraphs: [
+          "We are liable for defects under applicable consumer sales law where it applies. We are not liable for indirect damages or consequential losses beyond what follows from mandatory law.",
+        ],
+      },
+      {
+        title: "Disputes",
+        paragraphs: [
+          "Disputes should primarily be resolved amicably. Consumers may contact the National Board for Consumer Disputes (ARN). Swedish law applies.",
+        ],
+      },
+    ],
+    cookiesIntro:
+      "This cookie policy explains how Home Hub Stockholm AB uses cookies and similar technologies on the website.",
+    cookiesSections: [
+      {
+        title: "What are cookies?",
+        paragraphs: [
+          "Cookies are small text files stored in your browser. They are used to make the website work, remember choices and — if you consent — understand how the website is used.",
+        ],
+      },
+      {
+        title: "Necessary cookies",
+        paragraphs: [
+          "Necessary cookies are required for basic functions, such as saving your cookie choice and keeping the site secure. These are always used.",
+        ],
+      },
+      {
+        title: "Analytics cookies",
+        paragraphs: [
+          "If you accept analytics cookies we may use Google Analytics to understand traffic and site usage. These cookies are set only after your consent and can be withdrawn at any time via the cookie choice.",
+        ],
+      },
+      {
+        title: "How to manage cookies",
+        paragraphs: [
+          "You can accept all cookies or necessary cookies only via our cookie banner. You can also delete or block cookies in your browser settings. Note that some features may then be affected.",
+        ],
+      },
+      {
+        title: "More information",
+        paragraphs: [
+          "For how we otherwise process personal data, see our privacy policy. Feel free to contact us if you have questions.",
+        ],
+      },
+    ],
   },
   cookieBanner: {
     title: "We use cookies",

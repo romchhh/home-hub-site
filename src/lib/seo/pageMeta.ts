@@ -97,17 +97,17 @@ const seoCopy: Record<Exclude<SeoPageKey, "home">, (d: Dict, locale: Locale) => 
   privacy: (d) => ({
     path: "/integritetspolicy",
     title: d.legal.privacyTitle,
-    description: d.legal.placeholder,
+    description: d.legal.privacyIntro,
   }),
   terms: (d) => ({
     path: "/kopvillkor",
     title: d.legal.termsTitle,
-    description: d.legal.placeholder,
+    description: d.legal.termsIntro,
   }),
   cookies: (d) => ({
     path: "/cookies",
     title: d.legal.cookiesTitle,
-    description: d.legal.placeholder,
+    description: d.legal.cookiesIntro,
   }),
 };
 
