@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   applicationName: siteName,
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
+  verification: {
+    google: "HWcCvMdR8aI0Z6ZWsGqsWjw7uLpgxRbNsUUgKZIS_6U",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
