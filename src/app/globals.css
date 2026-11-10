@@ -2666,6 +2666,8 @@ p {
   flex-direction: column;
   gap: 2rem;
   max-width: min(42rem, 100%);
+  margin-inline: auto;
+  text-align: center;
   font-size: var(--font-body-sm);
   line-height: var(--leading-body);
   color: var(--muted);
@@ -2692,6 +2694,12 @@ p {
 
 .legal-doc-section p {
   margin: 0;
+}
+
+.page-head:has(+ .site-section .legal-doc) .breadcrumb,
+.page-head:has(+ .site-section .legal-doc) .catalog-title,
+.page-head:has(+ .site-section .legal-doc) .catalog-title h1 {
+  text-align: center;
 }
 
 .editorial-media {
