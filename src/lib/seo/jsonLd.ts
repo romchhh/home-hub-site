@@ -5,6 +5,14 @@ import { orgNrDigits } from "@/lib/contactInfo";
 import type { Locale } from "@/lib/i18n";
 import type { ProductReview } from "@/lib/productReviewTypes";
 import { absoluteMediaUrl } from "@/lib/seo/absoluteMedia";
+import {
+  MERCHANT_MAX_HANDLING_DAYS,
+  MERCHANT_MAX_TRANSIT_DAYS,
+  MERCHANT_MIN_HANDLING_DAYS,
+  MERCHANT_MIN_TRANSIT_DAYS,
+  merchantAvailabilityDate,
+  merchantShippingPriceSek,
+} from "@/lib/seo/merchantFeed";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 
 const siteUrl = () => getSiteUrl();
@@ -190,8 +198,36 @@ export function productJsonLd(
             price: model.priceSek,
             priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
             availability: "https://schema.org/PreOrder",
+            availabilityStarts: merchantAvailabilityDate(),
             itemCondition: "https://schema.org/NewCondition",
             seller: { "@id": `${siteUrl()}/#organization` },
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: merchantShippingPriceSek(),
+                currency: "SEK",
+              },
+              shippingDestination: {
+                "@type": "DefinedRegion",
+                addressCountry: "SE",
+              },
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: MERCHANT_MIN_HANDLING_DAYS,
+                  maxValue: MERCHANT_MAX_HANDLING_DAYS,
+                  unitCode: "d",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: MERCHANT_MIN_TRANSIT_DAYS,
+                  maxValue: MERCHANT_MAX_TRANSIT_DAYS,
+                  unitCode: "d",
+                },
+              },
+            },
           },
         }
       : {}),

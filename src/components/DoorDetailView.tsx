@@ -11,6 +11,7 @@ import { localePath, type Locale } from "@/lib/i18n";
 import { pickGalleryAlt } from "@/lib/imageAlt";
 import { mediaUrl } from "@/lib/mediaUrl";
 import type { ProductReview } from "@/lib/productReviewTypes";
+import { merchantAvailabilityLabel } from "@/lib/seo/merchantFeed";
 import { DoorRequestPill } from "./DoorRequestPill";
 import { PhotoGalleryModal } from "./PhotoGalleryModal";
 import { ProductCard } from "./ProductCard";
@@ -170,6 +171,11 @@ export function DoorDetailView({
           </span>
           <h1 className="door-hero-title">{model.name}</h1>
           {priceLabel ? <p className="door-hero-price">{priceLabel}</p> : null}
+          {priceLabel ? (
+            <p className="door-hero-availability text-body-sm text-muted">
+              {merchantAvailabilityLabel(locale)}
+            </p>
+          ) : null}
           <p className="door-hero-lead text-body-sm text-muted">{model.description}</p>
           {showPaintNote ? (
             <p className="door-paint-note text-body-sm text-muted">{d.paintColorNote}</p>

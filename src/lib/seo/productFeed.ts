@@ -1,6 +1,16 @@
 import { getModels } from "@/lib/catalog";
 import { isPricePublished } from "@/lib/formatPrice";
 import { absoluteMediaUrl } from "@/lib/seo/absoluteMedia";
+import {
+  MERCHANT_MAX_HANDLING_DAYS,
+  MERCHANT_MAX_TRANSIT_DAYS,
+  MERCHANT_MIN_HANDLING_DAYS,
+  MERCHANT_MIN_TRANSIT_DAYS,
+  MERCHANT_SHIPPING_COUNTRY,
+  MERCHANT_SHIPPING_SERVICE,
+  merchantAvailabilityDate,
+  merchantShippingPriceSek,
+} from "@/lib/seo/merchantFeed";
 import { absoluteUrl, getSiteUrl, siteName } from "@/lib/site";
 import type { Locale } from "@/lib/i18n";
 
@@ -53,6 +63,9 @@ export function buildGoogleProductFeedXml(locale: Locale = "sv"): string {
         .join(" — ")
         .slice(0, 5000);
 
+      const shippingPrice = merchantShippingPriceSek().toFixed(2);
+      const availabilityDate = merchantAvailabilityDate();
+
       return `    <item>
       <g:id>${escapeXml(model.slug)}</g:id>
       <g:title>${escapeXml(model.name)}</g:title>
@@ -60,6 +73,7 @@ export function buildGoogleProductFeedXml(locale: Locale = "sv"): string {
       <g:link>${escapeXml(link)}</g:link>
       <g:image_link>${escapeXml(image)}</g:image_link>
 ${additional ? `${additional}\n` : ""}      <g:availability>preorder</g:availability>
+      <g:availability_date>${availabilityDate}</g:availability_date>
       <g:price>${model.priceSek.toFixed(2)} SEK</g:price>
       <g:brand>${escapeXml(siteName)}</g:brand>
       <g:condition>new</g:condition>
@@ -68,6 +82,17 @@ ${additional ? `${additional}\n` : ""}      <g:availability>preorder</g:availabi
         model.category === "flooring" ? "632" : "464"
       }</g:google_product_category>
       <g:identifier_exists>false</g:identifier_exists>
+      <g:min_handling_time>${MERCHANT_MIN_HANDLING_DAYS}</g:min_handling_time>
+      <g:max_handling_time>${MERCHANT_MAX_HANDLING_DAYS}</g:max_handling_time>
+      <g:shipping>
+        <g:country>${MERCHANT_SHIPPING_COUNTRY}</g:country>
+        <g:service>${MERCHANT_SHIPPING_SERVICE}</g:service>
+        <g:price>${shippingPrice} SEK</g:price>
+        <g:min_handling_time>${MERCHANT_MIN_HANDLING_DAYS}</g:min_handling_time>
+        <g:max_handling_time>${MERCHANT_MAX_HANDLING_DAYS}</g:max_handling_time>
+        <g:min_transit_time>${MERCHANT_MIN_TRANSIT_DAYS}</g:min_transit_time>
+        <g:max_transit_time>${MERCHANT_MAX_TRANSIT_DAYS}</g:max_transit_time>
+      </g:shipping>
       <g:custom_label_0>${escapeXml(model.category)}</g:custom_label_0>
       <g:custom_label_1>${escapeXml(model.label)}</g:custom_label_1>
     </item>`;
