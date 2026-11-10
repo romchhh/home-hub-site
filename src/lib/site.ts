@@ -44,5 +44,7 @@ export const staticSeoPaths = [
   "/services",
   "/integritetspolicy",
   "/kopvillkor",
+  "/leverans",
+  "/retur",
   "/cookies",
 ] as const;

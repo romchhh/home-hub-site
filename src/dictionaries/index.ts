@@ -326,17 +326,22 @@ const sv = {
     note: "Showroom · Stockholm",
     companyName: "Home Hub Stockholm AB",
     orgNr: "556218-7475",
+    vatNote: "Momsregistrerad",
     copyright: "© 2026 Home Hub Stockholm AB",
     navHeading: "Navigering",
     contactHeading: "Showroom & kontakt",
     legalHeading: "Juridiskt",
     privacy: "Integritetspolicy",
     terms: "Köpvillkor",
+    shipping: "Leveranspolicy",
+    returns: "Retur & återbetalning",
     cookies: "Cookies",
   },
   legal: {
     privacyTitle: "Integritetspolicy",
     termsTitle: "Köpvillkor",
+    shippingTitle: "Leveranspolicy",
+    returnsTitle: "Retur- och återbetalningspolicy",
     cookiesTitle: "Cookies",
     privacyIntro:
       "Denna integritetspolicy beskriver hur Home Hub Stockholm AB (\"vi\", \"oss\") behandlar personuppgifter när du besöker vår webbplats, kontaktar oss eller gör en beställning.",
@@ -394,36 +399,35 @@ const sv = {
       {
         title: "Säljare",
         paragraphs: [
-          "Säljare är Home Hub Stockholm AB, org.nr 556218-7475. Showroom och kontaktuppgifter finns på webbplatsen.",
+          "Säljare är Home Hub Stockholm AB, org.nr 556218-7475, momsregistrerad. Showroom: Fredensvägen 4C, 174 53 Sundbyberg, Sverige. Telefon och e-post finns på kontaktsidan.",
         ],
       },
       {
         title: "Produkter och priser",
         paragraphs: [
           "Produkter som dörrar och golv tillverkas eller anpassas efter mått, material och övriga val. Priser i katalog och på webbplatsen är vägledande tills en skriftlig offert eller orderbekräftelse har godkänts.",
-          "Slutligt pris, leveranstid och specifikation framgår av offert eller orderbekräftelse.",
+          "Alla priser anges i SEK. Om inte annat anges i offerten är priser inklusive moms för konsumenter. Slutligt pris, leveranstid och specifikation framgår av offert eller orderbekräftelse.",
         ],
       },
       {
         title: "Beställning och betalning",
         paragraphs: [
-          "En bindande beställning uppstår när du godkänner offert/orderbekräftelse och eventuellt avtalad förskottsbetalning har mottagits, om så anges i offerten.",
-          "Betalningsvillkor anges i offert eller faktura. Vid försenad betalning förbehåller vi oss rätten att skjuta upp produktion och leverans.",
+          "Beställning sker efter offert. En bindande beställning uppstår när du godkänner offert/orderbekräftelse och eventuell avtalad förskottsbetalning har mottagits.",
+          "Betalning sker via faktura och banköverföring (Swish eller kort om det anges i offerten). Förskott, delbetalning eller slutbetalning anges i offert eller faktura. Vid försenad betalning förbehåller vi oss rätten att skjuta upp produktion och leverans.",
         ],
       },
       {
         title: "Leverans och montering",
         paragraphs: [
-          "Leveranstider anges i offerten och är ungefärliga. Vi meddelar dig när varan är klar för leverans eller hämtning.",
+          "Se vår leveranspolicy för fraktkostnad, leveranssätt, hanteringstid och leveransområde. Kortfattat: varor skickas från Sverige efter tillverkning; kostnad och tid anges i offerten.",
           "Eventuell montering och tilläggsarbeten avtalas separat och ingår endast om det uttryckligen anges.",
         ],
       },
       {
-        title: "Ångerrätt och returer",
+        title: "Ångerrätt, retur och återbetalning",
         paragraphs: [
-          "Varan återlämnas inte eftersom den tillverkas i sin helhet på beställning efter dina mått och val.",
-          "Produkter som tillverkas eller väsentligt anpassas efter kundens specifikation omfattas inte av lagstadgad ångerrätt vid distansavtal. När produktion har påbörjats eller varan är specialanpassad kan ordern normalt inte avbeställas, returneras eller bytas.",
-          "Om varan har ett fabrikationsfel i material eller yta gäller reklamation enligt lag och leverantörens garanti. Kontakta oss omgående vid skada eller fel.",
+          "Se vår retur- och återbetalningspolicy. Kortfattat: varan återlämnas inte eftersom den tillverkas i sin helhet på beställning efter dina mått och val.",
+          "Vid fabrikationsfel eller transportskada gäller reklamation enligt lag — kontakta oss omgående.",
         ],
       },
       {
@@ -442,6 +446,97 @@ const sv = {
         title: "Tvist",
         paragraphs: [
           "Tvister ska i första hand lösas i samförstånd. Konsumenter kan vända sig till Allmänna reklamationsnämnden (ARN). Svensk lag gäller.",
+        ],
+      },
+    ],
+    shippingIntro:
+      "Denna leveranspolicy beskriver hur Home Hub Stockholm AB levererar produkter som beställs via webbplats, showroom eller offert.",
+    shippingSections: [
+      {
+        title: "Avsändare och leveransområde",
+        paragraphs: [
+          "Varor skickas från vår verksamhet i Sundbyberg / Stockholmsområdet, Sverige (Fredensvägen 4C, 174 53 Sundbyberg).",
+          "Vi levererar främst inom Sverige. Leverans till andra länder kan erbjudas efter särskild överenskommelse i offerten.",
+        ],
+      },
+      {
+        title: "Leveranssätt",
+        paragraphs: [
+          "Leverans sker med fraktbolag till angiven adress, eller som upphämtning i showroom om det avtalats.",
+          "Stora gods (t.ex. dörrar) kan kräva hemleverans till tomtgräns eller lastkaj. Exakt leveranssätt anges i offert eller orderbekräftelse.",
+        ],
+      },
+      {
+        title: "Hanteringstid och leveranstid",
+        paragraphs: [
+          "Produkter tillverkas eller anpassas efter beställning. Produktionstid anges i offerten och är vanligen 4–12 veckor beroende på produkt, material och belastning.",
+          "När varan är klar meddelar vi dig. Transporttid inom Sverige är normalt 1–5 arbetsdagar efter avsändning. Uppskattad leveransvecka framgår av offerten.",
+        ],
+      },
+      {
+        title: "Fraktkostnad",
+        paragraphs: [
+          "Fraktkostnad beräknas utifrån vikt, volym, leveransadress och valt leveranssätt. Kostnaden anges tydligt i offerten innan du godkänner beställningen — antingen som separat rad eller inkluderad i priset.",
+          "Inga dolda avgifter tillkommer efter godkänd offert, utöver vad som följer av ändrade leveransuppgifter på kundens begäran.",
+        ],
+      },
+      {
+        title: "Mottagning och skador",
+        paragraphs: [
+          "Kontrollera emballage och gods vid mottagandet. Notera synliga skador på fraktsedel/följesedel och kontakta oss samma dag eller senast inom 48 timmar.",
+          "Vi hjälper dig med reklamationsärende mot transportör och leverantör vid transportskada.",
+        ],
+      },
+      {
+        title: "Montering",
+        paragraphs: [
+          "Montering ingår inte i standardleverans om det inte uttryckligen anges i offerten. Monteringspris och villkor avtalas separat.",
+        ],
+      },
+    ],
+    returnsIntro:
+      "Denna policy beskriver retur, ångerrätt och återbetalning för produkter från Home Hub Stockholm AB.",
+    returnsSections: [
+      {
+        title: "Inga returer för specialtillverkade varor",
+        paragraphs: [
+          "Varan återlämnas inte eftersom den tillverkas i sin helhet på beställning efter dina mått, material och övriga val.",
+          "Det finns därför ingen generell returfrist för ånger eller ombestämning efter att produktion har påbörjats eller varan är specialanpassad.",
+        ],
+      },
+      {
+        title: "Ångerrätt",
+        paragraphs: [
+          "Varor som tillverkas eller väsentligt anpassas efter kundens specifikation omfattas inte av lagstadgad ångerrätt vid distansavtal (konsument).",
+          "Om en standardvara utan specialanpassning skulle säljas på distans gäller i förekommande fall 14 dagars ångerrätt enligt lag — detta anges i så fall särskilt i offerten. För våra specialtillverkade dörrar och golv gäller normalt ingen ångerrätt.",
+        ],
+      },
+      {
+        title: "Avbeställning före produktion",
+        paragraphs: [
+          "Om du avbeställer innan produktion har startat kan vi återbetala erlagd förskottsbetalning minus eventuella dokumenterade kostnader som redan uppstått (t.ex. måttagning eller materialreservation), enligt överenskommelse i offerten.",
+          "När produktion har startat kan ordern normalt inte avbeställas, returneras eller bytas.",
+        ],
+      },
+      {
+        title: "Reklamation vid fel eller skada",
+        paragraphs: [
+          "Om varan har fabrikationsfel i material eller yta, eller skadats under transport som vi ansvarar för, har du rätt att reklamera enligt konsumentköplagen där den är tillämplig.",
+          "Kontakta oss via telefon eller e-post (uppgifter på kontaktsidan) så snart felet upptäcks — synliga skador helst inom 48 timmar efter leverans, dolda fel inom skälig tid.",
+          "Vid godkänd reklamation åtgärdar vi felet genom reparation, omleverans eller prisavdrag/återbetalning enligt lag. Returfrakt vid godkänd reklamation bekostas av oss om inte annat följer av tvingande regler.",
+        ],
+      },
+      {
+        title: "Återbetalning",
+        paragraphs: [
+          "När återbetalning ska ske (t.ex. godkänd reklamation eller avbeställning före produktion) återbetalar vi till samma betalningssätt som användes, normalt via banköverföring.",
+          "Återbetalning genomförs inom 14 dagar efter att vi godkänt ärendet och, vid behov, mottagit retur eller bekräftat felet. Du får bekräftelse på belopp och tidplan.",
+        ],
+      },
+      {
+        title: "Kontakt",
+        paragraphs: [
+          "Frågor om retur eller återbetalning: kontakta Home Hub Stockholm AB via e-post eller telefon enligt kontaktsidan. Org.nr 556218-7475, Fredensvägen 4C, 174 53 Sundbyberg.",
         ],
       },
     ],
@@ -817,17 +912,22 @@ const en: Dictionary = {
     note: "Showroom · Stockholm",
     companyName: "Home Hub Stockholm AB",
     orgNr: "556218-7475",
+    vatNote: "VAT registered",
     copyright: "© 2026 Home Hub Stockholm AB",
     navHeading: "Navigation",
     contactHeading: "Showroom & contact",
     legalHeading: "Legal",
     privacy: "Privacy policy",
     terms: "Terms of purchase",
+    shipping: "Shipping policy",
+    returns: "Returns & refunds",
     cookies: "Cookies",
   },
   legal: {
     privacyTitle: "Privacy policy",
     termsTitle: "Terms of purchase",
+    shippingTitle: "Shipping policy",
+    returnsTitle: "Return and refund policy",
     cookiesTitle: "Cookies",
     privacyIntro:
       "This privacy policy explains how Home Hub Stockholm AB (\"we\", \"us\") processes personal data when you visit our website, contact us or place an order.",
@@ -885,36 +985,35 @@ const en: Dictionary = {
       {
         title: "Seller",
         paragraphs: [
-          "The seller is Home Hub Stockholm AB, company registration number 556218-7475. Showroom and contact details are available on the website.",
+          "The seller is Home Hub Stockholm AB, company registration number 556218-7475, VAT registered. Showroom: Fredensvägen 4C, 174 53 Sundbyberg, Sweden. Phone and email are listed on the contact page.",
         ],
       },
       {
         title: "Products and prices",
         paragraphs: [
           "Products such as doors and flooring are manufactured or adapted to measurements, materials and other choices. Prices in the catalogue and on the website are indicative until a written quote or order confirmation has been accepted.",
-          "Final price, lead time and specification are stated in the quote or order confirmation.",
+          "All prices are in SEK. Unless otherwise stated in the quote, consumer prices include VAT. Final price, lead time and specification are stated in the quote or order confirmation.",
         ],
       },
       {
         title: "Order and payment",
         paragraphs: [
-          "A binding order is formed when you accept the quote/order confirmation and any agreed deposit has been received, if stated in the quote.",
-          "Payment terms are stated in the quote or invoice. In case of late payment we reserve the right to postpone production and delivery.",
+          "Orders are placed after a quote. A binding order is formed when you accept the quote/order confirmation and any agreed deposit has been received.",
+          "Payment is made by invoice and bank transfer (Swish or card if stated in the quote). Deposit, instalments or final payment are stated in the quote or invoice. In case of late payment we reserve the right to postpone production and delivery.",
         ],
       },
       {
         title: "Delivery and installation",
         paragraphs: [
-          "Delivery times are stated in the quote and are approximate. We will notify you when the goods are ready for delivery or collection.",
+          "See our shipping policy for freight cost, delivery methods, handling time and delivery area. In short: goods ship from Sweden after manufacturing; cost and timing are stated in the quote.",
           "Any installation and additional work is agreed separately and is included only if expressly stated.",
         ],
       },
       {
-        title: "Right of withdrawal and returns",
+        title: "Withdrawal, returns and refunds",
         paragraphs: [
-          "The product cannot be returned because it is manufactured entirely to order according to your measurements and choices.",
-          "Goods that are made or substantially customised to the customer's specification are not covered by the statutory right of withdrawal for distance contracts. Once production has started or the goods are custom-made, the order can normally not be cancelled, returned or exchanged.",
-          "If the goods have a manufacturing defect in material or finish, complaints are handled under applicable law and the supplier warranty. Contact us promptly in case of damage or defect.",
+          "See our return and refund policy. In short: the product cannot be returned because it is manufactured entirely to order according to your measurements and choices.",
+          "For manufacturing defects or transport damage, complaints are handled under applicable law — contact us promptly.",
         ],
       },
       {
@@ -933,6 +1032,97 @@ const en: Dictionary = {
         title: "Disputes",
         paragraphs: [
           "Disputes should primarily be resolved amicably. Consumers may contact the National Board for Consumer Disputes (ARN). Swedish law applies.",
+        ],
+      },
+    ],
+    shippingIntro:
+      "This shipping policy describes how Home Hub Stockholm AB delivers products ordered via the website, showroom or quotation.",
+    shippingSections: [
+      {
+        title: "Ship-from location and delivery area",
+        paragraphs: [
+          "Goods are dispatched from our operations in Sundbyberg / the Stockholm area, Sweden (Fredensvägen 4C, 174 53 Sundbyberg).",
+          "We mainly deliver within Sweden. Delivery to other countries may be offered by special agreement in the quote.",
+        ],
+      },
+      {
+        title: "Delivery methods",
+        paragraphs: [
+          "Delivery is made by freight carrier to the stated address, or as showroom collection if agreed.",
+          "Large goods (e.g. doors) may require home delivery to the property boundary or loading bay. The exact method is stated in the quote or order confirmation.",
+        ],
+      },
+      {
+        title: "Handling time and delivery time",
+        paragraphs: [
+          "Products are manufactured or adapted to order. Production time is stated in the quote and is usually 4–12 weeks depending on product, materials and capacity.",
+          "When the goods are ready we will notify you. Transit time within Sweden is normally 1–5 business days after dispatch. An estimated delivery week is stated in the quote.",
+        ],
+      },
+      {
+        title: "Shipping cost",
+        paragraphs: [
+          "Shipping cost is calculated from weight, volume, delivery address and chosen method. The cost is clearly stated in the quote before you accept the order — either as a separate line or included in the price.",
+          "No hidden fees are added after an accepted quote, other than changes requested by the customer to delivery details.",
+        ],
+      },
+      {
+        title: "Receipt and damage",
+        paragraphs: [
+          "Check packaging and goods on receipt. Note visible damage on the consignment note and contact us the same day or within 48 hours at the latest.",
+          "We will help you with a claim against the carrier and supplier in case of transport damage.",
+        ],
+      },
+      {
+        title: "Installation",
+        paragraphs: [
+          "Installation is not included in standard delivery unless expressly stated in the quote. Installation price and terms are agreed separately.",
+        ],
+      },
+    ],
+    returnsIntro:
+      "This policy describes returns, right of withdrawal and refunds for products from Home Hub Stockholm AB.",
+    returnsSections: [
+      {
+        title: "No returns for made-to-order goods",
+        paragraphs: [
+          "The product cannot be returned because it is manufactured entirely to order according to your measurements, materials and other choices.",
+          "There is therefore no general return window for change of mind once production has started or the goods are custom-made.",
+        ],
+      },
+      {
+        title: "Right of withdrawal",
+        paragraphs: [
+          "Goods that are made or substantially customised to the customer's specification are not covered by the statutory right of withdrawal for distance contracts (consumers).",
+          "If a non-customised standard product were sold at a distance, a 14-day right of withdrawal may apply by law — this would then be stated specifically in the quote. For our made-to-order doors and flooring, withdrawal normally does not apply.",
+        ],
+      },
+      {
+        title: "Cancellation before production",
+        paragraphs: [
+          "If you cancel before production has started we may refund any deposit paid minus documented costs already incurred (e.g. measuring or material reservation), as agreed in the quote.",
+          "Once production has started, the order can normally not be cancelled, returned or exchanged.",
+        ],
+      },
+      {
+        title: "Complaints for defects or damage",
+        paragraphs: [
+          "If the goods have a manufacturing defect in material or finish, or were damaged in transit that we are responsible for, you may complain under the Consumer Sales Act where applicable.",
+          "Contact us by phone or email (details on the contact page) as soon as the defect is discovered — visible damage preferably within 48 hours of delivery, hidden defects within a reasonable time.",
+          "For an approved complaint we remedy the defect by repair, replacement or price reduction/refund under the law. Return shipping for an approved complaint is paid by us unless mandatory rules say otherwise.",
+        ],
+      },
+      {
+        title: "Refunds",
+        paragraphs: [
+          "When a refund is due (e.g. approved complaint or cancellation before production) we refund to the same payment method used, normally by bank transfer.",
+          "Refunds are completed within 14 days after we approve the case and, if needed, receive a return or confirm the defect. You will receive confirmation of the amount and timeline.",
+        ],
+      },
+      {
+        title: "Contact",
+        paragraphs: [
+          "Questions about returns or refunds: contact Home Hub Stockholm AB by email or phone via the contact page. Company no. 556218-7475, Fredensvägen 4C, 174 53 Sundbyberg.",
         ],
       },
     ],

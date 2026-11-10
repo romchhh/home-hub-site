@@ -22,6 +22,8 @@ export type SeoPageKey =
   | "services"
   | "privacy"
   | "terms"
+  | "shipping"
+  | "returns"
   | "cookies";
 
 type Dict = ReturnType<typeof getDictionary>;
@@ -103,6 +105,16 @@ const seoCopy: Record<Exclude<SeoPageKey, "home">, (d: Dict, locale: Locale) => 
     path: "/kopvillkor",
     title: d.legal.termsTitle,
     description: d.legal.termsIntro,
+  }),
+  shipping: (d) => ({
+    path: "/leverans",
+    title: d.legal.shippingTitle,
+    description: d.legal.shippingIntro,
+  }),
+  returns: (d) => ({
+    path: "/retur",
+    title: d.legal.returnsTitle,
+    description: d.legal.returnsIntro,
   }),
   cookies: (d) => ({
     path: "/cookies",

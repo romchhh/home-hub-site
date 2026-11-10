@@ -20,6 +20,8 @@ const links = [
 const legalLinks = [
   { key: "privacy", path: "/integritetspolicy" },
   { key: "terms", path: "/kopvillkor" },
+  { key: "shipping", path: "/leverans" },
+  { key: "returns", path: "/retur" },
   { key: "cookies", path: "/cookies" },
 ] as const;
 
@@ -45,6 +47,10 @@ export function Footer({
             {contact.companyName}
             <br />
             {locale === "sv" ? "Org.nr" : "Org. no."} {contact.orgNr}
+            <br />
+            {f.vatNote}
+            <br />
+            {contact.addressLine1}, {contact.addressLine2}
           </p>
         </div>
 
