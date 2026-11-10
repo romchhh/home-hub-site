@@ -36,43 +36,40 @@ export function CookieConsentBanner({
   if (!visible) return null;
 
   return (
-    <div className="cookie-consent" role="presentation">
-      <div className="cookie-consent-backdrop" aria-hidden="true" />
-      <div
-        className="cookie-banner"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="cookie-banner-title"
-        aria-describedby="cookie-banner-desc"
-      >
-        <div className="cookie-banner-inner">
-          <div className="cookie-banner-copy">
-            <h2 id="cookie-banner-title" className="cookie-banner-title">
-              {c.title}
-            </h2>
-            <p id="cookie-banner-desc" className="cookie-banner-text">
-              {c.text}{" "}
-              <Link href={localePath(locale, "/cookies")} className="cookie-banner-link">
-                {c.learnMore}
-              </Link>
-            </p>
-          </div>
-          <div className="cookie-banner-actions">
-            <button
-              type="button"
-              className="cookie-banner-btn cookie-banner-btn--ghost"
-              onClick={() => choose("essential")}
-            >
-              {c.essentialOnly}
-            </button>
-            <button
-              type="button"
-              className="cookie-banner-btn cookie-banner-btn--solid"
-              onClick={() => choose("all")}
-            >
-              {c.acceptAll}
-            </button>
-          </div>
+    <div
+      className="cookie-banner"
+      role="dialog"
+      aria-labelledby="cookie-banner-title"
+      aria-describedby="cookie-banner-desc"
+      aria-live="polite"
+    >
+      <div className="cookie-banner-inner">
+        <div className="cookie-banner-copy">
+          <h2 id="cookie-banner-title" className="cookie-banner-title">
+            {c.title}
+          </h2>
+          <p id="cookie-banner-desc" className="cookie-banner-text">
+            {c.text}{" "}
+            <Link href={localePath(locale, "/cookies")} className="cookie-banner-link">
+              {c.learnMore}
+            </Link>
+          </p>
+        </div>
+        <div className="cookie-banner-actions">
+          <button
+            type="button"
+            className="cookie-banner-btn cookie-banner-btn--ghost"
+            onClick={() => choose("essential")}
+          >
+            {c.essentialOnly}
+          </button>
+          <button
+            type="button"
+            className="cookie-banner-btn cookie-banner-btn--solid"
+            onClick={() => choose("all")}
+          >
+            {c.acceptAll}
+          </button>
         </div>
       </div>
     </div>
