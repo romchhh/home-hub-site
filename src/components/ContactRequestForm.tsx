@@ -3,6 +3,7 @@
 import { useId, useMemo, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { ContactMessengerLink } from "@/lib/contactInfo";
+import { trackLeadFormSubmit } from "@/lib/analytics";
 import {
   normalizeRequestOpen,
   type RequestOpenOptions,
@@ -76,6 +77,11 @@ export function ContactRequestForm({
         }),
       });
       if (!res.ok) throw new Error("failed");
+      trackLeadFormSubmit({
+        model: model || undefined,
+        source: source || undefined,
+        intent: resolved.intent,
+      });
       form.reset();
       setConsent(false);
       setStatus("success");

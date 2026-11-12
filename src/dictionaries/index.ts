@@ -558,7 +558,7 @@ const sv = {
       {
         title: "Analyscookies",
         paragraphs: [
-          "Om du accepterar analyscookies kan vi använda Google Analytics för att förstå trafik och användning av webbplatsen. Dessa cookies sätts först efter ditt samtycke och kan återkallas när som helst via cookievalet.",
+          "Om du accepterar analyscookies kan vi använda Google Analytics och Google Tag Manager för att förstå trafik, användning och konverteringar (t.ex. skickade förfrågningar). Dessa cookies sätts först efter ditt samtycke och kan återkallas när som helst via cookievalet.",
         ],
       },
       {
@@ -1144,7 +1144,7 @@ const en: Dictionary = {
       {
         title: "Analytics cookies",
         paragraphs: [
-          "If you accept analytics cookies we may use Google Analytics to understand traffic and site usage. These cookies are set only after your consent and can be withdrawn at any time via the cookie choice.",
+          "If you accept analytics cookies we may use Google Analytics and Google Tag Manager to understand traffic, usage and conversions (e.g. submitted enquiries). These cookies are set only after your consent and can be withdrawn at any time via the cookie choice.",
         ],
       },
       {
