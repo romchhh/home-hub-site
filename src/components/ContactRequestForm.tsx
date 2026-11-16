@@ -9,6 +9,7 @@ import {
   normalizeRequestOpen,
   type RequestOpenOptions,
 } from "@/lib/requestOpen";
+import { markLeadConversionPending } from "@/lib/analytics";
 import { ArrowIcon } from "./ArrowIcon";
 import { ContactMessengers } from "./ContactMessengers";
 
@@ -85,6 +86,7 @@ export function ContactRequestForm({
       form.reset();
       setConsent(false);
       onSuccess?.();
+      markLeadConversionPending();
       // Conversion fires on /tack (Ads “conversion page”) — avoids double-counting.
       router.push(localePath(locale, "/tack"));
     } catch {
