@@ -5,7 +5,7 @@ export const GTM_ID = "GTM-5KCW4RHH";
 /** Google Ads conversion account. */
 export const AW_ID = "AW-18539496369";
 /** Event snippet: “Надсилання форми для лідів”. */
-export const AW_CONVERSION_SEND_TO = "AW-18539496369/wcm7CMbJ_rYdELGHqYhF";
+export const AW_CONVERSION_SEND_TO = "AW-18539496369/P3DlCPaGybkdELGHqYhF";
 
 declare global {
   interface Window {
