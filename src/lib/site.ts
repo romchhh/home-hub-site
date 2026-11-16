@@ -47,4 +47,5 @@ export const staticSeoPaths = [
   "/leverans",
   "/retur",
   "/cookies",
+  "/tack",
 ] as const;

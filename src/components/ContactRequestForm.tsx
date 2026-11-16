@@ -1,9 +1,10 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import type { Dictionary } from "@/dictionaries";
 import type { ContactMessengerLink } from "@/lib/contactInfo";
-import { trackLeadFormSubmit } from "@/lib/analytics";
+import { isLocale, localePath, type Locale } from "@/lib/i18n";
 import {
   normalizeRequestOpen,
   type RequestOpenOptions,
@@ -33,6 +34,10 @@ export function ContactRequestForm({
   onDismiss?: () => void;
 }) {
   const r = dict.request;
+  const router = useRouter();
+  const params = useParams();
+  const localeParam = typeof params?.locale === "string" ? params.locale : "sv";
+  const locale: Locale = isLocale(localeParam) ? localeParam : "sv";
   const resolved = useMemo(
     () =>
       normalizeRequestOpen(
@@ -77,18 +82,13 @@ export function ContactRequestForm({
         }),
       });
       if (!res.ok) throw new Error("failed");
-      trackLeadFormSubmit({
-        model: model || undefined,
-        source: source || undefined,
-        intent: resolved.intent,
-      });
       form.reset();
       setConsent(false);
-      setStatus("success");
       onSuccess?.();
+      // Conversion fires on /tack (Ads “conversion page”) — avoids double-counting.
+      router.push(localePath(locale, "/tack"));
     } catch {
       setStatus("error");
-    } finally {
       setSending(false);
     }
   }

@@ -112,6 +112,12 @@ const sv = {
     discussModel: "Diskutera modellen",
     modalNote: "Illustrativ modell. Slutliga specifikationer och pris behöver bekräftas.",
   },
+  thankYou: {
+    title: "Tack för din förfrågan",
+    lead: "Vi har tagit emot ditt meddelande och återkommer så snart vi kan.",
+    body: "Om du vill komplettera med mått, ritningar eller bilder — svara gärna på vårt mejl eller ring showroomet.",
+    backHome: "Tillbaka till startsidan",
+  },
   catalog: {
     breadcrumb: "Våra produkter",
     title: "Hitta din",
@@ -697,6 +703,12 @@ const en: Dictionary = {
     error: "Something went wrong. Please try again or contact us on WhatsApp.",
     discussModel: "Discuss this model",
     modalNote: "Illustrative model. Final specs and price need confirmation.",
+  },
+  thankYou: {
+    title: "Thank you for your enquiry",
+    lead: "We have received your message and will get back to you as soon as we can.",
+    body: "If you want to add measurements, drawings or photos — reply to our email or call the showroom.",
+    backHome: "Back to home",
   },
   catalog: {
     breadcrumb: "Our products",

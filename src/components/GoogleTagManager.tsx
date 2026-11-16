@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import { configureGoogleTags, GTM_ID } from "@/lib/analytics";
+import { AW_ID, GTM_ID } from "@/lib/analytics";
 import {
   analyticsAllowed,
   COOKIE_CONSENT_EVENT,
@@ -12,7 +12,7 @@ import {
 /**
  * Google tag (gtag.js) for GTM-5KCW4RHH + Google Ads AW-18539496369.
  * Loads only after analytics cookies are accepted.
- * Lead form conversions fire via `trackLeadFormSubmit`.
+ * Consent Mode is updated to granted at load (user already opted in).
  */
 export function GoogleTagManager() {
   const [enabled, setEnabled] = useState(false);
@@ -34,18 +34,21 @@ export function GoogleTagManager() {
         id="google-gtag"
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
-        onLoad={() => {
-          configureGoogleTags();
-        }}
       />
       <Script id="google-gtag-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
           gtag('js', new Date());
           gtag('config', '${GTM_ID}');
-          gtag('config', 'AW-18539496369');
+          gtag('config', '${AW_ID}');
         `}
       </Script>
     </>
