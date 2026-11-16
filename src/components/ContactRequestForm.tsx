@@ -85,6 +85,7 @@ export function ContactRequestForm({
       if (!res.ok) throw new Error("failed");
       form.reset();
       setConsent(false);
+      onDismiss?.();
       onSuccess?.();
       markLeadConversionPending();
       // Conversion fires on /tack (Ads “conversion page”) — avoids double-counting.

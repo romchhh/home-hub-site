@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import type { Dictionary } from "@/dictionaries";
 import type { ContactMessengerLink } from "@/lib/contactInfo";
@@ -23,13 +23,8 @@ export function RequestDialog({
   onClose,
 }: RequestDialogProps) {
   const r = dict.request;
-  const [sent, setSent] = useState(false);
 
   useLockBodyScroll(open);
-
-  useEffect(() => {
-    if (open) setSent(false);
-  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -53,18 +48,14 @@ export function RequestDialog({
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby={sent ? "contact-sheet-success" : "contact-sheet-title"}
-        className={`contact-sheet${sent ? " contact-sheet--success" : ""}`}
+        aria-labelledby="contact-sheet-title"
+        className="contact-sheet"
       >
         <div className="contact-sheet-handle" aria-hidden />
         <div className="contact-sheet-header">
-          {!sent ? (
-            <h2 id="contact-sheet-title" className="contact-sheet-title">
-              {r.dialogTitle}
-            </h2>
-          ) : (
-            <span className="contact-sheet-title-spacer" aria-hidden />
-          )}
+          <h2 id="contact-sheet-title" className="contact-sheet-title">
+            {r.dialogTitle}
+          </h2>
           <button
             type="button"
             className="contact-sheet-close"
@@ -88,15 +79,9 @@ export function RequestDialog({
             messengers={messengers}
             options={options}
             fillSuccess
-            onSuccess={() => setSent(true)}
             onDismiss={onClose}
           />
         </div>
-        {sent ? (
-          <span id="contact-sheet-success" className="sr-only">
-            {r.saved}
-          </span>
-        ) : null}
       </div>
     </div>
   );
