@@ -10,7 +10,7 @@ import {
 } from "@/lib/cookieConsent";
 
 /**
- * Google tag (gtag.js) for GTM-5KCW4RHH + Google Ads AW-18539496369.
+ * GTM-M3WMD66Z + Google Ads AW-18539496369.
  * Loads only after analytics cookies are accepted.
  * Consent Mode is updated to granted at load (user already opted in).
  */
@@ -30,14 +30,10 @@ export function GoogleTagManager() {
 
   return (
     <>
-      <Script
-        id="google-gtag"
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
-      />
-      <Script id="google-gtag-init" strategy="afterInteractive">
+      <Script id="google-gtm" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
           gtag('consent', 'update', {
@@ -46,8 +42,24 @@ export function GoogleTagManager() {
             ad_personalization: 'granted',
             analytics_storage: 'granted'
           });
+        `}
+      </Script>
+      <Script
+        id="google-gtm-src"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+      />
+      <Script
+        id="google-gtag"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${AW_ID}`}
+      />
+      <Script id="google-gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
           gtag('js', new Date());
-          gtag('config', '${GTM_ID}');
           gtag('config', '${AW_ID}');
         `}
       </Script>

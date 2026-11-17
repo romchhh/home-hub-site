@@ -1,7 +1,7 @@
 import { analyticsAllowed, readCookieConsent } from "@/lib/cookieConsent";
 
-/** Shared Google tag / GTM container from Ads setup. */
-export const GTM_ID = "GTM-5KCW4RHH";
+/** Google Tag Manager container. */
+export const GTM_ID = "GTM-M3WMD66Z";
 /** Google Ads conversion account. */
 export const AW_ID = "AW-18539496369";
 /** Event snippet: “Надсилання форми для лідів”. */
@@ -57,11 +57,10 @@ export function pushDataLayer(payload: Record<string, unknown>) {
   window.dataLayer.push(payload);
 }
 
-/** Config Google tag + Ads after analytics consent. */
+/** Config Google Ads after analytics consent (GTM loads separately). */
 export function configureGoogleTags() {
   ensureGtag();
   gtag("js", new Date());
-  gtag("config", GTM_ID);
   gtag("config", AW_ID);
 }
 
